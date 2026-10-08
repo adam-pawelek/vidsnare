@@ -1,7 +1,7 @@
 import type { UpdateStatus } from '@shared/update'
 import { useI18n } from '../i18n-context'
 
-const invoke = (channel: 'update:check' | 'update:download' | 'update:install' | 'update:open-releases'): void =>
+const invoke = (channel: 'update:check' | 'update:install' | 'update:open-releases'): void =>
   void window.vidsnare.invoke(channel)
 
 /** Status line and buttons for the Updates section in Settings. */
@@ -40,17 +40,13 @@ function UpdateMessage({ status, percent }: { status: UpdateStatus; percent: (f:
     return (
       <>
         <span role="status">{t('settings.updateAvailable', { version: status.version })}</span>
-        {status.mode === 'manual' ? (
+        {status.mode === 'manual' && (
           <>
             <span className="muted">{t('settings.manualUpdate')}</span>
             <button type="button" className="btn btn-primary" onClick={() => invoke('update:open-releases')}>
               {t('settings.openReleases')}
             </button>
           </>
-        ) : (
-          <button type="button" className="btn btn-primary" onClick={() => invoke('update:download')}>
-            {t('options.download')}
-          </button>
         )}
       </>
     )

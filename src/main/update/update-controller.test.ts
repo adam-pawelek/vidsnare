@@ -11,7 +11,7 @@ class FakeUpdater extends EventEmitter implements Updater {
   quitAndInstall = vi.fn()
 }
 
-function setup(mode: 'auto' | 'manual' | 'disabled' = 'auto', autoUpdate = true) {
+function setup(mode: 'auto' | 'manual' | 'disabled' = 'auto') {
   const fake = new FakeUpdater()
   const statuses: UpdateStatus[] = []
   const beforeInstall = vi.fn(async () => {})
@@ -19,7 +19,6 @@ function setup(mode: 'auto' | 'manual' | 'disabled' = 'auto', autoUpdate = true)
   const controller = new UpdateController({
     mode,
     updater: factory,
-    autoUpdate: () => autoUpdate,
     onStatus: (s) => statuses.push(s),
     beforeInstall
   })
@@ -60,19 +59,7 @@ describe('UpdateController', () => {
     expect(fake.autoInstallOnAppQuit).toBe(false)
     fake.emit('update-available', { version: '1.2.0' })
     expect(controller.getStatus()).toEqual({ state: 'available', mode: 'manual', version: '1.2.0' })
-    await controller.download()
     expect(fake.downloadUpdate).not.toHaveBeenCalled()
-  })
-
-  it('waits for the user when automatic updates are off', async () => {
-    const { fake, controller } = setup('auto', false)
-    await controller.check()
-    expect(fake.autoDownload).toBe(false)
-    fake.emit('update-available', { version: '1.2.0' })
-    expect(controller.getStatus().state).toBe('available')
-    await controller.download()
-    expect(fake.downloadUpdate).toHaveBeenCalled()
-    expect(controller.getStatus().state).toBe('downloading')
   })
 
   it('turns a failed check into an error status', async () => {

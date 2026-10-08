@@ -40,7 +40,6 @@ function registerIpc(services: Services, updates: UpdateController): void {
 
   handle('update:get-status', trusted, () => updates.getStatus())
   handle('update:check', trusted, () => updates.check())
-  handle('update:download', trusted, () => updates.download())
   handle('update:install', trusted, () => updates.install())
   handle('update:open-releases', trusted, () => shell.openExternal(RELEASES_URL))
 
@@ -190,7 +189,6 @@ if (!app.requestSingleInstanceLock()) {
         : 'disabled',
       // Loaded only in packaged builds; electron-updater reads app-update.yml from resources.
       updater: () => createRequire(import.meta.url)('electron-updater').autoUpdater,
-      autoUpdate: () => live.settings.get().autoUpdateApp,
       onStatus: (status) => broadcast('update:status', status),
       beforeInstall: async () => {
         quitConfirmed = true
@@ -208,11 +206,13 @@ if (!app.requestSingleInstanceLock()) {
     services.history.onChange(() => broadcast('history:changed', null))
     guardClose(createMainWindow(() => translatorFor(live.settings.get())))
 
-    if (services.settings.get().autoUpdateEngine) void services.engine.updateIfDue()
+    // Updates are always on; tests switch them off so they run offline and stay predictable.
+    const autoUpdates = !process.env['VIDSNARE_NO_AUTO_UPDATE']
+    if (autoUpdates) void services.engine.updateIfDue()
 
     // App updates: shortly after start (not to slow it down), then every six hours.
     const checkApp = (): void => {
-      if (live.settings.get().autoUpdateApp) void updates.check()
+      if (autoUpdates) void updates.check()
     }
     setTimeout(checkApp, 10_000)
     setInterval(checkApp, SIX_HOURS)

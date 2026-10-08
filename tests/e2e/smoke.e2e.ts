@@ -27,9 +27,9 @@ beforeAll(async () => {
   // Start in English and keep the test offline.
   writeFileSync(
     join(userData, 'settings.json'),
-    JSON.stringify({ language: 'en', autoUpdateEngine: false, autoUpdateApp: false })
+    JSON.stringify({ language: 'en' })
   )
-  app = await electron.launch({ args: [appDir], cwd: appDir, env: { ...process.env, VIDSNARE_USER_DATA: userData } })
+  app = await electron.launch({ args: [appDir], cwd: appDir, env: { ...process.env, VIDSNARE_USER_DATA: userData, VIDSNARE_NO_AUTO_UPDATE: '1' } })
   page = await app.firstWindow()
   await page.waitForSelector('.brand')
 })

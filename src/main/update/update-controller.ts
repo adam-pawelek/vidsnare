@@ -19,7 +19,6 @@ export interface UpdateControllerDeps {
   mode: UpdateMode
   /** Created lazily so development builds never touch electron-updater. */
   updater: () => Updater
-  autoUpdate: () => boolean
   onStatus: (status: UpdateStatus) => void
   /** Stops running downloads before the installer replaces the app. */
   beforeInstall: () => Promise<void>
@@ -46,8 +45,8 @@ export class UpdateController {
     if (this.updater) return this.updater
     const u = this.deps.updater()
     const mode = this.deps.mode
-    // Downloads only where we can install; .deb users get a notice instead.
-    u.autoDownload = mode === 'auto' && this.deps.autoUpdate()
+    // Updates are always automatic where we can install them; .deb users get a notice instead.
+    u.autoDownload = mode === 'auto'
     u.autoInstallOnAppQuit = mode === 'auto'
     u.on('checking-for-update', () => this.set({ state: 'checking', mode }))
     u.on('update-not-available', () => this.set({ state: 'up-to-date', mode }))
@@ -68,25 +67,12 @@ export class UpdateController {
   async check(): Promise<UpdateStatus> {
     if (this.deps.mode === 'disabled') return this.status
     const u = this.instance()
-    u.autoDownload = this.deps.mode === 'auto' && this.deps.autoUpdate()
     try {
       await u.checkForUpdates()
     } catch (error) {
       this.set({ state: 'error', mode: this.deps.mode, message: error instanceof Error ? error.message : String(error) })
     }
     return this.status
-  }
-
-  /** Downloads an update the user chose to get (when automatic download is off). */
-  async download(): Promise<void> {
-    if (this.deps.mode !== 'auto' || this.status.state !== 'available') return
-    const version = this.status.version
-    this.set({ state: 'downloading', mode: 'auto', version, fraction: null })
-    try {
-      await this.instance().downloadUpdate()
-    } catch (error) {
-      this.set({ state: 'error', mode: 'auto', message: error instanceof Error ? error.message : String(error) })
-    }
   }
 
   async install(): Promise<void> {

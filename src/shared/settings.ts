@@ -23,8 +23,6 @@ export interface Settings {
   notifications: boolean
   language: LanguageSetting
   theme: ThemeSetting
-  autoUpdateApp: boolean
-  autoUpdateEngine: boolean
   defaults: DownloadOptions
 }
 
@@ -39,8 +37,6 @@ export const DEFAULT_SETTINGS: Settings = {
   notifications: true,
   language: 'system',
   theme: 'system',
-  autoUpdateApp: true,
-  autoUpdateEngine: true,
   defaults: {
     kind: 'video',
     quality: 'best',
@@ -106,8 +102,6 @@ export function normalizeSettings(raw: unknown, base: Settings = DEFAULT_SETTING
     notifications: bool(s['notifications'], base.notifications),
     language: s['language'] === 'system' || isLocale(s['language']) ? (s['language'] as LanguageSetting) : base.language,
     theme: oneOf(s['theme'], ['system', 'light', 'dark'] as const, base.theme),
-    autoUpdateApp: bool(s['autoUpdateApp'], base.autoUpdateApp),
-    autoUpdateEngine: bool(s['autoUpdateEngine'], base.autoUpdateEngine),
     defaults: normalizeDownloadOptions(s['defaults'], base.defaults)
   }
 }

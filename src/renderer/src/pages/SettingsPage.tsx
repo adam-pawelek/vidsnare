@@ -217,13 +217,7 @@ export function SettingsPage({ settings, update }: { settings: Settings; update:
           <span className="field-label">{t('settings.appVersion')}</span> {version}
         </p>
         <AppUpdateControls status={updateStatus} />
-        <Toggle label={t('settings.autoUpdate')} checked={settings.autoUpdateApp} onChange={(v) => void update({ autoUpdateApp: v })} />
         <EngineSection />
-        <Toggle
-          label={t('settings.autoUpdateEngine')}
-          checked={settings.autoUpdateEngine}
-          onChange={(v) => void update({ autoUpdateEngine: v })}
-        />
       </section>
 
       <section className="card" aria-labelledby="s-about">

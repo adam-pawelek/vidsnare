@@ -67,7 +67,6 @@ export interface InvokeMap {
   'history:download-again': [[id: string], AddDownloadsResult]
   'update:get-status': [[], UpdateStatus]
   'update:check': [[], UpdateStatus]
-  'update:download': [[], void]
   'update:install': [[], void]
   'update:open-releases': [[], void]
 }
@@ -116,7 +115,6 @@ export const INVOKE_CHANNELS = [
   'history:download-again',
   'update:get-status',
   'update:check',
-  'update:download',
   'update:install',
   'update:open-releases'
 ] as const satisfies readonly InvokeChannel[]
