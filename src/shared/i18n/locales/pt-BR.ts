@@ -1,0 +1,187 @@
+import type { Messages } from '../types'
+
+export const ptBR: Messages = {
+  common: {
+    ok: 'OK',
+    cancel: 'Cancelar',
+    close: 'Fechar',
+    retry: 'Tentar de novo',
+    remove: 'Remover',
+    save: 'Salvar',
+    browse: 'Procurar…',
+    change: 'Alterar…',
+    reset: 'Restaurar padrões',
+    copyDetails: 'Copiar detalhes',
+    copied: 'Copiado',
+    loading: 'Carregando…',
+    unknown: 'Desconhecido'
+  },
+  nav: {
+    download: 'Baixar',
+    queue: 'Fila',
+    history: 'Histórico',
+    settings: 'Configurações'
+  },
+  input: {
+    placeholder: 'Cole um link do YouTube (vídeo ou playlist)',
+    paste: 'Colar',
+    load: 'Carregar',
+    invalid: 'Isso não parece um link do YouTube.',
+    hint: 'Aceita vídeos, Shorts, playlists e canais.'
+  },
+  preview: {
+    by: 'de {channel}',
+    duration: 'Duração',
+    live: 'Ao vivo',
+    videos: { one: '{count} vídeo', many: '{count} de vídeos', other: '{count} vídeos' },
+    selectAll: 'Selecionar tudo',
+    selectNone: 'Desmarcar tudo',
+    selected: '{selected} de {total} selecionados',
+    alreadyDownloaded: 'Já baixado',
+    hideDownloaded: 'Ocultar os já baixados',
+    partOfPlaylist: 'Este vídeo faz parte de uma playlist.',
+    thisVideoOnly: 'Só este vídeo',
+    wholePlaylist: 'Playlist inteira',
+    unavailableEntry: 'Indisponível'
+  },
+  options: {
+    downloadAs: 'Baixar como',
+    video: 'Vídeo',
+    audio: 'Só áudio',
+    quality: 'Qualidade',
+    qualityBest: 'Melhor disponível',
+    container: 'Tipo de arquivo',
+    audioFormat: 'Formato de áudio',
+    subtitles: 'Legendas',
+    subtitlesEnabled: 'Baixar legendas',
+    subtitleLanguages: 'Idiomas',
+    autoSubs: 'Usar legendas automáticas se necessário',
+    embedSubs: 'Incorporar no arquivo de vídeo',
+    saveTo: 'Salvar em',
+    download: 'Baixar',
+    downloadMany: { one: 'Baixar {count} vídeo', many: 'Baixar {count} de vídeos', other: 'Baixar {count} vídeos' },
+    added: {
+      one: '{count} download adicionado à fila',
+      many: '{count} de downloads adicionados à fila',
+      other: '{count} downloads adicionados à fila'
+    },
+    skippedExisting: {
+      one: '{count} vídeo já baixado foi ignorado',
+      many: '{count} de vídeos já baixados foram ignorados',
+      other: '{count} vídeos já baixados foram ignorados'
+    }
+  },
+  queue: {
+    empty: 'Nenhum download ainda. Cole um link para começar.',
+    status: {
+      queued: 'Aguardando',
+      downloading: 'Baixando',
+      processing: 'Processando',
+      completed: 'Concluído',
+      failed: 'Falhou',
+      cancelled: 'Cancelado',
+      skipped: 'Já baixado'
+    },
+    progress: '{done} de {total}',
+    speed: '{speed}',
+    eta: 'faltam {time}',
+    cancel: 'Cancelar',
+    retry: 'Tentar de novo',
+    openFile: 'Abrir arquivo',
+    showInFolder: 'Mostrar na pasta',
+    clearFinished: 'Limpar concluídos',
+    cancelAll: 'Cancelar todos',
+    active: { one: '{count} ativo', many: '{count} de ativos', other: '{count} ativos' }
+  },
+  history: {
+    empty: 'Os downloads concluídos aparecerão aqui.',
+    search: 'Pesquisar no histórico',
+    clear: 'Limpar histórico',
+    clearConfirm: 'Remover todas as entradas do histórico? Os arquivos baixados não serão apagados.',
+    fileMissing: 'O arquivo foi movido ou apagado',
+    downloadAgain: 'Baixar de novo',
+    noResults: 'Nenhum resultado.'
+  },
+  settings: {
+    title: 'Configurações',
+    sections: {
+      downloads: 'Downloads',
+      defaults: 'Opções padrão',
+      appearance: 'Aparência',
+      updates: 'Atualizações',
+      about: 'Sobre'
+    },
+    downloadFolder: 'Pasta de downloads',
+    maxConcurrent: 'Downloads simultâneos',
+    skipDownloaded: 'Ignorar vídeos já baixados',
+    skipDownloadedHelp: 'Vídeos do seu histórico são ignorados ao adicionar uma playlist.',
+    playlistSubfolder: 'Salvar playlists em uma pasta própria',
+    filenameTemplate: 'Nome do arquivo',
+    filenameTemplateHelp: 'Campos disponíveis: {fields}',
+    filenamePreview: 'Exemplo: {example}',
+    notifications: 'Mostrar uma notificação quando um download terminar',
+    language: 'Idioma',
+    systemLanguage: 'Idioma do sistema',
+    theme: 'Tema',
+    themeSystem: 'Seguir o sistema',
+    themeLight: 'Claro',
+    themeDark: 'Escuro',
+    appVersion: 'Versão do app',
+    autoUpdate: 'Instalar atualizações do app automaticamente',
+    checkForUpdates: 'Verificar atualizações',
+    checking: 'Verificando…',
+    upToDate: 'Você tem a versão mais recente.',
+    updateAvailable: 'A versão {version} está disponível.',
+    updateDownloading: 'Baixando atualização… {percent}',
+    updateReady: 'A versão {version} está pronta para instalar.',
+    restartToUpdate: 'Reiniciar e atualizar',
+    manualUpdate: 'Baixe a nova versão na página de lançamentos.',
+    openReleases: 'Abrir página de lançamentos',
+    updateFailed: 'Não foi possível verificar atualizações.',
+    engine: 'Mecanismo de download',
+    engineHelp: 'O YouTube muda com frequência. O mecanismo é atualizado separadamente do app.',
+    engineVersion: 'yt-dlp {version}',
+    updateEngine: 'Atualizar mecanismo',
+    engineUpdated: 'Mecanismo atualizado para {version}.',
+    engineUpToDate: 'O mecanismo está atualizado.',
+    engineUpdateFailed: 'Não foi possível atualizar o mecanismo. A versão atual continua em uso.',
+    autoUpdateEngine: 'Manter o mecanismo atualizado automaticamente',
+    disclaimer:
+      'Você é responsável por cumprir os Termos de Serviço do YouTube e as leis de direitos autorais. Baixe apenas conteúdo que você tem o direito de baixar.',
+    licenses: 'Licenças de terceiros',
+    sourceCode: 'Código-fonte'
+  },
+  notify: {
+    finishedTitle: 'Download concluído',
+    failedTitle: 'Falha no download',
+    allFinished: {
+      one: '{count} download concluído',
+      many: '{count} de downloads concluídos',
+      other: '{count} downloads concluídos'
+    }
+  },
+  errors: {
+    PRIVATE_VIDEO: 'Este vídeo é privado.',
+    VIDEO_UNAVAILABLE: 'Este vídeo está indisponível. Ele pode ter sido removido ou nunca ter existido.',
+    AGE_RESTRICTED: 'Este vídeo tem restrição de idade e exige login, que o VidSnare não usa.',
+    MEMBERS_ONLY: 'Este vídeo é exclusivo para membros pagantes do canal.',
+    PAID_CONTENT: 'Este vídeo precisa ser comprado ou alugado no YouTube.',
+    REGION_BLOCKED: 'Este vídeo não está disponível no seu país.',
+    COPYRIGHT_BLOCKED: 'Este vídeo foi bloqueado por uma reivindicação de direitos autorais.',
+    LIVE_NOT_STARTED: 'Esta transmissão ao vivo ou estreia ainda não começou. Tente de novo depois que começar.',
+    DRM_PROTECTED: 'Este vídeo é protegido contra cópia (DRM) e não pode ser baixado.',
+    BOT_CHECK: 'O YouTube está pedindo para confirmar que você não é um robô. Aguarde um pouco e tente de novo.',
+    RATE_LIMITED: 'O YouTube está limitando as solicitações agora. Aguarde alguns minutos e tente de novo.',
+    NO_INTERNET: 'Não foi possível acessar o YouTube. Verifique sua conexão com a internet.',
+    DISK_FULL: 'Não há espaço livre suficiente no disco.',
+    PERMISSION_DENIED: 'O VidSnare não tem permissão para salvar arquivos nesta pasta. Escolha outra pasta.',
+    FORMAT_UNAVAILABLE: 'A qualidade ou o formato escolhido não está disponível para este vídeo.',
+    ENGINE_OUTDATED: 'O YouTube mudou algo. Atualize o mecanismo de download nas Configurações e tente de novo.',
+    POSTPROCESSING_FAILED: 'O arquivo foi baixado, mas não pôde ser convertido.',
+    TOOL_MISSING: 'Um componente necessário está faltando. Reinstale o VidSnare.',
+    INVALID_URL: 'Isso não parece um link do YouTube.',
+    UNSUPPORTED_URL: 'Este tipo de link não é compatível.',
+    CANCELLED: 'Cancelado.',
+    UNKNOWN: 'Algo deu errado.'
+  }
+}
