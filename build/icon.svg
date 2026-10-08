@@ -1,14 +1,14 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024">
   <defs>
     <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#4f46e5"/>
-      <stop offset="1" stop-color="#312e81"/>
+      <stop offset="0" stop-color="#3b82f6"/>
+      <stop offset="1" stop-color="#1d4ed8"/>
     </linearGradient>
   </defs>
   <rect x="64" y="64" width="896" height="896" rx="200" fill="url(#bg)"/>
   <!-- Tray -->
-  <path d="M232 600 v112 a56 56 0 0 0 56 56 h448 a56 56 0 0 0 56 -56 v-112" fill="none" stroke="#ffffff" stroke-width="72" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M232 600 v112 a56 56 0 0 0 56 56 h448 a56 56 0 0 0 56 -56 v-112" fill="none" stroke="#bfdbfe" stroke-width="72" stroke-linecap="round" stroke-linejoin="round"/>
   <!-- Arrow -->
-  <path d="M512 224 v380" fill="none" stroke="#ff7a59" stroke-width="80" stroke-linecap="round"/>
-  <path d="M344 460 l168 168 l168 -168" fill="none" stroke="#ff7a59" stroke-width="80" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M512 224 v380" fill="none" stroke="#ffffff" stroke-width="80" stroke-linecap="round"/>
+  <path d="M344 460 l168 168 l168 -168" fill="none" stroke="#ffffff" stroke-width="80" stroke-linecap="round" stroke-linejoin="round"/>
 </svg>
