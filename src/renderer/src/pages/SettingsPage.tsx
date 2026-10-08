@@ -150,7 +150,7 @@ export function SettingsPage({ settings, update }: { settings: Settings; update:
               <bdi>{defaultFolder}</bdi>
             </span>
             <button type="button" className="btn" onClick={() => void chooseFolder()}>
-              {t('common.change')}
+              {t('common.changeFolder')}
             </button>
             {settings.downloadDir && (
               <button type="button" className="btn btn-ghost" onClick={() => void update({ downloadDir: '' })}>

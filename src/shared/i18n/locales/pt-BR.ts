@@ -15,7 +15,7 @@ export const ptBR: Messages = {
     remove: 'Remover',
     save: 'Salvar',
     browse: 'Procurar…',
-    change: 'Alterar…',
+    changeFolder: 'Alterar pasta de downloads…',
     reset: 'Restaurar padrões',
     copyDetails: 'Copiar detalhes',
     copied: 'Copiado',

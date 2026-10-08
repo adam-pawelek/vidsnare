@@ -40,7 +40,7 @@ describe('SettingsPage', () => {
     const { update } = setup()
     expect(await screen.findByText('/home/u/Downloads')).toBeInTheDocument()
     expect(screen.queryByRole('button', { name: 'Use the system Downloads folder' })).toBeNull()
-    fireEvent.click(screen.getByRole('button', { name: 'Change…' }))
+    fireEvent.click(screen.getByRole('button', { name: 'Change download folder…' }))
     await waitFor(() => expect(update).toHaveBeenCalledWith({ downloadDir: '/mnt/media' }))
   })
 

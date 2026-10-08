@@ -116,7 +116,7 @@ export function OptionsPanel({ options, onChange, folder, onChooseFolder }: Prop
             <bdi>{folder}</bdi>
           </span>
           <button type="button" className="btn" onClick={onChooseFolder}>
-            {t('common.change')}
+            {t('common.changeFolder')}
           </button>
         </div>
       </div>

@@ -282,7 +282,7 @@ describe('starting downloads', () => {
     fireEvent.click(await screen.findByRole('radio', { name: 'Audio only' }))
     expect(screen.queryByRole('combobox', { name: 'Quality' })).toBeNull()
     fireEvent.change(screen.getByRole('combobox', { name: 'Audio format' }), { target: { value: 'opus' } })
-    fireEvent.click(screen.getByRole('button', { name: 'Change…' }))
+    fireEvent.click(screen.getByRole('button', { name: 'Change download folder…' }))
     await screen.findByText('/mnt/usb')
     fireEvent.click(screen.getByRole('button', { name: 'Download' }))
     await screen.findByText(/Added 1 download/)

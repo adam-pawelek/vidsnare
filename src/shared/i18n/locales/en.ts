@@ -18,7 +18,7 @@ export const en = {
     remove: 'Remove',
     save: 'Save',
     browse: 'Browse…',
-    change: 'Change…',
+    changeFolder: 'Change download folder…',
     reset: 'Reset to defaults',
     copyDetails: 'Copy details',
     copied: 'Copied',

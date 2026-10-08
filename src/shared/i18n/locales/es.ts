@@ -15,7 +15,7 @@ export const es: Messages = {
     remove: 'Quitar',
     save: 'Guardar',
     browse: 'Examinar…',
-    change: 'Cambiar…',
+    changeFolder: 'Cambiar carpeta de descargas…',
     reset: 'Restablecer valores predeterminados',
     copyDetails: 'Copiar detalles',
     copied: 'Copiado',

@@ -15,7 +15,7 @@ export const ru: Messages = {
     remove: 'Удалить',
     save: 'Сохранить',
     browse: 'Обзор…',
-    change: 'Изменить…',
+    changeFolder: 'Изменить папку загрузок…',
     reset: 'Сбросить настройки',
     copyDetails: 'Скопировать подробности',
     copied: 'Скопировано',

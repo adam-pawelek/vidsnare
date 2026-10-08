@@ -15,7 +15,7 @@ export const pl: Messages = {
     remove: 'Usuń',
     save: 'Zapisz',
     browse: 'Przeglądaj…',
-    change: 'Zmień…',
+    changeFolder: 'Zmień folder pobierania…',
     reset: 'Przywróć domyślne',
     copyDetails: 'Kopiuj szczegóły',
     copied: 'Skopiowano',

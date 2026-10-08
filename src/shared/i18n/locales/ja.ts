@@ -15,7 +15,7 @@ export const ja: Messages = {
     remove: '削除',
     save: '保存',
     browse: '参照…',
-    change: '変更…',
+    changeFolder: '保存先フォルダーを変更…',
     reset: '初期設定に戻す',
     copyDetails: '詳細をコピー',
     copied: 'コピーしました',
