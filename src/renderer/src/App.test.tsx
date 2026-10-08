@@ -1,5 +1,5 @@
 // @vitest-environment jsdom
-import { fireEvent, render, screen } from '@testing-library/react'
+import { fireEvent, render, screen, waitFor } from '@testing-library/react'
 import { act } from 'react'
 import { describe, expect, it } from 'vitest'
 import type { DownloadJob } from '@shared/queue'
@@ -15,7 +15,8 @@ function setup(settings = DEFAULT_SETTINGS) {
     'queue:list': () => [],
     'queue:default-folder': () => '/home/u/Downloads',
     'tools:get-status': () => ({ ytdlp: null, ffmpeg: null, deno: null, lastCheck: null }),
-    'update:get-status': () => ({ state: 'idle', mode: 'disabled' })
+    'update:get-status': () => ({ state: 'idle', mode: 'disabled' }),
+    'settings:update': (patch) => ({ ...settings, ...(patch as object) })
   })
   api.on.mockImplementation((channel: string, listener: (payload: unknown) => void) => {
     listeners.set(channel, listener)
@@ -46,16 +47,29 @@ describe('App', () => {
     expect(await screen.findByRole('button', { name: 'Einstellungen' })).toBeInTheDocument()
   })
 
+  it('switches language from the sidebar', async () => {
+    const { emit } = setup()
+    render(<App />)
+    const picker = await screen.findByRole('combobox', { name: 'Language' })
+    const options = Array.from((picker as HTMLSelectElement).options).map((o) => o.text)
+    expect(options).toEqual(['System default', 'English', 'Polski', 'Deutsch', 'Español', 'Português (Brasil)', 'Русский', '日本語', 'Français'])
+    fireEvent.change(picker, { target: { value: 'pl' } })
+    expect(await screen.findByRole('button', { name: 'Pobierz' })).toBeInTheDocument()
+    expect(screen.getByRole('combobox', { name: 'Język' })).toHaveValue('pl')
+    emit('settings:changed', { ...DEFAULT_SETTINGS, language: 'ja' })
+    expect(await screen.findByRole('button', { name: 'ダウンロード' })).toBeInTheDocument()
+  })
+
   it('applies a forced theme and follows the system otherwise', async () => {
     setup({ ...DEFAULT_SETTINGS, theme: 'dark' })
     const { unmount } = render(<App />)
-    await screen.findByText('v1.2.3')
-    expect(document.documentElement.dataset['theme']).toBe('dark')
+    // Settings load separately from the app info, so wait for the theme itself.
+    await waitFor(() => expect(document.documentElement.dataset['theme']).toBe('dark'))
     unmount()
     setup()
     render(<App />)
-    await screen.findByText('v1.2.3')
-    expect(document.documentElement.dataset['theme']).toBeUndefined()
+    await screen.findByRole('combobox', { name: 'Language' })
+    await waitFor(() => expect(document.documentElement.dataset['theme']).toBeUndefined())
   })
 
   it('opens the page a notification asks for', async () => {

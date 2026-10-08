@@ -74,14 +74,36 @@ describe('VidSnare', () => {
     await page.waitForSelector('text=Finished downloads will appear here.')
   })
 
-  it('finds the bundled download engine', async () => {
-    await page.click('nav >> text=Settings')
-    await page.waitForSelector('.settings-page')
-    await page.waitForSelector('text=/yt-dlp \\d{4}\\.\\d{2}\\.\\d{2}/')
+  it('shows a translated right-click menu in text fields', async () => {
+    await page.click('nav >> text=Download')
+    const labels = await app.evaluate(async ({ BrowserWindow, Menu }) => {
+      const win = BrowserWindow.getAllWindows()[0]!
+      const shown = new Promise<string[]>((resolve) => {
+        const original = Menu.prototype.popup
+        Menu.prototype.popup = function (this: Electron.Menu) {
+          Menu.prototype.popup = original
+          resolve(this.items.map((i) => i.label).filter(Boolean))
+        }
+      })
+      win.webContents.emit('context-menu', {}, {
+        isEditable: true,
+        selectionText: '',
+        editFlags: { canCut: true, canCopy: true, canPaste: true, canSelectAll: true }
+      })
+      return shown
+    })
+    expect(labels).toEqual(['Cut', 'Copy', 'Paste', 'Select all'])
   })
 
-  it('switches language immediately and remembers it', async () => {
-    await page.selectOption('select:near(:text("Language"))', 'pl')
+  it('finds the bundled download engine', { timeout: 120_000 }, async () => {
+    await page.click('nav >> text=Settings')
+    await page.waitForSelector('.settings-page')
+    // The first version check starts yt-dlp, which unpacks itself first; that is slow on busy machines.
+    await page.waitForSelector('text=/yt-dlp \\d{4}\\.\\d{2}\\.\\d{2}/', { timeout: 90_000 })
+  })
+
+  it('switches language from the sidebar and remembers it', async () => {
+    await page.selectOption('nav select[aria-label="Language"]', 'pl')
     await page.waitForSelector('nav >> text=Ustawienia')
     const saved = await page.evaluate(() => window.vidsnare.invoke('settings:get'))
     expect(saved.language).toBe('pl')

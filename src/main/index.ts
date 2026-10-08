@@ -206,7 +206,7 @@ if (!app.requestSingleInstanceLock()) {
       broadcast('settings:changed', s)
     })
     services.history.onChange(() => broadcast('history:changed', null))
-    guardClose(createMainWindow())
+    guardClose(createMainWindow(() => translatorFor(live.settings.get())))
 
     if (services.settings.get().autoUpdateEngine) void services.engine.updateIfDue()
 
@@ -219,7 +219,7 @@ if (!app.requestSingleInstanceLock()) {
 
     nativeTheme.on('updated', () => broadcast('app:theme-changed', { dark: nativeTheme.shouldUseDarkColors }))
     app.on('activate', () => {
-      if (BrowserWindow.getAllWindows().length === 0) guardClose(createMainWindow())
+      if (BrowserWindow.getAllWindows().length === 0) guardClose(createMainWindow(() => translatorFor(live.settings.get())))
     })
   })
 

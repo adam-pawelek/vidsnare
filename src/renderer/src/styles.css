@@ -134,9 +134,29 @@ input[type='radio'] {
   font-weight: 600;
 }
 
-.version {
+.sidebar-footer {
   margin-top: auto;
-  padding: 0 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 0 4px;
+}
+
+.language-picker {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--muted);
+}
+
+.language-picker select {
+  flex: 1;
+  min-width: 0;
+  padding: 4px 6px;
+}
+
+.version {
+  padding: 0 6px;
   font-size: 12px;
 }
 
@@ -410,6 +430,11 @@ input[type='radio'] {
   .brand,
   .version {
     display: none;
+  }
+
+  .sidebar-footer {
+    margin-top: 0;
+    margin-left: auto;
   }
 
   .video-card {

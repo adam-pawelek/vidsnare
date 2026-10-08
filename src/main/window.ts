@@ -1,4 +1,6 @@
-import { BrowserWindow, nativeTheme, session, shell } from 'electron'
+import { BrowserWindow, Menu, nativeTheme, session, shell } from 'electron'
+import type { Translate } from '@shared/i18n'
+import { contextMenuTemplate } from './context-menu'
 import { join } from 'node:path'
 import { pathToFileURL } from 'node:url'
 import { contentSecurityPolicy, createWebPreferences, isAppUrl, isSafeExternalUrl } from './security'
@@ -22,7 +24,7 @@ function installCsp(): void {
   session.defaultSession.setPermissionRequestHandler((_wc, _permission, callback) => callback(false))
 }
 
-export function createMainWindow(): BrowserWindow {
+export function createMainWindow(translate: () => Translate): BrowserWindow {
   installCsp()
 
   const win = new BrowserWindow({
@@ -48,6 +50,11 @@ export function createMainWindow(): BrowserWindow {
     if (!isTrustedFrameUrl(url)) event.preventDefault()
   })
   win.webContents.on('will-attach-webview', (event) => event.preventDefault())
+
+  win.webContents.on('context-menu', (_event, params) => {
+    const template = contextMenuTemplate(params, translate())
+    if (template.length) Menu.buildFromTemplate(template).popup({ window: win })
+  })
 
   if (devServerUrl) {
     void win.loadURL(devServerUrl)

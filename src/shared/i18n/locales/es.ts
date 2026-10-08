@@ -22,6 +22,12 @@ export const es: Messages = {
     loading: 'Cargando…',
     unknown: 'Desconocido'
   },
+  contextMenu: {
+    cut: 'Cortar',
+    copy: 'Copiar',
+    paste: 'Pegar',
+    selectAll: 'Seleccionar todo'
+  },
   nav: {
     download: 'Descargar',
     queue: 'Cola',

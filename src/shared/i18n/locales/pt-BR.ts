@@ -22,6 +22,12 @@ export const ptBR: Messages = {
     loading: 'Carregando…',
     unknown: 'Desconhecido'
   },
+  contextMenu: {
+    cut: 'Recortar',
+    copy: 'Copiar',
+    paste: 'Colar',
+    selectAll: 'Selecionar tudo'
+  },
   nav: {
     download: 'Baixar',
     queue: 'Fila',

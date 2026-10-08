@@ -22,6 +22,12 @@ export const ja: Messages = {
     loading: '読み込み中…',
     unknown: '不明'
   },
+  contextMenu: {
+    cut: '切り取り',
+    copy: 'コピー',
+    paste: '貼り付け',
+    selectAll: 'すべて選択'
+  },
   nav: {
     download: 'ダウンロード',
     queue: 'キュー',

@@ -83,20 +83,15 @@ describe('SettingsPage', () => {
     expect(input).toHaveAttribute('aria-invalid', 'true')
   })
 
-  it('changes language and theme', () => {
+  it('changes the theme', () => {
     const { update } = setup()
-    fireEvent.change(screen.getByRole('combobox', { name: 'Language' }), { target: { value: 'ja' } })
     fireEvent.change(screen.getByRole('combobox', { name: 'Theme' }), { target: { value: 'dark' } })
-    expect(update).toHaveBeenCalledWith({ language: 'ja' })
     expect(update).toHaveBeenCalledWith({ theme: 'dark' })
   })
 
-  it('lists every language by its own name', () => {
+  it('no longer has a language picker (it lives in the sidebar)', () => {
     setup()
-    const options = Array.from((screen.getByRole('combobox', { name: 'Language' }) as HTMLSelectElement).options).map(
-      (o) => o.text
-    )
-    expect(options).toEqual(['System default', 'English', 'Polski', 'Deutsch', 'Español', 'Português (Brasil)', 'Русский', '日本語', 'Français'])
+    expect(screen.queryByRole('combobox', { name: 'Language' })).toBeNull()
   })
 
   it('changes default download options', () => {

@@ -3,6 +3,7 @@ import type { AppInfo } from '@shared/ipc'
 import { resolveLocale, type MessageKey } from '@shared/i18n'
 import { ACTIVE_STATUSES } from '@shared/queue'
 import { UpdateBanner } from './components/AppUpdate'
+import { LanguagePicker } from './components/LanguagePicker'
 import { useQueue } from './hooks/useQueue'
 import { useUpdateStatus } from './hooks/useUpdateStatus'
 import { useSettings } from './hooks/useSettings'
@@ -55,7 +56,10 @@ function Shell({ settings, update }: ReturnType<typeof useSettings>): React.JSX.
             )}
           </button>
         ))}
-        {info && <div className="version muted">v{info.version}</div>}
+        <div className="sidebar-footer">
+          {settings && <LanguagePicker value={settings.language} onChange={(language) => void update({ language })} />}
+          {info && <div className="version muted">v{info.version}</div>}
+        </div>
       </nav>
       <main className="content">
         <UpdateBanner status={updateStatus} />

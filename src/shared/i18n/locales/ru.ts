@@ -22,6 +22,12 @@ export const ru: Messages = {
     loading: 'Загрузка…',
     unknown: 'Неизвестно'
   },
+  contextMenu: {
+    cut: 'Вырезать',
+    copy: 'Копировать',
+    paste: 'Вставить',
+    selectAll: 'Выделить всё'
+  },
   nav: {
     download: 'Скачать',
     queue: 'Очередь',

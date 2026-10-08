@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react'
 import { renderFilename } from '@shared/filename'
-import { LOCALES, SUPPORTED_LOCALES } from '@shared/i18n'
 import type { EngineStatus, EngineUpdateResult } from '@shared/ipc'
 import { REPO_URL as SOURCE_URL } from '@shared/release'
 import { MAX_CONCURRENT_LIMIT, type Settings } from '@shared/settings'
@@ -201,17 +200,6 @@ export function SettingsPage({ settings, update }: { settings: Settings; update:
       <section className="card" aria-labelledby="s-appearance">
         <h2 id="s-appearance">{t('settings.sections.appearance')}</h2>
         <div className="row">
-          <label className="field">
-            <span className="field-label">{t('settings.language')}</span>
-            <select value={settings.language} onChange={(e) => void update({ language: e.target.value as Settings['language'] })}>
-              <option value="system">{t('settings.systemLanguage')}</option>
-              {SUPPORTED_LOCALES.map((l) => (
-                <option key={l} value={l} lang={l}>
-                  {LOCALES[l].name}
-                </option>
-              ))}
-            </select>
-          </label>
           <label className="field">
             <span className="field-label">{t('settings.theme')}</span>
             <select value={settings.theme} onChange={(e) => void update({ theme: e.target.value as Settings['theme'] })}>

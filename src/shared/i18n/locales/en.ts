@@ -25,6 +25,12 @@ export const en = {
     loading: 'Loading…',
     unknown: 'Unknown'
   },
+  contextMenu: {
+    cut: 'Cut',
+    copy: 'Copy',
+    paste: 'Paste',
+    selectAll: 'Select all'
+  },
   nav: {
     download: 'Download',
     queue: 'Queue',

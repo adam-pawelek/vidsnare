@@ -22,6 +22,12 @@ export const fr: Messages = {
     loading: 'Chargement…',
     unknown: 'Inconnu'
   },
+  contextMenu: {
+    cut: 'Couper',
+    copy: 'Copier',
+    paste: 'Coller',
+    selectAll: 'Tout sélectionner'
+  },
   nav: {
     download: 'Télécharger',
     queue: 'File d’attente',
