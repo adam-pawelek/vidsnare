@@ -7,6 +7,11 @@ export default tseslint.config(
   js.configs.recommended,
   ...tseslint.configs.recommended,
   {
+    // Small CommonJS helpers for website screenshots (Electron main/preload scripts).
+    files: ['scripts/screenshots/*.cjs'],
+    rules: { '@typescript-eslint/no-require-imports': 'off' }
+  },
+  {
     languageOptions: { globals: { ...globals.node, ...globals.browser } },
     rules: {
       '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }]

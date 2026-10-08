@@ -34,7 +34,9 @@ nsis:
   createDesktopShortcut: true
   createStartMenuShortcut: true
   shortcutName: VidSnare
-  artifactName: ${productName}-Setup-${version}.${ext}
+  # Stable names, so https://github.com/<repo>/releases/latest/download/<name>
+  # (used by the website) always points at the newest release.
+  artifactName: ${productName}-Setup.${ext}
   deleteAppDataOnUninstall: false
 
 linux:
@@ -53,10 +55,10 @@ linux:
   maintainer: Adam Pawelek <vidsnare@users.noreply.github.com>
 
 appImage:
-  artifactName: ${productName}-${version}-${arch}.${ext}
+  artifactName: ${productName}-${arch}.${ext}
 
 deb:
-  artifactName: ${productName}_${version}_${arch}.${ext}
+  artifactName: ${productName}_${arch}.${ext}
 
 publish:
   provider: github

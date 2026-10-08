@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>VidSnare – download videos and audio from YouTube</title>
+    <meta name="description" content="A free desktop app for Windows and Linux that downloads videos and audio from YouTube, with playlists, subtitles and a download queue." />
+    <meta property="og:title" content="VidSnare" />
+    <meta property="og:description" content="Download videos and music from YouTube. Simply." />
+    <meta property="og:image" content="images/download-light.png" />
+    <meta name="color-scheme" content="light dark" />
+    <link rel="icon" href="icon.png" />
+    <link rel="stylesheet" href="style.css" />
+    <script type="module" src="site.js"></script>
+  </head>
+  <body>
+    <header class="top">
+      <div class="wrap top-row">
+        <a class="brand" href="./"><img src="icon.png" alt="" width="28" height="28" /> VidSnare</a>
+        <label class="lang">
+          <span class="visually-hidden" data-t="language">Language</span>
+          <select id="language" aria-label="Language"></select>
+        </label>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero wrap">
+        <div class="hero-text">
+          <h1 data-t="tagline">Download videos and music from YouTube. Simply.</h1>
+          <p class="lead" data-t="lead">
+            Paste a link, choose the quality, and VidSnare does the rest. Free for personal use on Windows and Linux.
+          </p>
+          <a id="primary-download" class="button" data-file="windows" href="#">Download</a>
+          <p id="release-note" class="muted" aria-live="polite"></p>
+          <details class="other">
+            <summary data-t="otherDownloads">Other downloads</summary>
+            <ul>
+              <li><a data-file="windows" href="#">Windows</a></li>
+              <li><a data-file="appimage" href="#">Linux AppImage</a></li>
+              <li><a data-file="deb" href="#">Debian / Ubuntu</a></li>
+            </ul>
+          </details>
+        </div>
+        <picture class="hero-shot">
+          <source srcset="images/download-dark.png" media="(prefers-color-scheme: dark)" />
+          <img src="images/download-light.png" width="1100" height="720" data-t-alt="shotDownload" alt="Choosing videos from a playlist" />
+        </picture>
+      </section>
+
+      <section class="features wrap" aria-labelledby="features-title">
+        <h2 id="features-title" data-t="featuresTitle">What it does</h2>
+        <div class="grid">
+          <article><h3 data-t="f1Title"></h3><p data-t="f1"></p></article>
+          <article><h3 data-t="f2Title"></h3><p data-t="f2"></p></article>
+          <article><h3 data-t="f3Title"></h3><p data-t="f3"></p></article>
+          <article><h3 data-t="f4Title"></h3><p data-t="f4"></p></article>
+          <article><h3 data-t="f5Title"></h3><p data-t="f5"></p></article>
+          <article><h3 data-t="f6Title"></h3><p data-t="f6"></p></article>
+        </div>
+      </section>
+
+      <section class="wrap shot">
+        <img src="images/queue-light.png" width="1100" height="720" loading="lazy" data-t-alt="shotQueue" alt="The download queue" />
+      </section>
+
+      <section class="install wrap" aria-labelledby="install-title">
+        <h2 id="install-title" data-t="installTitle">Installing</h2>
+        <p>
+          <strong>Windows</strong> –
+          <span data-t="installWindows"></span>
+        </p>
+        <p>
+          <strong>Linux</strong> –
+          <span data-t="installLinux"></span>
+        </p>
+      </section>
+    </main>
+
+    <footer class="wrap footer">
+      <p data-t="disclaimer"></p>
+      <p>
+        <span data-t="license"></span>
+        <a href="https://github.com/adam-pawelek/vidsnare" data-t="source">Source code</a> ·
+        <span data-t="notAffiliated"></span>
+      </p>
+      <p class="muted">© 2026 Adam Pawelek</p>
+    </footer>
+  </body>
+</html>

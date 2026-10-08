@@ -17,13 +17,14 @@ A desktop app for Windows and Linux that downloads videos and audio from YouTube
 
 ## Installing
 
-Download the latest release from the [releases page](https://github.com/adam-pawelek/vidsnare/releases/latest):
+Get it from the website, **https://adam-pawelek.github.io/vidsnare/**, or from the
+[releases page](https://github.com/adam-pawelek/vidsnare/releases/latest):
 
 | System | File | Updates |
 |---|---|---|
-| Windows 10/11 | `VidSnare-Setup-<version>.exe` | Automatic |
-| Linux (any distribution) | `VidSnare-<version>-x86_64.AppImage`, then make it executable | Automatic |
-| Debian / Ubuntu | `VidSnare_<version>_amd64.deb` | The app tells you when a new version is out |
+| Windows 10/11 | `VidSnare-Setup.exe` | Automatic |
+| Linux (any distribution) | `VidSnare-x86_64.AppImage`, then make it executable | Automatic |
+| Debian / Ubuntu | `VidSnare_amd64.deb` | The app tells you when a new version is out |
 
 Everything VidSnare needs (yt-dlp, ffmpeg, Deno) is included; nothing else has to be installed.
 
@@ -60,6 +61,10 @@ npm run dev              # run with hot reload
 | `VIDSNARE_NETWORK=1 npm test` | Also checks the live GitHub release lookups |
 | `npm run typecheck` / `npm run lint` | Static checks |
 | `npm run dist:linux` / `npm run dist:win` | Build installers into `release/` |
+
+The website lives in `website/` (plain HTML, CSS and JavaScript; text for all languages in
+`website/strings.js`) and is published to GitHub Pages by the *Website* workflow. Screenshots
+come from the real UI with example data: `npm run build && node scripts/screenshots/take.mjs`.
 
 See [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) for how the app is put together and
 [docs/TRANSLATIONS.md](docs/TRANSLATIONS.md) for adding or reviewing languages.

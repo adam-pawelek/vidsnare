@@ -12,7 +12,7 @@ export default defineConfig({
   },
   test: {
     globals: true,
-    include: ['src/**/*.test.{ts,tsx}'],
+    include: ['src/**/*.test.{ts,tsx}', 'tests/*.test.ts'],
     environment: 'node',
     setupFiles: ['./vitest.setup.ts']
   }
