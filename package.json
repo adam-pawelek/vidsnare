@@ -8,7 +8,7 @@
     "name": "Adam Pawelek",
     "email": "vidsnare@users.noreply.github.com"
   },
-  "homepage": "https://github.com/adam-pawelek/vidsnare",
+  "homepage": "https://vidsnare.com",
   "type": "module",
   "main": "out/main/index.js",
   "scripts": {

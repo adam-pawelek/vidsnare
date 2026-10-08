@@ -17,7 +17,7 @@ A desktop app for Windows and Linux that downloads videos and audio from YouTube
 
 ## Installing
 
-Get it from the website, **https://adam-pawelek.github.io/vidsnare/**, or from the
+Get it from **https://vidsnare.com**, or from the
 [releases page](https://github.com/adam-pawelek/vidsnare/releases/latest):
 
 | System | File | Updates |
