@@ -1,4 +1,5 @@
 import { app, BrowserWindow, clipboard, dialog, nativeTheme, shell } from 'electron'
+import { dirname } from 'node:path'
 import type { EventChannel, EventMap } from '@shared/ipc'
 import { handle } from './ipc'
 import { createServices, type Services } from './services'
@@ -12,7 +13,7 @@ function broadcast<C extends EventChannel>(channel: C, payload: EventMap[C]): vo
 }
 
 function registerIpc(services: Services): void {
-  const { settings, engine, media, queue, queueService } = services
+  const { settings, history, engine, media, queue, queueService } = services
 
   handle('app:get-info', trusted, () => ({ name: app.getName(), version: app.getVersion(), platform: process.platform }))
   handle('app:read-clipboard', trusted, async () => (await clipboard.readText()).trim().slice(0, 4096))
@@ -58,6 +59,40 @@ function registerIpc(services: Services): void {
     const path = queue.get(String(id))?.filePath
     if (path) shell.showItemInFolder(path)
   })
+
+  handle('history:list', trusted, (query) =>
+    history.list({
+      search: typeof query?.search === 'string' ? query.search.slice(0, 200) : '',
+      limit: Number(query?.limit) || 200
+    })
+  )
+  handle('history:remove', trusted, (id) => history.remove(String(id)))
+  handle('history:clear', trusted, () => history.clear())
+  handle('history:open-file', trusted, async (id) => {
+    const entry = history.get(String(id))
+    if (entry) await shell.openPath(entry.filePath)
+  })
+  handle('history:show-in-folder', trusted, (id) => {
+    const entry = history.get(String(id))
+    if (entry) shell.showItemInFolder(entry.filePath)
+  })
+  handle('history:download-again', trusted, (id) => {
+    const entry = history.get(String(id))
+    if (!entry) return { added: 0, skipped: 0 }
+    return queueService.requeue(
+      {
+        videoId: entry.videoId,
+        title: entry.title,
+        channel: entry.channel,
+        thumbnail: entry.thumbnail,
+        duration: entry.duration,
+        uploadDate: null,
+        index: null
+      },
+      entry.options,
+      dirname(entry.filePath)
+    )
+  })
 }
 
 // Tests run the app against a throwaway data folder instead of the user's real one.
@@ -86,6 +121,7 @@ if (!app.requestSingleInstanceLock()) {
     services = await createServices({ onQueueChange: pushQueue })
     registerIpc(services)
     services.settings.onChange((s) => broadcast('settings:changed', s))
+    services.history.onChange(() => broadcast('history:changed', null))
     createMainWindow()
 
     if (services.settings.get().autoUpdateEngine) void services.engine.updateIfDue()

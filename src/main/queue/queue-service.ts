@@ -1,4 +1,5 @@
 import { isAbsolute, join, resolve } from 'node:path'
+import type { DownloadOptions } from '@shared/download'
 import type { AddDownloadsRequest, AddDownloadsResult, QueueItem } from '@shared/queue'
 import { normalizeDownloadOptions, type Settings } from '@shared/settings'
 import { sanitizeFilename } from '../core/filename'
@@ -67,6 +68,17 @@ export class QueueService {
       if (this.approvedDirs.has(dir) || dir === resolve(this.defaultDirectory())) return dir
     }
     return this.defaultDirectory()
+  }
+
+  /**
+   * Queues a video again from main-side data (the history), so the folder is
+   * trusted as is.
+   */
+  requeue(item: QueueItem, options: DownloadOptions, outputDir: string): AddDownloadsResult {
+    this.deps.queue.add([
+      { item, options, outputDir, filenameTemplate: this.deps.settings().filenameTemplate, playlistCount: null }
+    ])
+    return { added: 1, skipped: 0 }
   }
 
   add(request: AddDownloadsRequest): AddDownloadsResult {

@@ -6,6 +6,7 @@ import { useQueue } from './hooks/useQueue'
 import { useSettings } from './hooks/useSettings'
 import { I18nProvider, useI18n } from './i18n'
 import { DownloadPage } from './pages/DownloadPage'
+import { HistoryPage } from './pages/HistoryPage'
 import { QueuePage } from './pages/QueuePage'
 
 type Page = 'download' | 'queue' | 'history' | 'settings'
@@ -55,7 +56,8 @@ function Shell({ settings }: { settings: ReturnType<typeof useSettings>['setting
           <DownloadPage settings={settings} onOpenQueue={() => setPage('queue')} />
         </div>
         {page === 'queue' && <QueuePage jobs={jobs} />}
-        {(page === 'history' || page === 'settings') && <h1>{t(PAGES.find((p) => p.id === page)!.label)}</h1>}
+        {page === 'history' && <HistoryPage onQueued={() => setPage('queue')} />}
+        {page === 'settings' && <h1>{t('nav.settings')}</h1>}
       </main>
     </div>
   )

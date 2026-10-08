@@ -74,7 +74,6 @@ function setup(overrides: Partial<QueueDeps> = {}) {
     tools: async () => ({ ytdlp: '/t/yt-dlp', ffmpeg: '/t', deno: '/t/deno' }),
     tempRoot: '/tmp/vs',
     maxConcurrent: () => 2,
-    archiveFile: () => undefined,
     onFinished: (job) => finished.push(job),
     fileExists: async () => false,
     fileSize: async () => null,
@@ -115,15 +114,16 @@ describe('DownloadQueue', () => {
   })
 
   it('passes the right arguments to yt-dlp', async () => {
-    const { queue, run } = setup({ archiveFile: () => '/data/archive.txt' })
+    const { queue, run } = setup()
     queue.add([spec(1)])
     await settle()
     const args = run.runs[0]!.args
     expect(args.slice(-1)[0]).toBe('https://www.youtube.com/watch?v=vid00000001')
     expect(args).toContain('Video 1 [vid00000001].%(ext)s')
     expect(args).toContain(`temp:${join('/tmp/vs', 'job1')}`)
-    expect(args).toContain('/data/archive.txt')
     expect(args).toContain('deno:/t/deno')
+    // Skipping is decided from the history before queuing, never by yt-dlp's archive.
+    expect(args).not.toContain('--download-archive')
   })
 
   it('reports progress and finishes with the file path', async () => {

@@ -704,3 +704,10 @@ select {
     transition: none;
   }
 }
+
+.search {
+  padding: 8px 12px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--surface);
+}

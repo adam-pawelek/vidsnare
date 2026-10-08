@@ -5,6 +5,7 @@
  * the main process can push is listed in `EventMap`. The preload script only
  * forwards channels named here, so the renderer cannot reach anything else.
  */
+import type { HistoryItem, HistoryQuery } from './history'
 import type { FetchInfoResult } from './media'
 import type { AddDownloadsRequest, AddDownloadsResult, DownloadJob } from './queue'
 import type { Settings } from './settings'
@@ -57,6 +58,12 @@ export interface InvokeMap {
   'queue:clear-finished': [[], void]
   'queue:open-file': [[id: string], void]
   'queue:show-in-folder': [[id: string], void]
+  'history:list': [[query: HistoryQuery], HistoryItem[]]
+  'history:remove': [[id: string], void]
+  'history:clear': [[], void]
+  'history:open-file': [[id: string], void]
+  'history:show-in-folder': [[id: string], void]
+  'history:download-again': [[id: string], AddDownloadsResult]
 }
 
 /** Push channels from main to renderer: channel name -> payload. */
@@ -65,6 +72,7 @@ export interface EventMap {
   'tools:update-progress': { fraction: number | null }
   'queue:changed': DownloadJob[]
   'settings:changed': Settings
+  'history:changed': null
 }
 
 export type InvokeChannel = keyof InvokeMap
@@ -90,9 +98,15 @@ export const INVOKE_CHANNELS = [
   'queue:remove',
   'queue:clear-finished',
   'queue:open-file',
-  'queue:show-in-folder'
+  'queue:show-in-folder',
+  'history:list',
+  'history:remove',
+  'history:clear',
+  'history:open-file',
+  'history:show-in-folder',
+  'history:download-again'
 ] as const satisfies readonly InvokeChannel[]
-export const EVENT_CHANNELS = ['app:theme-changed', 'tools:update-progress', 'queue:changed', 'settings:changed'] as const satisfies readonly EventChannel[]
+export const EVENT_CHANNELS = ['app:theme-changed', 'tools:update-progress', 'queue:changed', 'settings:changed', 'history:changed'] as const satisfies readonly EventChannel[]
 
 export function isInvokeChannel(value: unknown): value is InvokeChannel {
   return typeof value === 'string' && (INVOKE_CHANNELS as readonly string[]).includes(value)

@@ -20,8 +20,6 @@ export interface QueueDeps {
   /** Partial files live in `<tempRoot>/<job id>` until finished. */
   tempRoot: string
   maxConcurrent: () => number
-  /** yt-dlp archive, when "skip already downloaded" is on. */
-  archiveFile: () => string | undefined
   /** Called whenever any job changes (including progress). */
   onChange?: () => void
   /** Called once when a job reaches a final state. */
@@ -225,7 +223,6 @@ export class DownloadQueue {
         fileBase: base,
         options: job.options,
         tools: { ffmpeg: tools.ffmpeg, deno: tools.deno },
-        archiveFile: this.deps.archiveFile(),
         tempDir
       })
 

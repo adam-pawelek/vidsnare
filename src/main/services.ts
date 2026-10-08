@@ -2,6 +2,7 @@ import { app, net } from 'electron'
 import { rm } from 'node:fs/promises'
 import { join } from 'node:path'
 import { spawnRunner } from './core/runner'
+import { HistoryStore } from './history/history-store'
 import { MediaService } from './media-service'
 import { DownloadQueue } from './queue/download-queue'
 import { QueueService } from './queue/queue-service'
@@ -15,6 +16,7 @@ import { ffmpegLocation, ToolManager } from './tools/tool-manager'
 /** Long-lived main-process services, created once the app is ready. */
 export interface Services {
   settings: SettingsStore
+  history: HistoryStore
   tools: ToolManager
   engine: EngineService
   media: MediaService
@@ -30,6 +32,8 @@ export async function createServices(hooks: ServiceHooks): Promise<Services> {
   const userData = app.getPath('userData')
   const settings = new SettingsStore(join(userData, 'settings.json'))
   await settings.load()
+  const history = new HistoryStore(join(userData, 'history.json'))
+  await history.load()
 
   const target = currentTarget()
   // Packaged: electron-builder copies resources/bin/<target> to <resources>/bin.
@@ -46,7 +50,7 @@ export async function createServices(hooks: ServiceHooks): Promise<Services> {
     allowSystem: !app.isPackaged
   })
   const engine = new EngineService(tools, (message) => console.warn(`[engine] ${message}`))
-  const media = new MediaService(tools, spawnRunner)
+  const media = new MediaService(tools, spawnRunner, (id) => history.has(id))
 
   // Partial downloads from a previous session that crashed or was killed.
   const tempRoot = join(userData, 'partial')
@@ -60,9 +64,9 @@ export async function createServices(hooks: ServiceHooks): Promise<Services> {
     },
     tempRoot,
     maxConcurrent: () => settings.get().maxConcurrent,
-    archiveFile: () => undefined,
     onChange: hooks.onQueueChange,
     onFinished: (job) => {
+      if (job.status === 'completed') void history.addFromJob(job)
       // YouTube changed something: fetch a new engine, then retry what failed because of it.
       if (job.error?.code === 'ENGINE_OUTDATED' || job.error?.code === 'BOT_CHECK') {
         void engine.updateAfterEngineError().then((result) => {
@@ -74,10 +78,15 @@ export async function createServices(hooks: ServiceHooks): Promise<Services> {
       }
     }
   })
-  const queueService = new QueueService({ queue, settings: () => settings.get(), systemDownloads: app.getPath('downloads') })
+  const queueService = new QueueService({
+    queue,
+    settings: () => settings.get(),
+    systemDownloads: app.getPath('downloads'),
+    isDownloaded: (id) => history.has(id)
+  })
 
   // A higher limit takes effect at once.
   settings.onChange(() => queue.pump())
 
-  return { settings, tools, engine, media, queue, queueService }
+  return { settings, history, tools, engine, media, queue, queueService }
 }

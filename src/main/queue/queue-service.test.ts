@@ -117,6 +117,15 @@ describe('QueueService.add', () => {
   })
 })
 
+describe('QueueService.requeue', () => {
+  it('queues into the given folder with the given options', () => {
+    const { service, added } = setup()
+    const folder = resolve('/old/place')
+    service.requeue(item('aaaaaaaaaaa'), { ...DEFAULT_SETTINGS.defaults, kind: 'audio' }, folder)
+    expect(added[0]).toMatchObject({ outputDir: folder, options: { kind: 'audio' } })
+  })
+})
+
 describe('sanitizeItem', () => {
   it('keeps only safe fields', () => {
     expect(
