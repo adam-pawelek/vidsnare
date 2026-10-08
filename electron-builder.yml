@@ -27,9 +27,14 @@ win:
   target:
     - target: nsis
       arch: [x64]
-  icon: build/icon.png
+  # Multi-size icon (16–256 px) so Explorer shows a sharp icon on the
+  # downloaded installer and on the installed app. Made by scripts/make-ico.py.
+  icon: build/icon.ico
 
 nsis:
+  installerIcon: build/icon.ico
+  uninstallerIcon: build/icon.ico
+  installerHeaderIcon: build/icon.ico
   oneClick: false
   perMachine: false
   allowToChangeInstallationDirectory: true
