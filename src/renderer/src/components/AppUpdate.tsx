@@ -1,5 +1,5 @@
 import type { UpdateStatus } from '@shared/update'
-import { useI18n } from '../i18n'
+import { useI18n } from '../i18n-context'
 
 const invoke = (channel: 'update:check' | 'update:download' | 'update:install' | 'update:open-releases'): void =>
   void window.vidsnare.invoke(channel)

@@ -2,7 +2,7 @@ import { useState } from 'react'
 import type { HistoryItem } from '@shared/history'
 import { Thumbnail } from '../components/Thumbnail'
 import { useHistory } from '../hooks/useHistory'
-import { useI18n } from '../i18n'
+import { useI18n } from '../i18n-context'
 
 function formatLabel(item: HistoryItem): string {
   const ext = item.filePath.match(/\.([A-Za-z0-9]+)$/)?.[1]

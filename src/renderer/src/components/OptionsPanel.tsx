@@ -1,5 +1,5 @@
 import { AUDIO_FORMATS, VIDEO_CONTAINERS, VIDEO_QUALITIES, type DownloadOptions } from '@shared/download'
-import { useI18n } from '../i18n'
+import { useI18n } from '../i18n-context'
 import { SubtitleLanguages } from './SubtitleLanguages'
 
 interface Props {

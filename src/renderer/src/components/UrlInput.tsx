@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { parseYouTubeUrl } from '@shared/youtube-url'
-import { useI18n } from '../i18n'
+import { useI18n } from '../i18n-context'
 
 export function UrlInput({ onSubmit, busy }: { onSubmit: (url: string) => void; busy: boolean }): React.JSX.Element {
   const { t } = useI18n()

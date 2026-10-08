@@ -1,7 +1,8 @@
 // @vitest-environment jsdom
 import { render, screen } from '@testing-library/react'
 import { describe, expect, it } from 'vitest'
-import { I18nProvider, useI18n } from './i18n'
+import { I18nProvider } from './i18n'
+import { useI18n } from './i18n-context'
 
 function Probe(): React.JSX.Element {
   const { t, bytes } = useI18n()

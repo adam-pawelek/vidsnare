@@ -29,6 +29,7 @@ export const es: Messages = {
     selectAll: 'Seleccionar todo'
   },
   nav: {
+    changeLanguage: 'Cambiar idioma',
     download: 'Descargar',
     queue: 'Cola',
     history: 'Historial',

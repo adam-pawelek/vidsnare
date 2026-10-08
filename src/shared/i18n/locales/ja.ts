@@ -29,6 +29,7 @@ export const ja: Messages = {
     selectAll: 'すべて選択'
   },
   nav: {
+    changeLanguage: '言語を変更',
     download: 'ダウンロード',
     queue: 'キュー',
     history: '履歴',

@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import type { AppError } from '@shared/errors'
-import { useI18n } from '../i18n'
+import { useI18n } from '../i18n-context'
 
 export function ErrorNotice({ error, onRetry }: { error: AppError; onRetry?: () => void }): React.JSX.Element {
   const { t } = useI18n()

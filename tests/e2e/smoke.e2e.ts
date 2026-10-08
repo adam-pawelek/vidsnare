@@ -103,7 +103,7 @@ describe('VidSnare', () => {
   })
 
   it('switches language from the sidebar and remembers it', async () => {
-    await page.selectOption('nav select[aria-label="Language"]', 'pl')
+    await page.selectOption('nav .language-picker select', 'pl')
     await page.waitForSelector('nav >> text=Ustawienia')
     const saved = await page.evaluate(() => window.vidsnare.invoke('settings:get'))
     expect(saved.language).toBe('pl')

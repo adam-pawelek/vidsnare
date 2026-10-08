@@ -1,5 +1,5 @@
 import { useMemo } from 'react'
-import { useI18n } from '../i18n'
+import { useI18n } from '../i18n-context'
 
 /** Languages YouTube commonly has subtitles for; any code can still be typed in Settings. */
 export const COMMON_SUBTITLE_LANGUAGES = [

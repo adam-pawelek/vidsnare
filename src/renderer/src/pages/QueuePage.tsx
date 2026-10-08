@@ -1,6 +1,6 @@
 import { ACTIVE_STATUSES, FINISHED_STATUSES, type DownloadJob } from '@shared/queue'
 import { Thumbnail } from '../components/Thumbnail'
-import { useI18n } from '../i18n'
+import { useI18n } from '../i18n-context'
 
 function ProgressBar({ fraction }: { fraction: number | null }): React.JSX.Element {
   return (

@@ -29,6 +29,7 @@ export const ru: Messages = {
     selectAll: 'Выделить всё'
   },
   nav: {
+    changeLanguage: 'Сменить язык',
     download: 'Скачать',
     queue: 'Очередь',
     history: 'История',

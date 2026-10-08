@@ -144,14 +144,21 @@ input[type='radio'] {
 
 .language-picker {
   display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.language-label {
+  display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 5px;
+  font-size: 12px;
+  font-weight: 600;
   color: var(--muted);
 }
 
 .language-picker select {
-  flex: 1;
-  min-width: 0;
+  width: 100%;
   padding: 4px 6px;
 }
 

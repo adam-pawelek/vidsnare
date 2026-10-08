@@ -6,7 +6,7 @@ import { MAX_CONCURRENT_LIMIT, type Settings } from '@shared/settings'
 import { AppUpdateControls } from '../components/AppUpdate'
 import { OptionsPanel } from '../components/OptionsPanel'
 import { useUpdateStatus } from '../hooks/useUpdateStatus'
-import { useI18n } from '../i18n'
+import { useI18n } from '../i18n-context'
 
 const FIELDS = '{title} {id} {channel} {date} {index}'
 const EXAMPLE = { title: 'Example video', id: 'dQw4w9WgXcQ', channel: 'Channel', uploadDate: '20240115', playlistIndex: 3, playlistCount: 25 }

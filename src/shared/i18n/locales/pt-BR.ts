@@ -29,6 +29,7 @@ export const ptBR: Messages = {
     selectAll: 'Selecionar tudo'
   },
   nav: {
+    changeLanguage: 'Alterar idioma',
     download: 'Baixar',
     queue: 'Fila',
     history: 'Histórico',

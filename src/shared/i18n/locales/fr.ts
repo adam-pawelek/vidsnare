@@ -29,6 +29,7 @@ export const fr: Messages = {
     selectAll: 'Tout sélectionner'
   },
   nav: {
+    changeLanguage: 'Changer de langue',
     download: 'Télécharger',
     queue: 'File d’attente',
     history: 'Historique',

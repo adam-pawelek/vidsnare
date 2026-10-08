@@ -10,7 +10,7 @@ import { defaultSelection, PlaylistPicker } from '../components/PlaylistPicker'
 import { UrlInput } from '../components/UrlInput'
 import { VideoCard } from '../components/VideoCard'
 import { useLinkPreview } from '../hooks/useLinkPreview'
-import { useI18n } from '../i18n'
+import { useI18n } from '../i18n-context'
 
 function toItem(entry: VideoEntry): QueueItem {
   return {

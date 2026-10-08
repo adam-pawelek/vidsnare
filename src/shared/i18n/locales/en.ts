@@ -32,6 +32,7 @@ export const en = {
     selectAll: 'Select all'
   },
   nav: {
+    changeLanguage: 'Change language',
     download: 'Download',
     queue: 'Queue',
     history: 'History',

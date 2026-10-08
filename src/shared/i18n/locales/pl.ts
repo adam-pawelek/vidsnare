@@ -29,6 +29,7 @@ export const pl: Messages = {
     selectAll: 'Zaznacz wszystko'
   },
   nav: {
+    changeLanguage: 'Zmień język',
     download: 'Pobierz',
     queue: 'Kolejka',
     history: 'Historia',
