@@ -26,6 +26,15 @@ jobs:
     steps:
       - uses: actions/checkout@v5
       - uses: actions/configure-pages@v5
+      # Give the page's files a new address on every deploy, so browsers fetch
+      # the new version immediately instead of reusing a cached copy.
+      - name: Add version to file links
+        run: |
+          v="${GITHUB_SHA::8}"
+          sed -i "s#href=\"style.css\"#href=\"style.css?v=$v\"#; s#src=\"site.js\"#src=\"site.js?v=$v\"#" website/index.html
+          sed -i "s#from './strings.js'#from './strings.js?v=$v'#" website/site.js
+          grep -q "site.js?v=$v" website/index.html
+          grep -q "strings.js?v=$v" website/site.js
       - uses: actions/upload-pages-artifact@v4
         with:
           path: website
