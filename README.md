@@ -17,7 +17,7 @@ A desktop app for Windows and Linux that downloads videos and audio from YouTube
 
 ## Installing
 
-Download the latest release from the [releases page](https://github.com/OWNER/vidsnare/releases/latest):
+Download the latest release from the [releases page](https://github.com/adam-pawelek/vidsnare/releases/latest):
 
 | System | File | Updates |
 |---|---|---|
@@ -66,11 +66,11 @@ See [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) for how the app is put together
 
 ## Releasing
 
-1. **Once:** replace the `OWNER` placeholder with the GitHub account that hosts the public
-   repository in `electron-builder.yml` (`publish.owner`), `src/shared/release.ts`, and
-   `package.json` (`homepage`, `repository`). Until then, app self-update stays switched off.
-2. Bump `version` in `package.json` and commit.
-3. Tag and push: `git tag v0.2.0 && git push origin v0.2.0`.
+The release repository is `adam-pawelek/vidsnare`, set in `electron-builder.yml` (`publish`),
+`src/shared/release.ts` and `package.json`; a test keeps the first two in sync.
+
+1. Bump `version` in `package.json` and commit.
+2. Tag and push: `git tag v0.2.0 && git push origin v0.2.0`.
 
 The *Release* workflow builds the Windows installer and the Linux packages on their own
 runners and publishes them to a GitHub release, where installed copies find the update.

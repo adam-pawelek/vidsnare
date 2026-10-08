@@ -58,9 +58,8 @@ appImage:
 deb:
   artifactName: ${productName}_${version}_${arch}.${ext}
 
-# Replace OWNER with the GitHub account that hosts the public repository.
 publish:
   provider: github
-  owner: OWNER
+  owner: adam-pawelek
   repo: vidsnare
   releaseType: release

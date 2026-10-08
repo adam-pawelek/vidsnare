@@ -57,7 +57,7 @@ All state files live in the app's data folder (`~/.config/VidSnare` on Linux,
 
 | Topic | Decision |
 |---|---|
-| Distribution | Public, GitHub Releases (`OWNER/vidsnare` placeholder until the repo exists) |
+| Distribution | Public, GitHub Releases (`adam-pawelek/vidsnare`) |
 | Windows | NSIS installer, unsigned for now (signing can be added in CI later) |
 | Linux | AppImage (updates itself) + .deb (shows a notice when an update is out) |
 | Languages | en, pl, de, es, pt-BR, ru, ja, fr; follows the system language by default |

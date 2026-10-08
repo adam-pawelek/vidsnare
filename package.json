@@ -8,7 +8,7 @@
     "name": "VidSnare contributors",
     "email": "vidsnare@users.noreply.github.com"
   },
-  "homepage": "https://github.com/OWNER/vidsnare",
+  "homepage": "https://github.com/adam-pawelek/vidsnare",
   "type": "module",
   "main": "out/main/index.js",
   "scripts": {
@@ -58,7 +58,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/OWNER/vidsnare.git"
+    "url": "https://github.com/adam-pawelek/vidsnare.git"
   },
   "desktopName": "vidsnare.desktop"
 }
