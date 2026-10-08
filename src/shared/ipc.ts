@@ -12,14 +12,37 @@ export interface AppInfo {
   platform: 'win32' | 'linux' | 'darwin' | (string & {})
 }
 
+export type ToolSource = 'updated' | 'bundled' | 'system'
+
+export interface ToolStatus {
+  version: string
+  source: ToolSource
+}
+
+export interface EngineStatus {
+  ytdlp: ToolStatus | null
+  ffmpeg: ToolStatus | null
+  deno: ToolStatus | null
+  /** When we last asked GitHub for a new engine (ms since epoch). */
+  lastCheck: number | null
+}
+
+export type EngineUpdateResult =
+  | { status: 'updated'; version: string }
+  | { status: 'up-to-date'; version: string | null }
+  | { status: 'failed'; message: string }
+
 /** Request channels: channel name -> [argument tuple, resolved value]. */
 export interface InvokeMap {
   'app:get-info': [[], AppInfo]
+  'tools:get-status': [[], EngineStatus]
+  'tools:update-engine': [[], EngineUpdateResult]
 }
 
 /** Push channels from main to renderer: channel name -> payload. */
 export interface EventMap {
   'app:theme-changed': { dark: boolean }
+  'tools:update-progress': { fraction: number | null }
 }
 
 export type InvokeChannel = keyof InvokeMap
@@ -27,8 +50,8 @@ export type EventChannel = keyof EventMap
 export type InvokeArgs<C extends InvokeChannel> = InvokeMap[C][0]
 export type InvokeResult<C extends InvokeChannel> = InvokeMap[C][1]
 
-export const INVOKE_CHANNELS = ['app:get-info'] as const satisfies readonly InvokeChannel[]
-export const EVENT_CHANNELS = ['app:theme-changed'] as const satisfies readonly EventChannel[]
+export const INVOKE_CHANNELS = ['app:get-info', 'tools:get-status', 'tools:update-engine'] as const satisfies readonly InvokeChannel[]
+export const EVENT_CHANNELS = ['app:theme-changed', 'tools:update-progress'] as const satisfies readonly EventChannel[]
 
 export function isInvokeChannel(value: unknown): value is InvokeChannel {
   return typeof value === 'string' && (INVOKE_CHANNELS as readonly string[]).includes(value)
