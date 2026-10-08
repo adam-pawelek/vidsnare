@@ -13,7 +13,8 @@ function setup(settings = DEFAULT_SETTINGS) {
     'app:get-info': () => ({ name: 'VidSnare', version: '1.2.3', platform: 'linux' }),
     'settings:get': () => settings,
     'queue:list': () => [],
-    'queue:default-folder': () => '/home/u/Downloads'
+    'queue:default-folder': () => '/home/u/Downloads',
+    'tools:get-status': () => ({ ytdlp: null, ffmpeg: null, deno: null, lastCheck: null })
   })
   api.on.mockImplementation((channel: string, listener: (payload: unknown) => void) => {
     listeners.set(channel, listener)
@@ -42,6 +43,26 @@ describe('App', () => {
     setup({ ...DEFAULT_SETTINGS, language: 'de' })
     render(<App />)
     expect(await screen.findByRole('button', { name: 'Einstellungen' })).toBeInTheDocument()
+  })
+
+  it('applies a forced theme and follows the system otherwise', async () => {
+    setup({ ...DEFAULT_SETTINGS, theme: 'dark' })
+    const { unmount } = render(<App />)
+    await screen.findByText('v1.2.3')
+    expect(document.documentElement.dataset['theme']).toBe('dark')
+    unmount()
+    setup()
+    render(<App />)
+    await screen.findByText('v1.2.3')
+    expect(document.documentElement.dataset['theme']).toBeUndefined()
+  })
+
+  it('opens the page a notification asks for', async () => {
+    const { emit } = setup()
+    render(<App />)
+    await screen.findByText('v1.2.3')
+    emit('app:navigate', { page: 'queue' })
+    expect(screen.getByRole('button', { name: 'Queue' })).toHaveAttribute('aria-current', 'page')
   })
 
   it('shows how many downloads are active on the Queue tab', async () => {

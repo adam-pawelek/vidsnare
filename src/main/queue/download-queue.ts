@@ -5,7 +5,7 @@ import type { DownloadOptions } from '@shared/download'
 import type { AppError } from '@shared/errors'
 import { FINISHED_STATUSES, type DownloadJob, type QueueItem } from '@shared/queue'
 import { classifyError, classifySpawnError } from '../core/errors'
-import { filenameBudget, renderFilename } from '../core/filename'
+import { filenameBudget, renderFilename } from '@shared/filename'
 import { parseLine, ProgressTracker } from '../core/progress'
 import type { Runner } from '../core/runner'
 import { buildDownloadArgs, type ToolPaths } from '../core/ytdlp-args'
@@ -276,7 +276,7 @@ export class DownloadQueue {
 
   /** A file name in the output folder that neither exists nor is claimed by another job. */
   private async uniqueBase(job: DownloadJob, spec: NewJob, ext: string): Promise<string> {
-    const budget = filenameBudget(job.outputDir) - 4 // room for " (9)"
+    const budget = filenameBudget(job.outputDir, process.platform) - 4 // room for " (9)"
     const base = renderFilename(
       spec.filenameTemplate,
       {

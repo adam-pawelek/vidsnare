@@ -1,6 +1,12 @@
 import type { Messages } from '../types'
 
 export const de: Messages = {
+  app: {
+    quitTitle: 'Downloads laufen',
+    quitMessage: 'Beim Beenden werden laufende Downloads abgebrochen.',
+    quitAnyway: 'Trotzdem beenden',
+    keepDownloading: 'Weiter herunterladen'
+  },
   common: {
     ok: 'OK',
     cancel: 'Abbrechen',
@@ -144,6 +150,10 @@ export const de: Messages = {
     engineUpToDate: 'Die Engine ist aktuell.',
     engineUpdateFailed: 'Engine konnte nicht aktualisiert werden. Die bisherige Version wird weiter verwendet.',
     autoUpdateEngine: 'Engine automatisch aktuell halten',
+    useSystemFolder: 'Systemordner „Downloads“ verwenden',
+    templateInvalid: 'Der Dateiname muss den Titel oder die Video-ID enthalten.',
+    lastChecked: 'Zuletzt geprüft: {date}',
+    never: 'Nie',
     disclaimer:
       'Du bist dafür verantwortlich, die Nutzungsbedingungen von YouTube und das Urheberrecht einzuhalten. Lade nur Inhalte herunter, zu deren Download du berechtigt bist.',
     licenses: 'Lizenzen von Drittanbietern',
@@ -152,7 +162,8 @@ export const de: Messages = {
   notify: {
     finishedTitle: 'Download abgeschlossen',
     failedTitle: 'Download fehlgeschlagen',
-    allFinished: { one: '{count} Download abgeschlossen', other: '{count} Downloads abgeschlossen' }
+    allFinished: { one: '{count} Download abgeschlossen', other: '{count} Downloads abgeschlossen' },
+    failedMany: { one: '{count} Download fehlgeschlagen', other: '{count} Downloads fehlgeschlagen' }
   },
   errors: {
     PRIVATE_VIDEO: 'Dieses Video ist privat.',

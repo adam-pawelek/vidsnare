@@ -1,6 +1,12 @@
 import type { Messages } from '../types'
 
 export const es: Messages = {
+  app: {
+    quitTitle: 'Hay descargas en curso',
+    quitMessage: 'Al salir se cancelarán las descargas en curso.',
+    quitAnyway: 'Salir de todos modos',
+    keepDownloading: 'Seguir descargando'
+  },
   common: {
     ok: 'Aceptar',
     cancel: 'Cancelar',
@@ -150,6 +156,10 @@ export const es: Messages = {
     engineUpToDate: 'El motor está actualizado.',
     engineUpdateFailed: 'No se pudo actualizar el motor. Se sigue usando la versión actual.',
     autoUpdateEngine: 'Mantener el motor actualizado automáticamente',
+    useSystemFolder: 'Usar la carpeta Descargas del sistema',
+    templateInvalid: 'El nombre de archivo debe incluir el título o el ID del vídeo.',
+    lastChecked: 'Última comprobación: {date}',
+    never: 'Nunca',
     disclaimer:
       'Eres responsable de cumplir las Condiciones de servicio de YouTube y las leyes de derechos de autor. Descarga solo contenido que tengas derecho a descargar.',
     licenses: 'Licencias de terceros',
@@ -162,6 +172,11 @@ export const es: Messages = {
       one: '{count} descarga terminada',
       many: '{count} de descargas terminadas',
       other: '{count} descargas terminadas'
+    },
+    failedMany: {
+      one: '{count} descarga falló',
+      many: '{count} de descargas fallaron',
+      other: '{count} descargas fallaron'
     }
   },
   errors: {

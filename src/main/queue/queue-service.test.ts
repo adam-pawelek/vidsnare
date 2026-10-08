@@ -60,6 +60,14 @@ describe('QueueService.add', () => {
     expect(added[1]!.outputDir).toBe(picked)
   })
 
+  it('reports which folders were approved', () => {
+    const { service } = setup()
+    expect(service.isApproved(resolve('/mnt/usb'))).toBe(false)
+    service.approveDirectory(resolve('/mnt/usb'))
+    expect(service.isApproved(resolve('/mnt/usb'))).toBe(true)
+    expect(service.isApproved('relative')).toBe(false)
+  })
+
   it('ignores relative folders', () => {
     const { service, added } = setup()
     service.add(request({ outputDir: '../../etc' }))

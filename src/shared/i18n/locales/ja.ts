@@ -1,6 +1,12 @@
 import type { Messages } from '../types'
 
 export const ja: Messages = {
+  app: {
+    quitTitle: 'ダウンロード中です',
+    quitMessage: '終了すると、実行中のダウンロードはキャンセルされます。',
+    quitAnyway: '終了する',
+    keepDownloading: 'ダウンロードを続ける'
+  },
   common: {
     ok: 'OK',
     cancel: 'キャンセル',
@@ -138,6 +144,10 @@ export const ja: Messages = {
     engineUpToDate: 'エンジンは最新です。',
     engineUpdateFailed: 'エンジンを更新できませんでした。現在のバージョンを引き続き使用します。',
     autoUpdateEngine: 'エンジンを自動で最新に保つ',
+    useSystemFolder: 'システムのダウンロードフォルダーを使う',
+    templateInvalid: 'ファイル名にはタイトルまたは動画 ID を含める必要があります。',
+    lastChecked: '最終確認: {date}',
+    never: 'なし',
     disclaimer:
       'YouTube の利用規約と著作権法を守る責任はユーザーにあります。ダウンロードする権利のあるコンテンツのみをダウンロードしてください。',
     licenses: 'サードパーティのライセンス',
@@ -146,7 +156,8 @@ export const ja: Messages = {
   notify: {
     finishedTitle: 'ダウンロード完了',
     failedTitle: 'ダウンロード失敗',
-    allFinished: { other: '{count} 件のダウンロードが完了しました' }
+    allFinished: { other: '{count} 件のダウンロードが完了しました' },
+    failedMany: { other: '{count} 件のダウンロードに失敗しました' }
   },
   errors: {
     PRIVATE_VIDEO: 'この動画は非公開です。',

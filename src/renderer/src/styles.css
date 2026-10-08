@@ -711,3 +711,65 @@ select {
   border-radius: 6px;
   background: var(--surface);
 }
+
+/* Settings */
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 16px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--surface);
+}
+
+.card .options {
+  padding: 0;
+  border: 0;
+}
+
+.setting {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.help {
+  margin: 0;
+  font-size: 12px;
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 16px;
+}
+
+.text-input {
+  padding: 7px 10px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--surface);
+  font-family: ui-monospace, 'Cascadia Mono', 'DejaVu Sans Mono', monospace;
+}
+
+.text-input[aria-invalid='true'] {
+  border-color: var(--danger);
+}
+
+select.narrow {
+  width: 5em;
+}
+
+.error-text {
+  color: var(--danger);
+}
+
+.ok-text {
+  color: var(--ok);
+}
+
+a {
+  color: var(--accent);
+}

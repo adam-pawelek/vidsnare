@@ -1,6 +1,12 @@
 import type { Messages } from '../types'
 
 export const fr: Messages = {
+  app: {
+    quitTitle: 'Téléchargements en cours',
+    quitMessage: 'Quitter annulera les téléchargements en cours.',
+    quitAnyway: 'Quitter quand même',
+    keepDownloading: 'Continuer à télécharger'
+  },
   common: {
     ok: 'OK',
     cancel: 'Annuler',
@@ -150,6 +156,10 @@ export const fr: Messages = {
     engineUpToDate: 'Le moteur est à jour.',
     engineUpdateFailed: 'Impossible de mettre à jour le moteur. La version actuelle reste utilisée.',
     autoUpdateEngine: 'Maintenir le moteur à jour automatiquement',
+    useSystemFolder: 'Utiliser le dossier Téléchargements du système',
+    templateInvalid: 'Le nom de fichier doit contenir le titre ou l’identifiant de la vidéo.',
+    lastChecked: 'Dernière vérification : {date}',
+    never: 'Jamais',
     disclaimer:
       'Vous êtes responsable du respect des Conditions d’utilisation de YouTube et du droit d’auteur. Ne téléchargez que des contenus que vous avez le droit de télécharger.',
     licenses: 'Licences tierces',
@@ -162,6 +172,11 @@ export const fr: Messages = {
       one: '{count} téléchargement terminé',
       many: '{count} de téléchargements terminés',
       other: '{count} téléchargements terminés'
+    },
+    failedMany: {
+      one: '{count} téléchargement a échoué',
+      many: '{count} de téléchargements ont échoué',
+      other: '{count} téléchargements ont échoué'
     }
   },
   errors: {

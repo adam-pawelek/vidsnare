@@ -1,6 +1,12 @@
 import type { Messages } from '../types'
 
 export const ru: Messages = {
+  app: {
+    quitTitle: 'Идут загрузки',
+    quitMessage: 'При выходе незавершённые загрузки будут отменены.',
+    quitAnyway: 'Всё равно выйти',
+    keepDownloading: 'Продолжить загрузку'
+  },
   common: {
     ok: 'ОК',
     cancel: 'Отмена',
@@ -153,6 +159,10 @@ export const ru: Messages = {
     engineUpToDate: 'Движок обновлён до последней версии.',
     engineUpdateFailed: 'Не удалось обновить движок. Используется текущая версия.',
     autoUpdateEngine: 'Автоматически обновлять движок',
+    useSystemFolder: 'Использовать системную папку «Загрузки»',
+    templateInvalid: 'Имя файла должно содержать название или идентификатор видео.',
+    lastChecked: 'Последняя проверка: {date}',
+    never: 'Никогда',
     disclaimer:
       'Вы несёте ответственность за соблюдение Условий использования YouTube и авторского права. Скачивайте только то, на что у вас есть права.',
     licenses: 'Лицензии сторонних компонентов',
@@ -166,6 +176,12 @@ export const ru: Messages = {
       few: 'Завершены {count} загрузки',
       many: 'Завершено {count} загрузок',
       other: 'Завершено {count} загрузки'
+    },
+    failedMany: {
+      one: 'Не удалась {count} загрузка',
+      few: 'Не удались {count} загрузки',
+      many: 'Не удалось {count} загрузок',
+      other: 'Не удалось {count} загрузки'
     }
   },
   errors: {

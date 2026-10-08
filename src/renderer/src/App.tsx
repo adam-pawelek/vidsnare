@@ -7,6 +7,7 @@ import { useSettings } from './hooks/useSettings'
 import { I18nProvider, useI18n } from './i18n'
 import { DownloadPage } from './pages/DownloadPage'
 import { HistoryPage } from './pages/HistoryPage'
+import { SettingsPage } from './pages/SettingsPage'
 import { QueuePage } from './pages/QueuePage'
 
 type Page = 'download' | 'queue' | 'history' | 'settings'
@@ -17,9 +18,12 @@ const PAGES: { id: Page; label: MessageKey }[] = [
   { id: 'settings', label: 'nav.settings' }
 ]
 
-function Shell({ settings }: { settings: ReturnType<typeof useSettings>['settings'] }): React.JSX.Element {
+function Shell({ settings, update }: ReturnType<typeof useSettings>): React.JSX.Element {
   const { t } = useI18n()
   const [page, setPage] = useState<Page>('download')
+
+  // Clicking a notification opens the queue.
+  useEffect(() => window.vidsnare.on('app:navigate', ({ page }) => setPage(page)), [])
   const [info, setInfo] = useState<AppInfo | null>(null)
   const jobs = useQueue()
   const active = jobs.filter((j) => ACTIVE_STATUSES.includes(j.status) || j.status === 'queued').length
@@ -57,19 +61,27 @@ function Shell({ settings }: { settings: ReturnType<typeof useSettings>['setting
         </div>
         {page === 'queue' && <QueuePage jobs={jobs} />}
         {page === 'history' && <HistoryPage onQueued={() => setPage('queue')} />}
-        {page === 'settings' && <h1>{t('nav.settings')}</h1>}
+        {page === 'settings' && settings && <SettingsPage settings={settings} update={update} />}
       </main>
     </div>
   )
 }
 
 export function App(): React.JSX.Element {
-  const { settings } = useSettings()
-  const language = settings?.language ?? 'system'
+  const store = useSettings()
+  const language = store.settings?.language ?? 'system'
   const locale = language === 'system' ? resolveLocale(navigator.languages) : language
+  const theme = store.settings?.theme ?? 'system'
+
+  // "system" leaves the colours to prefers-color-scheme; light/dark force them.
+  useEffect(() => {
+    if (theme === 'system') delete document.documentElement.dataset['theme']
+    else document.documentElement.dataset['theme'] = theme
+  }, [theme])
+
   return (
     <I18nProvider locale={locale}>
-      <Shell settings={settings} />
+      <Shell {...store} />
     </I18nProvider>
   )
 }

@@ -2,7 +2,7 @@ import { isAbsolute, join, resolve } from 'node:path'
 import type { DownloadOptions } from '@shared/download'
 import type { AddDownloadsRequest, AddDownloadsResult, QueueItem } from '@shared/queue'
 import { normalizeDownloadOptions, type Settings } from '@shared/settings'
-import { sanitizeFilename } from '../core/filename'
+import { sanitizeFilename } from '@shared/filename'
 import type { DownloadQueue } from './download-queue'
 
 const VIDEO_ID = /^[A-Za-z0-9_-]{11}$/
@@ -55,6 +55,10 @@ export class QueueService {
 
   approveDirectory(dir: string): void {
     this.approvedDirs.add(resolve(dir))
+  }
+
+  isApproved(dir: string): boolean {
+    return isAbsolute(dir) && this.approvedDirs.has(resolve(dir))
   }
 
   defaultDirectory(): string {

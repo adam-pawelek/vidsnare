@@ -5,8 +5,9 @@ import { SubtitleLanguages } from './SubtitleLanguages'
 interface Props {
   options: DownloadOptions
   onChange: (options: DownloadOptions) => void
-  folder: string
-  onChooseFolder: () => void
+  /** Omit to hide the folder row (e.g. when editing defaults in Settings). */
+  folder?: string
+  onChooseFolder?: () => void
 }
 
 export function OptionsPanel({ options, onChange, folder, onChooseFolder }: Props): React.JSX.Element {
@@ -107,6 +108,7 @@ export function OptionsPanel({ options, onChange, folder, onChooseFolder }: Prop
         )}
       </div>
 
+      {folder !== undefined && onChooseFolder && (
       <div className="field field-wide">
         <span className="field-label">{t('options.saveTo')}</span>
         <div className="folder">
@@ -118,6 +120,7 @@ export function OptionsPanel({ options, onChange, folder, onChooseFolder }: Prop
           </button>
         </div>
       </div>
+      )}
     </section>
   )
 }

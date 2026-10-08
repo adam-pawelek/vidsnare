@@ -1,4 +1,5 @@
 import { app, net } from 'electron'
+import type { DownloadJob } from '@shared/queue'
 import { rm } from 'node:fs/promises'
 import { join } from 'node:path'
 import { spawnRunner } from './core/runner'
@@ -26,6 +27,7 @@ export interface Services {
 
 export interface ServiceHooks {
   onQueueChange: () => void
+  onJobFinished: (job: DownloadJob) => void
 }
 
 export async function createServices(hooks: ServiceHooks): Promise<Services> {
@@ -67,6 +69,7 @@ export async function createServices(hooks: ServiceHooks): Promise<Services> {
     onChange: hooks.onQueueChange,
     onFinished: (job) => {
       if (job.status === 'completed') void history.addFromJob(job)
+      hooks.onJobFinished(job)
       // YouTube changed something: fetch a new engine, then retry what failed because of it.
       if (job.error?.code === 'ENGINE_OUTDATED' || job.error?.code === 'BOT_CHECK') {
         void engine.updateAfterEngineError().then((result) => {

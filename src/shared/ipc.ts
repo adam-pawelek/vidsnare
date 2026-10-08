@@ -73,6 +73,8 @@ export interface EventMap {
   'queue:changed': DownloadJob[]
   'settings:changed': Settings
   'history:changed': null
+  /** Ask the UI to show a page (e.g. after clicking a notification). */
+  'app:navigate': { page: 'download' | 'queue' | 'history' | 'settings' }
 }
 
 export type InvokeChannel = keyof InvokeMap
@@ -106,7 +108,7 @@ export const INVOKE_CHANNELS = [
   'history:show-in-folder',
   'history:download-again'
 ] as const satisfies readonly InvokeChannel[]
-export const EVENT_CHANNELS = ['app:theme-changed', 'tools:update-progress', 'queue:changed', 'settings:changed', 'history:changed'] as const satisfies readonly EventChannel[]
+export const EVENT_CHANNELS = ['app:theme-changed', 'tools:update-progress', 'queue:changed', 'settings:changed', 'history:changed', 'app:navigate'] as const satisfies readonly EventChannel[]
 
 export function isInvokeChannel(value: unknown): value is InvokeChannel {
   return typeof value === 'string' && (INVOKE_CHANNELS as readonly string[]).includes(value)

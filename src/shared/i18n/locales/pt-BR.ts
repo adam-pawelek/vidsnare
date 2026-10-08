@@ -1,6 +1,12 @@
 import type { Messages } from '../types'
 
 export const ptBR: Messages = {
+  app: {
+    quitTitle: 'Downloads em andamento',
+    quitMessage: 'Sair vai cancelar os downloads em andamento.',
+    quitAnyway: 'Sair mesmo assim',
+    keepDownloading: 'Continuar baixando'
+  },
   common: {
     ok: 'OK',
     cancel: 'Cancelar',
@@ -146,6 +152,10 @@ export const ptBR: Messages = {
     engineUpToDate: 'O mecanismo está atualizado.',
     engineUpdateFailed: 'Não foi possível atualizar o mecanismo. A versão atual continua em uso.',
     autoUpdateEngine: 'Manter o mecanismo atualizado automaticamente',
+    useSystemFolder: 'Usar a pasta Downloads do sistema',
+    templateInvalid: 'O nome do arquivo deve incluir o título ou o ID do vídeo.',
+    lastChecked: 'Última verificação: {date}',
+    never: 'Nunca',
     disclaimer:
       'Você é responsável por cumprir os Termos de Serviço do YouTube e as leis de direitos autorais. Baixe apenas conteúdo que você tem o direito de baixar.',
     licenses: 'Licenças de terceiros',
@@ -158,6 +168,11 @@ export const ptBR: Messages = {
       one: '{count} download concluído',
       many: '{count} de downloads concluídos',
       other: '{count} downloads concluídos'
+    },
+    failedMany: {
+      one: '{count} download falhou',
+      many: '{count} de downloads falharam',
+      other: '{count} downloads falharam'
     }
   },
   errors: {

@@ -1,6 +1,12 @@
 import type { Messages } from '../types'
 
 export const pl: Messages = {
+  app: {
+    quitTitle: 'Trwa pobieranie',
+    quitMessage: 'Zamknięcie programu anuluje trwające pobierania.',
+    quitAnyway: 'Zamknij mimo to',
+    keepDownloading: 'Kontynuuj pobieranie'
+  },
   common: {
     ok: 'OK',
     cancel: 'Anuluj',
@@ -153,6 +159,10 @@ export const pl: Messages = {
     engineUpToDate: 'Silnik jest aktualny.',
     engineUpdateFailed: 'Nie udało się zaktualizować silnika. Nadal używana jest obecna wersja.',
     autoUpdateEngine: 'Automatycznie aktualizuj silnik',
+    useSystemFolder: 'Używaj systemowego folderu Pobrane',
+    templateInvalid: 'Nazwa pliku musi zawierać tytuł lub identyfikator filmu.',
+    lastChecked: 'Ostatnie sprawdzenie: {date}',
+    never: 'Nigdy',
     disclaimer:
       'Odpowiadasz za przestrzeganie Warunków korzystania z YouTube i prawa autorskiego. Pobieraj tylko treści, do których masz prawo.',
     licenses: 'Licencje zewnętrzne',
@@ -166,6 +176,12 @@ export const pl: Messages = {
       few: 'Zakończono {count} pobierania',
       many: 'Zakończono {count} pobierań',
       other: 'Zakończono {count} pobierania'
+    },
+    failedMany: {
+      one: '{count} pobieranie nie powiodło się',
+      few: '{count} pobierania nie powiodły się',
+      many: '{count} pobierań nie powiodło się',
+      other: '{count} pobierania nie powiodło się'
     }
   },
   errors: {

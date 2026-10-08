@@ -138,7 +138,7 @@ export function renderFilename(
  * don't opt into long paths fail past 260 characters, so leave room for the
  * extension and yt-dlp's temporary suffixes (".f137.webm.part", ".en.srt").
  */
-export function filenameBudget(directory: string, platform: string = process.platform): number {
+export function filenameBudget(directory: string, platform: string): number {
   if (platform !== 'win32') return DEFAULT_MAX_BYTES
   const reserved = 1 /* separator */ + 24 /* extension and temp suffixes */
   return Math.max(40, Math.min(DEFAULT_MAX_BYTES, 259 - directory.length - reserved))

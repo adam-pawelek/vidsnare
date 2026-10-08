@@ -1,5 +1,5 @@
 import type { DownloadOptions } from '@shared/download'
-import { escapeOutputTemplate } from './filename'
+import { escapeOutputTemplate } from '@shared/filename'
 
 /** Markers that let us tell our structured output apart from yt-dlp's own logging. */
 export const MARK = {

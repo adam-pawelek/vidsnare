@@ -5,7 +5,10 @@ import {
   type DownloadOptions,
   type SubtitleOptions
 } from './download'
+import { DEFAULT_FILENAME_TEMPLATE } from './filename'
 import { isLocale, type Locale } from './i18n'
+
+export { DEFAULT_FILENAME_TEMPLATE }
 
 export type ThemeSetting = 'system' | 'light' | 'dark'
 export type LanguageSetting = Locale | 'system'
@@ -26,7 +29,6 @@ export interface Settings {
 }
 
 export const MAX_CONCURRENT_LIMIT = 8
-export const DEFAULT_FILENAME_TEMPLATE = '{title} [{id}]'
 
 export const DEFAULT_SETTINGS: Settings = {
   downloadDir: '',

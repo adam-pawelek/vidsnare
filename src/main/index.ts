@@ -1,7 +1,10 @@
-import { app, BrowserWindow, clipboard, dialog, nativeTheme, shell } from 'electron'
+import { app, BrowserWindow, clipboard, dialog, nativeTheme, Notification, shell } from 'electron'
 import { dirname } from 'node:path'
+import { createTranslator, resolveLocale, type Translate } from '@shared/i18n'
 import type { EventChannel, EventMap } from '@shared/ipc'
+import type { Settings } from '@shared/settings'
 import { handle } from './ipc'
+import { Notifier } from './notifier'
 import { createServices, type Services } from './services'
 import { throttle } from './throttle'
 import { createMainWindow, isTrustedFrameUrl } from './window'
@@ -10,6 +13,21 @@ const trusted = (event: Electron.IpcMainInvokeEvent): boolean => isTrustedFrameU
 
 function broadcast<C extends EventChannel>(channel: C, payload: EventMap[C]): void {
   for (const win of BrowserWindow.getAllWindows()) win.webContents.send(channel, payload)
+}
+
+/** Translator for text the main process shows itself (notifications, dialogs). */
+function translatorFor(settings: Settings): Translate {
+  const locale = settings.language === 'system' ? resolveLocale(app.getPreferredSystemLanguages()) : settings.language
+  return createTranslator(locale)
+}
+
+function showWindow(page?: EventMap['app:navigate']['page']): void {
+  const win = BrowserWindow.getAllWindows()[0]
+  if (!win) return
+  if (win.isMinimized()) win.restore()
+  win.show()
+  win.focus()
+  if (page) win.webContents.send('app:navigate', { page })
 }
 
 function registerIpc(services: Services): void {
@@ -28,7 +46,14 @@ function registerIpc(services: Services): void {
   handle('tools:update-engine', trusted, () => engine.update((fraction) => broadcast('tools:update-progress', { fraction })))
 
   handle('settings:get', trusted, () => settings.get())
-  handle('settings:update', trusted, (patch) => settings.update(patch))
+  handle('settings:update', trusted, (patch) => {
+    // A download folder is only accepted if the user picked it in the folder dialog.
+    const p = patch && typeof patch === 'object' ? { ...patch } : {}
+    if (typeof p.downloadDir === 'string' && p.downloadDir && !queueService.isApproved(p.downloadDir)) {
+      delete p.downloadDir
+    }
+    return settings.update(p)
+  })
 
   handle('dialog:choose-folder', trusted, async (current) => {
     const win = BrowserWindow.getFocusedWindow() ?? BrowserWindow.getAllWindows()[0]
@@ -102,33 +127,67 @@ if (process.env['VIDSNARE_USER_DATA']) app.setPath('userData', process.env['VIDS
 if (!app.requestSingleInstanceLock()) {
   app.quit()
 } else {
-  app.on('second-instance', () => {
-    const win = BrowserWindow.getAllWindows()[0]
-    if (win) {
-      if (win.isMinimized()) win.restore()
-      win.focus()
-    }
-  })
+  app.on('second-instance', () => showWindow())
 
   let services: Services | null = null
+  let quitConfirmed = false
   // The queue changes many times a second while downloading; the UI needs ~4 updates/s.
   const pushQueue = throttle(() => {
     if (services) broadcast('queue:changed', services.queue.list())
   }, 250)
 
+  const notifier = new Notifier({
+    enabled: () => Boolean(services?.settings.get().notifications) && Notification.isSupported(),
+    translate: () => translatorFor(services!.settings.get()),
+    show: (title, body) => {
+      const notification = new Notification({ title, body })
+      notification.on('click', () => showWindow('queue'))
+      notification.show()
+    }
+  })
+
+  /** Asks before closing while downloads are running. */
+  function guardClose(win: BrowserWindow): void {
+    win.on('close', (event) => {
+      if (quitConfirmed || !services?.queue.hasUnfinished()) return
+      event.preventDefault()
+      const t = translatorFor(services.settings.get())
+      const choice = dialog.showMessageBoxSync(win, {
+        type: 'question',
+        title: t('app.quitTitle'),
+        message: t('app.quitTitle'),
+        detail: t('app.quitMessage'),
+        buttons: [t('app.keepDownloading'), t('app.quitAnyway')],
+        defaultId: 0,
+        cancelId: 0,
+        noLink: true
+      })
+      if (choice === 1) {
+        quitConfirmed = true
+        app.quit()
+      }
+    })
+  }
+
   app.whenReady().then(async () => {
     app.setAppUserModelId('com.vidsnare.app')
-    services = await createServices({ onQueueChange: pushQueue })
+    services = await createServices({ onQueueChange: pushQueue, onJobFinished: (job) => notifier.jobFinished(job) })
     registerIpc(services)
-    services.settings.onChange((s) => broadcast('settings:changed', s))
+
+    // Native parts (dialogs, title bar) and the page's prefers-color-scheme follow the theme setting.
+    nativeTheme.themeSource = services.settings.get().theme
+    services.settings.onChange((s) => {
+      nativeTheme.themeSource = s.theme
+      broadcast('settings:changed', s)
+    })
     services.history.onChange(() => broadcast('history:changed', null))
-    createMainWindow()
+    guardClose(createMainWindow())
 
     if (services.settings.get().autoUpdateEngine) void services.engine.updateIfDue()
 
     nativeTheme.on('updated', () => broadcast('app:theme-changed', { dark: nativeTheme.shouldUseDarkColors }))
     app.on('activate', () => {
-      if (BrowserWindow.getAllWindows().length === 0) createMainWindow()
+      if (BrowserWindow.getAllWindows().length === 0) guardClose(createMainWindow())
     })
   })
 

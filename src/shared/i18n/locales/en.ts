@@ -4,6 +4,12 @@
  * the `count` variable using the language's plural rules.
  */
 export const en = {
+  app: {
+    quitTitle: 'Downloads in progress',
+    quitMessage: 'Quitting will cancel the downloads that are still running.',
+    quitAnyway: 'Quit anyway',
+    keepDownloading: 'Keep downloading'
+  },
   common: {
     ok: 'OK',
     cancel: 'Cancel',
@@ -144,6 +150,10 @@ export const en = {
     engineUpToDate: 'The engine is up to date.',
     engineUpdateFailed: 'Could not update the engine. The current version is still used.',
     autoUpdateEngine: 'Keep the engine up to date automatically',
+    useSystemFolder: 'Use the system Downloads folder',
+    templateInvalid: 'The file name must include the title or the video ID.',
+    lastChecked: 'Last checked: {date}',
+    never: 'Never',
     disclaimer:
       "You are responsible for complying with YouTube's Terms of Service and copyright law. Only download content you have the right to download.",
     licenses: 'Third-party licenses',
@@ -152,7 +162,8 @@ export const en = {
   notify: {
     finishedTitle: 'Download finished',
     failedTitle: 'Download failed',
-    allFinished: { one: '{count} download finished', other: '{count} downloads finished' }
+    allFinished: { one: '{count} download finished', other: '{count} downloads finished' },
+    failedMany: { one: '{count} download failed', other: '{count} downloads failed' }
   },
   errors: {
     PRIVATE_VIDEO: 'This video is private.',
