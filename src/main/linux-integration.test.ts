@@ -1,6 +1,7 @@
 import { mkdir, mkdtemp, readFile, rm, writeFile } from 'node:fs/promises'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
+import { pathToFileURL } from 'node:url'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { desktopEntry, integrateLinux, quoteExec, systemEnv } from './linux-integration'
 
@@ -36,7 +37,7 @@ describe('integrateLinux', () => {
       ['VidSnare-x86_64.AppImage', 'VidSnare_amd64 (1).deb', 'VidSnare_amd64.deb'].map((n) => join(downloads, n)).sort()
     )
     const [, args] = run.mock.calls[0]!
-    expect(args).toEqual(expect.arrayContaining(['metadata::custom-icon', `file://${join(home, '.local/share/vidsnare/icon.png')}`]))
+    expect(args).toEqual(expect.arrayContaining(['metadata::custom-icon', pathToFileURL(join(home, '.local/share/vidsnare/icon.png')).href]))
   })
 
   it('keeps a stable copy of the icon', async () => {
@@ -49,7 +50,8 @@ describe('integrateLinux', () => {
     const run = vi.fn(async (_command: string, _args: string[]) => true)
     await integrateLinux({ home, downloadsDir: downloads, resourcesDir: resources, appImage, version: '0.1.1', run })
     const entry = await readFile(join(home, '.local/share/applications/vidsnare.desktop'), 'utf8')
-    expect(entry).toContain(`Exec="${appImage}" %U`)
+    // quoteExec escapes backslashes, so compare through it (paths use \ on Windows test runners).
+    expect(entry).toContain(`Exec=${quoteExec(appImage)} %U`)
     expect(entry).toContain(`Icon=${join(home, '.local/share/vidsnare/icon.png')}`)
     expect(gioCalls(run)).toContain(appImage)
   })

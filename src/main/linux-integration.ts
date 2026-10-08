@@ -1,6 +1,7 @@
 import { execFile } from 'node:child_process'
 import { copyFile, mkdir, readdir, readFile, writeFile } from 'node:fs/promises'
 import { join } from 'node:path'
+import { pathToFileURL } from 'node:url'
 
 /**
  * Linux desktop integration, done once at startup:
@@ -91,7 +92,7 @@ export async function integrateLinux(deps: LinuxIntegrationDeps): Promise<void> 
   } catch {
     return // no shipped icon (development build): nothing to integrate
   }
-  const iconUri = `file://${icon.split('/').map(encodeURIComponent).join('/')}`
+  const iconUri = pathToFileURL(icon).href
   const setFileIcon = (path: string): Promise<boolean> => run('gio', ['set', path, 'metadata::custom-icon', iconUri])
 
   if (deps.appImage) {
