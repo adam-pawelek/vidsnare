@@ -1,4 +1,5 @@
-import { BrowserWindow, Menu, nativeTheme, session, shell } from 'electron'
+import { app, BrowserWindow, Menu, nativeTheme, session, shell } from 'electron'
+import { existsSync } from 'node:fs'
 import type { Translate } from '@shared/i18n'
 import { contextMenuTemplate } from './context-menu'
 import { join } from 'node:path'
@@ -24,6 +25,15 @@ function installCsp(): void {
   session.defaultSession.setPermissionRequestHandler((_wc, _permission, callback) => callback(false))
 }
 
+/**
+ * The window/taskbar icon. Installers also embed it, but Linux window managers
+ * and development runs only show it when the window names it explicitly.
+ */
+function windowIcon(): string | undefined {
+  const path = app.isPackaged ? join(process.resourcesPath, 'icon.png') : join(app.getAppPath(), 'build', 'icon.png')
+  return existsSync(path) ? path : undefined
+}
+
 export function createMainWindow(translate: () => Translate): BrowserWindow {
   installCsp()
 
@@ -34,6 +44,7 @@ export function createMainWindow(translate: () => Translate): BrowserWindow {
     minHeight: 520,
     show: false,
     title: 'VidSnare',
+    icon: windowIcon(),
     autoHideMenuBar: true,
     backgroundColor: nativeTheme.shouldUseDarkColors ? '#16181d' : '#f7f8fa',
     webPreferences: createWebPreferences(join(__dirname, '../preload/index.cjs'))

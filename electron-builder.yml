@@ -20,6 +20,8 @@ extraResources:
     to: THIRD_PARTY.md
   - from: LICENSE
     to: LICENSE
+  - from: build/icon.png
+    to: icon.png
 
 win:
   target:
