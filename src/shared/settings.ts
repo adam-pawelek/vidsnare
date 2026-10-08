@@ -5,10 +5,7 @@ import {
   type DownloadOptions,
   type SubtitleOptions
 } from './download'
-import { DEFAULT_FILENAME_TEMPLATE } from './filename'
 import { isLocale, type Locale } from './i18n'
-
-export { DEFAULT_FILENAME_TEMPLATE }
 
 export type ThemeSetting = 'system' | 'light' | 'dark'
 export type LanguageSetting = Locale | 'system'
@@ -19,7 +16,6 @@ export interface Settings {
   maxConcurrent: number
   skipDownloaded: boolean
   playlistSubfolder: boolean
-  filenameTemplate: string
   notifications: boolean
   language: LanguageSetting
   theme: ThemeSetting
@@ -33,7 +29,6 @@ export const DEFAULT_SETTINGS: Settings = {
   maxConcurrent: 3,
   skipDownloaded: true,
   playlistSubfolder: true,
-  filenameTemplate: DEFAULT_FILENAME_TEMPLATE,
   notifications: true,
   language: 'system',
   theme: 'system',
@@ -88,7 +83,6 @@ export function normalizeDownloadOptions(raw: unknown, fallback: DownloadOptions
 export function normalizeSettings(raw: unknown, base: Settings = DEFAULT_SETTINGS): Settings {
   const s = obj(raw)
   const concurrent = Number(s['maxConcurrent'])
-  const template = typeof s['filenameTemplate'] === 'string' ? s['filenameTemplate'].trim() : ''
   return {
     downloadDir: typeof s['downloadDir'] === 'string' ? s['downloadDir'] : base.downloadDir,
     maxConcurrent: Number.isInteger(concurrent)
@@ -96,9 +90,6 @@ export function normalizeSettings(raw: unknown, base: Settings = DEFAULT_SETTING
       : base.maxConcurrent,
     skipDownloaded: bool(s['skipDownloaded'], base.skipDownloaded),
     playlistSubfolder: bool(s['playlistSubfolder'], base.playlistSubfolder),
-    // A template must name the title or the ID, or every file would get the same name.
-    filenameTemplate:
-      template && /\{(title|id)\}/.test(template) && template.length <= 200 ? template : base.filenameTemplate,
     notifications: bool(s['notifications'], base.notifications),
     language: s['language'] === 'system' || isLocale(s['language']) ? (s['language'] as LanguageSetting) : base.language,
     theme: oneOf(s['theme'], ['system', 'light', 'dark'] as const, base.theme),

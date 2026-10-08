@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react'
-import { renderFilename } from '@shared/filename'
 import type { EngineStatus } from '@shared/ipc'
 import { REPO_URL as SOURCE_URL } from '@shared/release'
 import { MAX_CONCURRENT_LIMIT, type Settings } from '@shared/settings'
@@ -8,8 +7,6 @@ import { OptionsPanel } from '../components/OptionsPanel'
 import { useUpdateStatus } from '../hooks/useUpdateStatus'
 import { useI18n } from '../i18n-context'
 
-const FIELDS = '{title} {id} {channel} {date} {index}'
-const EXAMPLE = { title: 'Example video', id: 'dQw4w9WgXcQ', channel: 'Channel', uploadDate: '20240115', playlistIndex: 3, playlistCount: 25 }
 
 function Toggle({ label, help, checked, onChange }: { label: string; help?: string; checked: boolean; onChange: (v: boolean) => void }): React.JSX.Element {
   return (
@@ -19,40 +16,6 @@ function Toggle({ label, help, checked, onChange }: { label: string; help?: stri
         {label}
       </label>
       {help && <p className="muted help">{help}</p>}
-    </div>
-  )
-}
-
-function FilenameTemplate({ value, onSave }: { value: string; onSave: (v: string) => void }): React.JSX.Element {
-  const { t } = useI18n()
-  const [draft, setDraft] = useState(value)
-  useEffect(() => setDraft(value), [value])
-  const valid = /\{(title|id)\}/.test(draft) && draft.trim().length > 0 && draft.length <= 200
-
-  return (
-    <div className="setting">
-      <label className="field">
-        <span className="field-label">{t('settings.filenameTemplate')}</span>
-        <input
-          type="text"
-          className="text-input"
-          spellCheck={false}
-          value={draft}
-          aria-invalid={!valid}
-          onChange={(e) => {
-            setDraft(e.target.value)
-            if (/\{(title|id)\}/.test(e.target.value)) onSave(e.target.value)
-          }}
-        />
-      </label>
-      {valid ? (
-        <p className="muted help">{t('settings.filenamePreview', { example: `${renderFilename(draft, EXAMPLE)}.mp4` })}</p>
-      ) : (
-        <p className="help error-text" role="alert">
-          {t('settings.templateInvalid')}
-        </p>
-      )}
-      <p className="muted help">{t('settings.filenameTemplateHelp', { fields: FIELDS })}</p>
     </div>
   )
 }
@@ -147,7 +110,6 @@ export function SettingsPage({ settings, update }: { settings: Settings; update:
           checked={settings.playlistSubfolder}
           onChange={(v) => void update({ playlistSubfolder: v })}
         />
-        <FilenameTemplate value={settings.filenameTemplate} onSave={(v) => void update({ filenameTemplate: v })} />
         <Toggle
           label={t('settings.notifications')}
           checked={settings.notifications}

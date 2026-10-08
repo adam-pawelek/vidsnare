@@ -80,7 +80,7 @@ export class QueueService {
    */
   requeue(item: QueueItem, options: DownloadOptions, outputDir: string): AddDownloadsResult {
     this.deps.queue.add([
-      { item, options, outputDir, filenameTemplate: this.deps.settings().filenameTemplate, playlistCount: null }
+      { item, options, outputDir, playlistCount: null }
     ])
     return { added: 1, skipped: 0 }
   }
@@ -109,7 +109,6 @@ export class QueueService {
         item,
         options,
         outputDir,
-        filenameTemplate: settings.filenameTemplate,
         playlistCount: playlistTitle ? items.length : null
       }))
     )

@@ -41,7 +41,7 @@ describe('QueueService.add', () => {
   it('queues into the system Downloads folder by default', () => {
     const { service, added } = setup()
     expect(service.add(request())).toEqual({ added: 1, skipped: 0 })
-    expect(added[0]).toMatchObject({ outputDir: DOWNLOADS, filenameTemplate: '{title} [{id}]', playlistCount: null })
+    expect(added[0]).toMatchObject({ outputDir: DOWNLOADS, playlistCount: null })
   })
 
   it('uses the folder from settings', () => {

@@ -129,9 +129,6 @@ export const de: Messages = {
     skipDownloaded: 'Bereits heruntergeladene Videos überspringen',
     skipDownloadedHelp: 'Videos aus dem Download-Verlauf werden beim Hinzufügen einer Playlist ausgelassen.',
     playlistSubfolder: 'Playlists in eigenem Ordner speichern',
-    filenameTemplate: 'Dateiname',
-    filenameTemplateHelp: 'Verfügbare Felder: {fields}',
-    filenamePreview: 'Beispiel: {example}',
     notifications: 'Benachrichtigung anzeigen, wenn ein Download fertig ist',
     language: 'Sprache',
     systemLanguage: 'Systemsprache',
@@ -150,7 +147,6 @@ export const de: Messages = {
     engineHelp: 'VidSnare hält sich und seine Download-Engine automatisch aktuell.',
     engineVersion: 'yt-dlp {version}',
     useSystemFolder: 'Systemordner „Downloads“ verwenden',
-    templateInvalid: 'Der Dateiname muss den Titel oder die Video-ID enthalten.',
     lastChecked: 'Zuletzt geprüft: {date}',
     never: 'Nie',
     disclaimer:

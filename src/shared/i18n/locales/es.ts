@@ -135,9 +135,6 @@ export const es: Messages = {
     skipDownloaded: 'Omitir los vídeos ya descargados',
     skipDownloadedHelp: 'Los vídeos de tu historial se omiten al añadir una lista de reproducción.',
     playlistSubfolder: 'Guardar las listas en su propia carpeta',
-    filenameTemplate: 'Nombre de archivo',
-    filenameTemplateHelp: 'Campos disponibles: {fields}',
-    filenamePreview: 'Ejemplo: {example}',
     notifications: 'Mostrar una notificación al terminar una descarga',
     language: 'Idioma',
     systemLanguage: 'Idioma del sistema',
@@ -156,7 +153,6 @@ export const es: Messages = {
     engineHelp: 'VidSnare se mantiene actualizado automáticamente, junto con su motor de descarga.',
     engineVersion: 'yt-dlp {version}',
     useSystemFolder: 'Usar la carpeta Descargas del sistema',
-    templateInvalid: 'El nombre de archivo debe incluir el título o el ID del vídeo.',
     lastChecked: 'Última comprobación: {date}',
     never: 'Nunca',
     disclaimer:

@@ -123,9 +123,6 @@ export const ja: Messages = {
     skipDownloaded: 'ダウンロード済みの動画をスキップする',
     skipDownloadedHelp: '再生リストを追加するとき、履歴にある動画は除外されます。',
     playlistSubfolder: '再生リストを専用フォルダーに保存する',
-    filenameTemplate: 'ファイル名',
-    filenameTemplateHelp: '使用できる項目: {fields}',
-    filenamePreview: '例: {example}',
     notifications: 'ダウンロード完了時に通知を表示する',
     language: '言語',
     systemLanguage: 'システムの言語',
@@ -144,7 +141,6 @@ export const ja: Messages = {
     engineHelp: 'VidSnare は本体とダウンロードエンジンを自動で最新に保ちます。',
     engineVersion: 'yt-dlp {version}',
     useSystemFolder: 'システムのダウンロードフォルダーを使う',
-    templateInvalid: 'ファイル名にはタイトルまたは動画 ID を含める必要があります。',
     lastChecked: '最終確認: {date}',
     never: 'なし',
     disclaimer:

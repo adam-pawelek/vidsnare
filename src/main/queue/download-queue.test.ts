@@ -29,7 +29,6 @@ const spec = (n: number, overrides: Partial<NewJob> = {}): NewJob => ({
   item: item(n),
   options: video,
   outputDir: OUT,
-  filenameTemplate: '{title} [{id}]',
   playlistCount: null,
   ...overrides
 })
@@ -299,18 +298,11 @@ describe('DownloadQueue', () => {
 
     it('never gives two running jobs the same name', async () => {
       const { queue, run } = setup()
-      const same = (n: number): NewJob => spec(n, { item: { ...item(n), title: 'Same' }, filenameTemplate: '{title}' })
-      queue.add([same(1), same(2)])
+      // The same video added twice (e.g. "download again" while the first still runs).
+      queue.add([spec(1), spec(1)])
       await settle()
       const outputs = run.runs.map((r) => r.args[r.args.indexOf('-o') + 1])
-      expect(outputs).toEqual(['Same.%(ext)s', 'Same (2).%(ext)s'])
-    })
-
-    it('fills playlist fields in the template', async () => {
-      const { queue, run } = setup()
-      queue.add([spec(7, { filenameTemplate: '{index} - {title}', playlistCount: 120 })])
-      await settle()
-      expect(run.runs[0]!.args).toContain('007 - Video 7.%(ext)s')
+      expect(outputs).toEqual(['Video 1 [vid00000001].%(ext)s', 'Video 1 [vid00000001] (2).%(ext)s'])
     })
   })
 

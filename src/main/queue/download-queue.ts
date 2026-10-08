@@ -5,7 +5,7 @@ import type { DownloadOptions } from '@shared/download'
 import type { AppError } from '@shared/errors'
 import { FINISHED_STATUSES, type DownloadJob, type QueueItem } from '@shared/queue'
 import { classifyError, classifySpawnError } from '../core/errors'
-import { filenameBudget, renderFilename } from '@shared/filename'
+import { DEFAULT_FILENAME_TEMPLATE, filenameBudget, renderFilename } from '@shared/filename'
 import { parseLine, ProgressTracker } from '../core/progress'
 import type { Runner } from '../core/runner'
 import { buildDownloadArgs, type ToolPaths } from '../core/ytdlp-args'
@@ -35,7 +35,6 @@ export interface NewJob {
   item: QueueItem
   options: DownloadOptions
   outputDir: string
-  filenameTemplate: string
   playlistCount: number | null
 }
 
@@ -278,7 +277,8 @@ export class DownloadQueue {
   private async uniqueBase(job: DownloadJob, spec: NewJob, ext: string): Promise<string> {
     const budget = filenameBudget(job.outputDir, process.platform) - 4 // room for " (9)"
     const base = renderFilename(
-      spec.filenameTemplate,
+      // Always "Title [video ID]": the ID keeps names unique and recognisable.
+      DEFAULT_FILENAME_TEMPLATE,
       {
         title: job.title,
         id: job.videoId,

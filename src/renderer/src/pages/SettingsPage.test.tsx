@@ -58,23 +58,9 @@ describe('SettingsPage', () => {
     expect(update).toHaveBeenCalledWith({ notifications: false })
   })
 
-  it('previews the file name template', () => {
+  it('does not offer to change the file name format', () => {
     setup()
-    expect(screen.getByText('Example: Example video [dQw4w9WgXcQ].mp4')).toBeInTheDocument()
-  })
-
-  it('saves a valid template and refuses one without title or ID', () => {
-    const { update } = setup()
-    const input = screen.getByRole('textbox', { name: 'File name' })
-    fireEvent.change(input, { target: { value: '{index} - {title}' } })
-    expect(update).toHaveBeenLastCalledWith({ filenameTemplate: '{index} - {title}' })
-    expect(screen.getByText('Example: 03 - Example video.mp4')).toBeInTheDocument()
-
-    update.mockClear()
-    fireEvent.change(input, { target: { value: '{channel}' } })
-    expect(update).not.toHaveBeenCalled()
-    expect(screen.getByRole('alert')).toHaveTextContent('The file name must include the title or the video ID.')
-    expect(input).toHaveAttribute('aria-invalid', 'true')
+    expect(screen.queryByRole('textbox', { name: 'File name' })).toBeNull()
   })
 
   it('changes the theme', () => {

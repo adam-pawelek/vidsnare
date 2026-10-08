@@ -24,10 +24,8 @@ describe('normalizeSettings', () => {
     expect(normalizeSettings({ theme: 'purple', language: 'xx' })).toMatchObject({ theme: 'system', language: 'system' })
   })
 
-  it('rejects filename templates without title or ID', () => {
-    expect(normalizeSettings({ filenameTemplate: '{channel}' }).filenameTemplate).toBe('{title} [{id}]')
-    expect(normalizeSettings({ filenameTemplate: '  ' }).filenameTemplate).toBe('{title} [{id}]')
-    expect(normalizeSettings({ filenameTemplate: '{channel} - {title}' }).filenameTemplate).toBe('{channel} - {title}')
+  it('drops settings that no longer exist', () => {
+    expect(normalizeSettings({ filenameTemplate: '{channel}' })).not.toHaveProperty('filenameTemplate')
   })
 
   it('applies a partial update on top of current settings', () => {

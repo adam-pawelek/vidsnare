@@ -131,9 +131,6 @@ export const ptBR: Messages = {
     skipDownloaded: 'Ignorar vídeos já baixados',
     skipDownloadedHelp: 'Vídeos do seu histórico são ignorados ao adicionar uma playlist.',
     playlistSubfolder: 'Salvar playlists em uma pasta própria',
-    filenameTemplate: 'Nome do arquivo',
-    filenameTemplateHelp: 'Campos disponíveis: {fields}',
-    filenamePreview: 'Exemplo: {example}',
     notifications: 'Mostrar uma notificação quando um download terminar',
     language: 'Idioma',
     systemLanguage: 'Idioma do sistema',
@@ -152,7 +149,6 @@ export const ptBR: Messages = {
     engineHelp: 'O VidSnare se mantém atualizado automaticamente, junto com seu mecanismo de download.',
     engineVersion: 'yt-dlp {version}',
     useSystemFolder: 'Usar a pasta Downloads do sistema',
-    templateInvalid: 'O nome do arquivo deve incluir o título ou o ID do vídeo.',
     lastChecked: 'Última verificação: {date}',
     never: 'Nunca',
     disclaimer:

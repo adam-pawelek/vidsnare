@@ -129,9 +129,6 @@ export const en = {
     skipDownloaded: 'Skip videos I have already downloaded',
     skipDownloadedHelp: 'Videos in your download history are left out when you add a playlist.',
     playlistSubfolder: 'Save playlists in their own folder',
-    filenameTemplate: 'File name',
-    filenameTemplateHelp: 'Available fields: {fields}',
-    filenamePreview: 'Example: {example}',
     notifications: 'Show a notification when a download finishes',
     language: 'Language',
     systemLanguage: 'System default',
@@ -150,7 +147,6 @@ export const en = {
     engineHelp: 'VidSnare keeps itself and its download engine up to date automatically.',
     engineVersion: 'yt-dlp {version}',
     useSystemFolder: 'Use the system Downloads folder',
-    templateInvalid: 'The file name must include the title or the video ID.',
     lastChecked: 'Last checked: {date}',
     never: 'Never',
     disclaimer:

@@ -138,9 +138,6 @@ export const pl: Messages = {
     skipDownloaded: 'Pomijaj już pobrane filmy',
     skipDownloadedHelp: 'Filmy z historii pobierania są pomijane przy dodawaniu playlisty.',
     playlistSubfolder: 'Zapisuj playlisty w osobnym folderze',
-    filenameTemplate: 'Nazwa pliku',
-    filenameTemplateHelp: 'Dostępne pola: {fields}',
-    filenamePreview: 'Przykład: {example}',
     notifications: 'Pokazuj powiadomienie po zakończeniu pobierania',
     language: 'Język',
     systemLanguage: 'Język systemu',
@@ -159,7 +156,6 @@ export const pl: Messages = {
     engineHelp: 'VidSnare automatycznie aktualizuje siebie i silnik pobierania.',
     engineVersion: 'yt-dlp {version}',
     useSystemFolder: 'Używaj systemowego folderu Pobrane',
-    templateInvalid: 'Nazwa pliku musi zawierać tytuł lub identyfikator filmu.',
     lastChecked: 'Ostatnie sprawdzenie: {date}',
     never: 'Nigdy',
     disclaimer:

@@ -138,9 +138,6 @@ export const ru: Messages = {
     skipDownloaded: 'Пропускать уже скачанные видео',
     skipDownloadedHelp: 'Видео из истории загрузок не добавляются при добавлении плейлиста.',
     playlistSubfolder: 'Сохранять плейлисты в отдельную папку',
-    filenameTemplate: 'Имя файла',
-    filenameTemplateHelp: 'Доступные поля: {fields}',
-    filenamePreview: 'Пример: {example}',
     notifications: 'Показывать уведомление по завершении загрузки',
     language: 'Язык',
     systemLanguage: 'Язык системы',
@@ -159,7 +156,6 @@ export const ru: Messages = {
     engineHelp: 'VidSnare автоматически обновляет себя и движок загрузки.',
     engineVersion: 'yt-dlp {version}',
     useSystemFolder: 'Использовать системную папку «Загрузки»',
-    templateInvalid: 'Имя файла должно содержать название или идентификатор видео.',
     lastChecked: 'Последняя проверка: {date}',
     never: 'Никогда',
     disclaimer:
