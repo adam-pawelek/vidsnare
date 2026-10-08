@@ -39,7 +39,6 @@ function registerIpc(services: Services, updates: UpdateController): void {
   const { settings, history, engine, media, queue, queueService } = services
 
   handle('update:get-status', trusted, () => updates.getStatus())
-  handle('update:check', trusted, () => updates.check())
   handle('update:install', trusted, () => updates.install())
   handle('update:open-releases', trusted, () => shell.openExternal(RELEASES_URL))
 
@@ -53,7 +52,6 @@ function registerIpc(services: Services, updates: UpdateController): void {
   )
 
   handle('tools:get-status', trusted, () => engine.status())
-  handle('tools:update-engine', trusted, () => engine.update((fraction) => broadcast('tools:update-progress', { fraction })))
 
   handle('settings:get', trusted, () => settings.get())
   handle('settings:update', trusted, (patch) => {
@@ -208,7 +206,11 @@ if (!app.requestSingleInstanceLock()) {
 
     // Updates are always on; tests switch them off so they run offline and stay predictable.
     const autoUpdates = !process.env['VIDSNARE_NO_AUTO_UPDATE']
-    if (autoUpdates) void services.engine.updateIfDue()
+    if (autoUpdates) {
+      void services.engine.updateIfDue()
+      // Also while the app stays open; updateIfDue checks at most once a day.
+      setInterval(() => void live.engine.updateIfDue(), 60 * 60 * 1000)
+    }
 
     // App updates: shortly after start (not to slow it down), then every six hours.
     const checkApp = (): void => {

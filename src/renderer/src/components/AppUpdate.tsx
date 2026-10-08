@@ -1,34 +1,15 @@
 import type { UpdateStatus } from '@shared/update'
 import { useI18n } from '../i18n-context'
 
-const invoke = (channel: 'update:check' | 'update:install' | 'update:open-releases'): void =>
-  void window.vidsnare.invoke(channel)
+const invoke = (channel: 'update:install' | 'update:open-releases'): void => void window.vidsnare.invoke(channel)
 
-/** Status line and buttons for the Updates section in Settings. */
+/** Update state in Settings. Checking and downloading happen on their own; this only reports. */
 export function AppUpdateControls({ status }: { status: UpdateStatus | null }): React.JSX.Element | null {
-  const { t, percent } = useI18n()
+  const { percent } = useI18n()
   if (!status || status.mode === 'disabled') return null
-
+  if (status.state !== 'available' && status.state !== 'downloading' && status.state !== 'ready') return null
   return (
     <div className="row">
-      {status.state === 'checking' ? (
-        <span className="muted" role="status">
-          {t('settings.checking')}
-        </span>
-      ) : (
-        status.state !== 'downloading' &&
-        status.state !== 'ready' && (
-          <button type="button" className="btn" onClick={() => invoke('update:check')}>
-            {t('settings.checkForUpdates')}
-          </button>
-        )
-      )}
-      {status.state === 'up-to-date' && <span className="muted" role="status">{t('settings.upToDate')}</span>}
-      {status.state === 'error' && (
-        <span className="error-text" role="alert">
-          {t('settings.updateFailed')}
-        </span>
-      )}
       <UpdateMessage status={status} percent={percent} />
     </div>
   )

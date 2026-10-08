@@ -1,7 +1,7 @@
 // @vitest-environment jsdom
 import { fireEvent, screen, waitFor } from '@testing-library/react'
 import { describe, expect, it, vi } from 'vitest'
-import type { EngineStatus, EngineUpdateResult } from '@shared/ipc'
+import type { EngineStatus } from '@shared/ipc'
 import type { UpdateStatus } from '@shared/update'
 import { DEFAULT_SETTINGS, type Settings } from '@shared/settings'
 import { mockApi, renderWithI18n } from '../test-utils'
@@ -14,20 +14,14 @@ const status: EngineStatus = {
   lastCheck: null
 }
 
-function setup(
-  settings: Partial<Settings> = {},
-  engineResult: EngineUpdateResult = { status: 'up-to-date', version: '2026.08.19' },
-  updateStatus: UpdateStatus = { state: 'idle', mode: 'disabled' }
-) {
+function setup(settings: Partial<Settings> = {}, updateStatus: UpdateStatus = { state: 'idle', mode: 'disabled' }) {
   const api = mockApi({
     'update:get-status': () => updateStatus,
-    'update:check': () => updateStatus,
     'update:install': () => undefined,
     'update:open-releases': () => undefined,
     'queue:default-folder': () => '/home/u/Downloads',
     'app:get-info': () => ({ name: 'VidSnare', version: '0.1.0', platform: 'linux' }),
     'tools:get-status': () => status,
-    'tools:update-engine': () => engineResult,
     'dialog:choose-folder': () => '/mnt/media'
   })
   const update = vi.fn(async () => {})
@@ -100,59 +94,43 @@ describe('SettingsPage', () => {
     expect(update).toHaveBeenCalledWith({ defaults: { ...DEFAULT_SETTINGS.defaults, kind: 'audio' } })
   })
 
-  it('shows the engine version and updates it', async () => {
-    const { api } = setup({}, { status: 'updated', version: '2026.09.01' })
+  it('shows the engine version and says updates are automatic, with no buttons', async () => {
+    setup()
     expect(await screen.findByText(/yt-dlp 2026\.08\.19/)).toBeInTheDocument()
     expect(screen.getByText(/Last checked: Never/)).toBeInTheDocument()
-    fireEvent.click(screen.getByRole('button', { name: 'Update engine' }))
-    expect(await screen.findByText('Engine updated to 2026.09.01.')).toBeInTheDocument()
-    expect(api.invoke).toHaveBeenCalledWith('tools:update-engine')
-  })
-
-  it('says when the engine is already current', async () => {
-    setup()
-    fireEvent.click(await screen.findByRole('button', { name: 'Update engine' }))
-    expect(await screen.findByText('The engine is up to date.')).toBeInTheDocument()
-  })
-
-  it('reports a failed engine update', async () => {
-    setup({}, { status: 'failed', message: 'HTTP 503' })
-    fireEvent.click(await screen.findByRole('button', { name: 'Update engine' }))
-    expect(await screen.findByRole('alert')).toHaveTextContent('Could not update the engine')
+    expect(screen.getByText('VidSnare keeps itself and its download engine up to date automatically.')).toBeInTheDocument()
+    expect(screen.queryByRole('button', { name: /update engine|check for updates/i })).toBeNull()
   })
 
   describe('app updates', () => {
-    const engine: EngineUpdateResult = { status: 'up-to-date', version: '2026.08.19' }
-
-    it('hides update controls in development builds', async () => {
-      setup()
+    it('shows nothing while there is nothing to do', async () => {
+      setup({}, { state: 'up-to-date', mode: 'auto' })
       await screen.findByText(/yt-dlp 2026/)
-      expect(screen.queryByRole('button', { name: 'Check for updates' })).toBeNull()
+      expect(screen.queryByRole('status')).toBeNull()
     })
 
-    it('checks for updates', async () => {
-      const { api } = setup({}, engine, { state: 'up-to-date', mode: 'auto' })
-      expect(await screen.findByText('You have the latest version.')).toBeInTheDocument()
-      fireEvent.click(screen.getByRole('button', { name: 'Check for updates' }))
-      expect(api.invoke).toHaveBeenCalledWith('update:check')
+    it('stays quiet about failed checks (it retries on its own)', async () => {
+      setup({}, { state: 'error', mode: 'auto', message: 'HTTP 404' })
+      await screen.findByText(/yt-dlp 2026/)
+      expect(screen.queryByRole('alert')).toBeNull()
     })
 
-    it('installs a downloaded update', async () => {
-      const { api } = setup({}, engine, { state: 'ready', mode: 'auto', version: '2.0.0' })
+    it('shows download progress of an update', async () => {
+      setup({}, { state: 'downloading', mode: 'auto', version: '2.0.0', fraction: 0.5 })
+      expect(await screen.findByText('Downloading update… 50%')).toBeInTheDocument()
+    })
+
+    it('offers to restart once an update is downloaded', async () => {
+      const { api } = setup({}, { state: 'ready', mode: 'auto', version: '2.0.0' })
       fireEvent.click(await screen.findByRole('button', { name: 'Restart and update' }))
       expect(api.invoke).toHaveBeenCalledWith('update:install')
     })
 
     it('sends .deb users to the releases page', async () => {
-      const { api } = setup({}, engine, { state: 'available', mode: 'manual', version: '2.0.0' })
+      const { api } = setup({}, { state: 'available', mode: 'manual', version: '2.0.0' })
       expect(await screen.findByText('Version 2.0.0 is available.')).toBeInTheDocument()
       fireEvent.click(screen.getByRole('button', { name: 'Open releases page' }))
       expect(api.invoke).toHaveBeenCalledWith('update:open-releases')
-    })
-
-    it('reports a failed check', async () => {
-      setup({}, engine, { state: 'error', mode: 'auto', message: 'HTTP 404' })
-      expect(await screen.findByText('Could not check for updates.')).toBeInTheDocument()
     })
   })
 

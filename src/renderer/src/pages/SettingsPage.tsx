@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { renderFilename } from '@shared/filename'
-import type { EngineStatus, EngineUpdateResult } from '@shared/ipc'
+import type { EngineStatus } from '@shared/ipc'
 import { REPO_URL as SOURCE_URL } from '@shared/release'
 import { MAX_CONCURRENT_LIMIT, type Settings } from '@shared/settings'
 import { AppUpdateControls } from '../components/AppUpdate'
@@ -57,34 +57,18 @@ function FilenameTemplate({ value, onSave }: { value: string; onSave: (v: string
   )
 }
 
+/** Versions and when the engine was last checked; updating itself is automatic. */
 function EngineSection(): React.JSX.Element {
-  const { t, dateTime, percent } = useI18n()
+  const { t, dateTime } = useI18n()
   const [status, setStatus] = useState<EngineStatus | null>(null)
-  const [updating, setUpdating] = useState(false)
-  const [progress, setProgress] = useState<number | null>(null)
-  const [result, setResult] = useState<EngineUpdateResult | null>(null)
 
   useEffect(() => {
     void window.vidsnare.invoke('tools:get-status').then(setStatus)
-    return window.vidsnare.on('tools:update-progress', ({ fraction }) => setProgress(fraction))
   }, [])
-
-  const update = async (): Promise<void> => {
-    setUpdating(true)
-    setResult(null)
-    setProgress(null)
-    try {
-      setResult(await window.vidsnare.invoke('tools:update-engine'))
-      setStatus(await window.vidsnare.invoke('tools:get-status'))
-    } finally {
-      setUpdating(false)
-    }
-  }
 
   return (
     <div className="setting">
       <span className="field-label">{t('settings.engine')}</span>
-      <p className="muted help">{t('settings.engineHelp')}</p>
       <p>
         {status?.ytdlp ? t('settings.engineVersion', { version: status.ytdlp.version }) : t('errors.TOOL_MISSING')}
         {status && (
@@ -94,27 +78,6 @@ function EngineSection(): React.JSX.Element {
           </span>
         )}
       </p>
-      <div className="row">
-        <button type="button" className="btn" disabled={updating} onClick={() => void update()}>
-          {updating ? t('settings.checking') : t('settings.updateEngine')}
-        </button>
-        {updating && progress !== null && <span className="muted">{percent(progress)}</span>}
-        {result?.status === 'updated' && (
-          <span className="ok-text" role="status">
-            {t('settings.engineUpdated', { version: result.version })}
-          </span>
-        )}
-        {result?.status === 'up-to-date' && (
-          <span className="muted" role="status">
-            {t('settings.engineUpToDate')}
-          </span>
-        )}
-        {result?.status === 'failed' && (
-          <span className="error-text" role="alert">
-            {t('settings.engineUpdateFailed')}
-          </span>
-        )}
-      </div>
     </div>
   )
 }
@@ -213,6 +176,7 @@ export function SettingsPage({ settings, update }: { settings: Settings; update:
 
       <section className="card" aria-labelledby="s-updates">
         <h2 id="s-updates">{t('settings.sections.updates')}</h2>
+        <p className="muted help">{t('settings.engineHelp')}</p>
         <p>
           <span className="field-label">{t('settings.appVersion')}</span> {version}
         </p>

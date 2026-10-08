@@ -41,7 +41,6 @@ export type EngineUpdateResult =
 export interface InvokeMap {
   'app:get-info': [[], AppInfo]
   'tools:get-status': [[], EngineStatus]
-  'tools:update-engine': [[], EngineUpdateResult]
   'app:read-clipboard': [[], string]
   'media:fetch-info': [[url: string], FetchInfoResult]
   'settings:get': [[], Settings]
@@ -66,7 +65,6 @@ export interface InvokeMap {
   'history:show-in-folder': [[id: string], void]
   'history:download-again': [[id: string], AddDownloadsResult]
   'update:get-status': [[], UpdateStatus]
-  'update:check': [[], UpdateStatus]
   'update:install': [[], void]
   'update:open-releases': [[], void]
 }
@@ -74,7 +72,6 @@ export interface InvokeMap {
 /** Push channels from main to renderer: channel name -> payload. */
 export interface EventMap {
   'app:theme-changed': { dark: boolean }
-  'tools:update-progress': { fraction: number | null }
   'queue:changed': DownloadJob[]
   'settings:changed': Settings
   'history:changed': null
@@ -91,7 +88,6 @@ export type InvokeResult<C extends InvokeChannel> = InvokeMap[C][1]
 export const INVOKE_CHANNELS = [
   'app:get-info',
   'tools:get-status',
-  'tools:update-engine',
   'app:read-clipboard',
   'media:fetch-info',
   'settings:get',
@@ -114,11 +110,10 @@ export const INVOKE_CHANNELS = [
   'history:show-in-folder',
   'history:download-again',
   'update:get-status',
-  'update:check',
   'update:install',
   'update:open-releases'
 ] as const satisfies readonly InvokeChannel[]
-export const EVENT_CHANNELS = ['app:theme-changed', 'tools:update-progress', 'queue:changed', 'settings:changed', 'history:changed', 'app:navigate', 'update:status'] as const satisfies readonly EventChannel[]
+export const EVENT_CHANNELS = ['app:theme-changed', 'queue:changed', 'settings:changed', 'history:changed', 'app:navigate', 'update:status'] as const satisfies readonly EventChannel[]
 
 export function isInvokeChannel(value: unknown): value is InvokeChannel {
   return typeof value === 'string' && (INVOKE_CHANNELS as readonly string[]).includes(value)
