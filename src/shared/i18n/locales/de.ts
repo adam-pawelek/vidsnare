@@ -79,6 +79,7 @@ export const de: Messages = {
       one: '{count} Download zur Warteschlange hinzugefügt',
       other: '{count} Downloads zur Warteschlange hinzugefügt'
     },
+    addedHint: 'Klicke links auf „{queue}“, um den Fortschritt zu sehen und die Datei zu öffnen, sobald sie fertig ist.',
     skippedExisting: {
       one: '{count} bereits heruntergeladenes Video übersprungen',
       other: '{count} bereits heruntergeladene Videos übersprungen'

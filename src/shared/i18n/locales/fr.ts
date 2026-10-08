@@ -84,6 +84,7 @@ export const fr: Messages = {
       many: '{count} de téléchargements ajoutés à la file',
       other: '{count} téléchargements ajoutés à la file'
     },
+    addedHint: 'Cliquez sur « {queue} » à gauche pour suivre la progression et ouvrir votre fichier une fois prêt.',
     skippedExisting: {
       one: '{count} vidéo déjà téléchargée ignorée',
       many: '{count} de vidéos déjà téléchargées ignorées',

@@ -79,6 +79,7 @@ export const en = {
     download: 'Download',
     downloadMany: { one: 'Download {count} video', other: 'Download {count} videos' },
     added: { one: 'Added {count} download to the queue', other: 'Added {count} downloads to the queue' },
+    addedHint: 'Click “{queue}” on the left to see the progress and open your file when it’s ready.',
     skippedExisting: {
       one: 'Skipped {count} video you already downloaded',
       other: 'Skipped {count} videos you already downloaded'

@@ -76,6 +76,7 @@ export const ja: Messages = {
     download: 'ダウンロード',
     downloadMany: { other: '{count} 本の動画をダウンロード' },
     added: { other: '{count} 件のダウンロードをキューに追加しました' },
+    addedHint: '左側の「{queue}」をクリックすると、進行状況を確認し、完了したファイルを開けます。',
     skippedExisting: { other: 'ダウンロード済みの動画 {count} 本をスキップしました' }
   },
   queue: {

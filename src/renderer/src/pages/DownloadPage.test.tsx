@@ -233,6 +233,7 @@ describe('starting downloads', () => {
     load(VIDEO_URL)
     fireEvent.click(await screen.findByRole('button', { name: 'Download' }))
     await screen.findByText('Added 1 download to the queue')
+    expect(screen.getByText('Click “Queue” on the left to see the progress and open your file when it’s ready.')).toBeInTheDocument()
     expect(requests[0]).toMatchObject({
       items: [{ videoId: 'aaaaaaaaaaa', title: 'V' }],
       options: DEFAULT_SETTINGS.defaults,
@@ -316,5 +317,7 @@ describe('starting downloads', () => {
     load(PLAYLIST_URL)
     fireEvent.click(await screen.findByRole('button', { name: 'Download 1 video' }))
     expect(await screen.findByText(/Skipped 3 videos you already downloaded/)).toBeInTheDocument()
+    // Nothing was added, so there is nothing to go and look at.
+    expect(screen.queryByText(/on the left to see the progress/)).toBeNull()
   })
 })

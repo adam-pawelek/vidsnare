@@ -86,6 +86,7 @@ export const pl: Messages = {
       many: 'Dodano {count} pobierań do kolejki',
       other: 'Dodano {count} pobierania do kolejki'
     },
+    addedHint: 'Kliknij „{queue}” po lewej, aby zobaczyć postęp i otworzyć plik, gdy będzie gotowy.',
     skippedExisting: {
       one: 'Pominięto {count} już pobrany film',
       few: 'Pominięto {count} już pobrane filmy',

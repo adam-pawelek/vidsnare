@@ -84,6 +84,7 @@ export const es: Messages = {
       many: 'Se añadieron {count} de descargas a la cola',
       other: 'Se añadieron {count} descargas a la cola'
     },
+    addedHint: 'Haz clic en «{queue}» a la izquierda para ver el progreso y abrir tu archivo cuando esté listo.',
     skippedExisting: {
       one: 'Se omitió {count} vídeo ya descargado',
       many: 'Se omitieron {count} de vídeos ya descargados',

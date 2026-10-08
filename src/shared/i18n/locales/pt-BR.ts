@@ -80,6 +80,7 @@ export const ptBR: Messages = {
       many: '{count} de downloads adicionados à fila',
       other: '{count} downloads adicionados à fila'
     },
+    addedHint: 'Clique em “{queue}” à esquerda para ver o progresso e abrir seu arquivo quando estiver pronto.',
     skippedExisting: {
       one: '{count} vídeo já baixado foi ignorado',
       many: '{count} de vídeos já baixados foram ignorados',

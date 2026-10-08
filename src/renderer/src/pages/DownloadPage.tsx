@@ -128,10 +128,13 @@ export function DownloadPage({ settings, onOpenQueue }: Props): React.JSX.Elemen
       )}
       {result && (
         <div className="notice" role="status">
-          <p>
-            {t('options.added', { count: result.added })}
-            {result.skipped > 0 && <> · {t('options.skippedExisting', { count: result.skipped })}</>}
-          </p>
+          <div>
+            <p>
+              {t('options.added', { count: result.added })}
+              {result.skipped > 0 && <> · {t('options.skippedExisting', { count: result.skipped })}</>}
+            </p>
+            {result.added > 0 && <p className="muted">{t('options.addedHint', { queue: t('nav.queue') })}</p>}
+          </div>
           <button type="button" className="btn" onClick={onOpenQueue}>
             {t('nav.queue')}
           </button>
