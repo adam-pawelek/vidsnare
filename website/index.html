@@ -54,6 +54,10 @@
             Paste a link, choose the quality, and VidSnare does the rest. Free for personal use on Windows and Linux.
           </p>
           <a id="primary-download" class="button" data-file="windows" href="#">Download</a>
+          <p class="secondary-links">
+            <a id="secondary-download" data-file="appimage" href="#" hidden></a>
+            <a href="#install" data-t="installHelp">Installation help</a>
+          </p>
           <p id="release-note" class="muted" aria-live="polite"></p>
           <details class="other">
             <summary data-t="otherDownloads">Other downloads</summary>
@@ -86,16 +90,63 @@
         <img src="images/queue-light.png" width="1100" height="720" loading="lazy" data-t-alt="shotQueue" alt="The download queue" />
       </section>
 
-      <section class="install wrap" aria-labelledby="install-title">
+      <section id="install" class="install wrap" aria-labelledby="install-title">
         <h2 id="install-title" data-t="installTitle">Installing</h2>
-        <p>
-          <strong>Windows</strong> –
-          <span data-t="installWindows"></span>
-        </p>
-        <p>
-          <strong>Linux</strong> –
-          <span data-t="installLinux"></span>
-        </p>
+        <div class="tabs" role="tablist" aria-labelledby="install-title">
+          <button type="button" role="tab" id="tab-windows" aria-controls="panel-windows" aria-selected="true" data-tab="windows" data-t="tabWindows">Windows</button>
+          <button type="button" role="tab" id="tab-deb" aria-controls="panel-deb" aria-selected="false" tabindex="-1" data-tab="deb"><span data-t="tabDeb">Ubuntu, Debian, Mint</span> <span class="badge" data-t="recommended">Recommended</span></button>
+          <button type="button" role="tab" id="tab-appimage" aria-controls="panel-appimage" aria-selected="false" tabindex="-1" data-tab="appimage" data-t="tabAppImage">Other Linux (AppImage)</button>
+        </div>
+
+        <div class="panel" role="tabpanel" id="panel-windows" aria-labelledby="tab-windows">
+          <ol class="steps">
+            <li data-t="winStep1"></li>
+            <li data-t="winStep2"></li>
+            <li data-t="winStep3"></li>
+          </ol>
+          <p class="note" data-t="winUpdates"></p>
+        </div>
+
+        <div class="panel" role="tabpanel" id="panel-deb" aria-labelledby="tab-deb" hidden>
+          <ol class="steps">
+            <li><span data-t="debStep1"></span><div class="code"><pre><code>wget https://github.com/adam-pawelek/vidsnare/releases/latest/download/VidSnare_amd64.deb</code></pre><button type="button" class="copy" data-t="copy">Copy</button></div></li>
+            <li><span data-t="debStep2"></span><div class="code"><pre><code>sudo apt install ./VidSnare_amd64.deb</code></pre><button type="button" class="copy" data-t="copy">Copy</button></div></li>
+            <li><span data-t="debStep3"></span><div class="code"><pre><code>vidsnare</code></pre><button type="button" class="copy" data-t="copy">Copy</button></div></li>
+          </ol>
+          <p class="note" data-t="debUpdates"></p>
+          <p><span data-t="debRemove"></span></p>
+          <div class="code"><pre><code>sudo apt remove vidsnare</code></pre><button type="button" class="copy" data-t="copy">Copy</button></div>
+        </div>
+
+        <div class="panel" role="tabpanel" id="panel-appimage" aria-labelledby="tab-appimage" hidden>
+          <ol class="steps">
+            <li><span data-t="appStep1"></span><div class="code"><pre><code>wget https://github.com/adam-pawelek/vidsnare/releases/latest/download/VidSnare-x86_64.AppImage</code></pre><button type="button" class="copy" data-t="copy">Copy</button></div></li>
+            <li><span data-t="appStep2"></span><div class="code"><pre><code>chmod +x VidSnare-x86_64.AppImage
+./VidSnare-x86_64.AppImage</code></pre><button type="button" class="copy" data-t="copy">Copy</button></div><p class="muted" data-t="appStep2Alt"></p></li>
+          </ol>
+          <p class="note" data-t="appUpdates"></p>
+          <h3 data-t="troubleTitle">If it doesn’t start</h3>
+          <p data-t="troubleFuse"></p>
+          <div class="code"><pre><code># Ubuntu 24.04 and newer
+sudo apt install libfuse2t64
+# Ubuntu 22.04, Debian
+sudo apt install libfuse2
+# Fedora
+sudo dnf install fuse-libs
+# Arch, Manjaro
+sudo pacman -S fuse2</code></pre><button type="button" class="copy" data-t="copy">Copy</button></div>
+          <p data-t="troubleSandbox"></p>
+        </div>
+      </section>
+
+      <section id="usage" class="usage wrap" aria-labelledby="usage-title">
+        <h2 id="usage-title" data-t="usageTitle">How to use it</h2>
+        <ol class="usage-steps">
+          <li data-t="use1"></li>
+          <li data-t="use2"></li>
+          <li data-t="use3"></li>
+          <li data-t="use4"></li>
+        </ol>
       </section>
     </main>
 

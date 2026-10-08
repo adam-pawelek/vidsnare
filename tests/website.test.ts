@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 // @ts-expect-error plain JavaScript module served as-is by the website
-import { detectOs, FILES, filterChoices, fold, format, languageChoices, pickLanguage } from '../website/site.js'
+import { detectOs, detectSystem, FILES, filterChoices, fold, format, languageChoices, pickLanguage } from '../website/site.js'
 // @ts-expect-error plain JavaScript module served as-is by the website
 import { LANGUAGE_NAMES, STRINGS } from '../website/strings.js'
 
@@ -52,6 +52,17 @@ describe('website helpers', () => {
     expect(detectOs(ua)).toBe(os)
   })
 
+  it.each([
+    ['Mozilla/5.0 (Windows NT 10.0; Win64; x64)', 'windows'],
+    ['Mozilla/5.0 (X11; Linux x86_64) Chrome/140', 'deb'],
+    ['Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:140.0) Firefox/140.0', 'deb'],
+    ['Mozilla/5.0 (X11; Fedora; Linux x86_64; rv:140.0) Firefox/140.0', 'appimage'],
+    ['Mozilla/5.0 (X11; Linux x86_64; Arch Linux) Firefox/140', 'appimage'],
+    ['Mozilla/5.0 (Macintosh; Intel Mac OS X 14_0)', 'windows']
+  ])('suggests the right download for %s', (ua, system) => {
+    expect(detectSystem(ua)).toBe(system)
+  })
+
   it('fills placeholders', () => {
     expect(format('Version {version}', { version: '1.2.0' })).toBe('Version 1.2.0')
   })
@@ -93,6 +104,27 @@ describe('language search', () => {
 
   it('ignores case and accents', () => {
     expect(fold('Français ČEŠTINA')).toBe('francais cestina')
+  })
+})
+
+describe('install guide', () => {
+  it('names the app’s own buttons in every language', async () => {
+    const { LOCALES } = await import('../src/shared/i18n')
+    for (const [lang, strings] of Object.entries(STRINGS) as [string, Record<string, string>][]) {
+      const app = (LOCALES as Record<string, { messages: { nav: { queue: string }; queue: { openFile: string } } }>)[lang]!
+      expect(strings.use4, lang).toContain(app.messages.nav.queue)
+      expect(strings.use4, lang).toContain(app.messages.queue.openFile)
+    }
+  })
+
+  it('has every guide step in the page', async () => {
+    const { readFileSync } = await import('node:fs')
+    const html = readFileSync(new URL('../website/index.html', import.meta.url), 'utf8')
+    for (const key of ['winStep1', 'debStep1', 'debStep2', 'appStep1', 'troubleFuse', 'use1', 'use4', 'installHelp']) {
+      expect(html, key).toContain(`data-t="${key}"`)
+    }
+    expect(html).toContain('sudo apt install ./VidSnare_amd64.deb')
+    expect(html).toContain('chmod +x VidSnare-x86_64.AppImage')
   })
 })
 

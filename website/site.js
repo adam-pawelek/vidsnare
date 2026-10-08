@@ -38,6 +38,20 @@ export function detectOs(userAgent, platform = '') {
   return 'other'
 }
 
+/**
+ * Which download fits this visitor: 'windows', 'deb' (Ubuntu, Debian, Mint and
+ * most Linux desktops) or 'appimage' (Linux systems that can't use a .deb).
+ * Browsers rarely name the Linux distribution, so .deb is the default for Linux.
+ */
+export function detectSystem(userAgent, platform = '') {
+  const os = detectOs(userAgent, platform)
+  if (os !== 'linux') return 'windows'
+  if (/fedora|red hat|centos|rocky|alma|arch|manjaro|endeavour|opensuse|suse|gentoo|void|nixos/i.test(userAgent)) {
+    return 'appimage'
+  }
+  return 'deb'
+}
+
 export function format(template, vars = {}) {
   return template.replace(/\{(\w+)\}/g, (whole, key) => (key in vars ? vars[key] : whole))
 }
@@ -61,24 +75,81 @@ function render(lang, release) {
   for (const el of document.querySelectorAll('[data-t-alt]')) el.alt = s[el.dataset.tAlt]
 
   const os = detectOs(navigator.userAgent, navigator.userAgentData?.platform)
+  const system = detectSystem(navigator.userAgent, navigator.userAgentData?.platform)
   const primary = document.getElementById('primary-download')
+  const secondary = document.getElementById('secondary-download')
   const note = document.getElementById('release-note')
-  const main = os === 'linux' ? 'appimage' : 'windows'
-  primary.textContent = format(s.downloadFor, { os: main === 'windows' ? 'Windows' : 'Linux' })
+  const main = system === 'deb' ? 'deb' : system === 'appimage' ? 'appimage' : 'windows'
 
   const available = release !== null
   for (const link of document.querySelectorAll('a[data-file]')) {
     const file = FILES[link.dataset.file]
     link.href = available ? `${DOWNLOAD}/${file.name}` : '#'
     link.setAttribute('aria-disabled', String(!available))
-    if (link !== primary) link.textContent = s[file.label]
+    if (link !== primary && link !== secondary) link.textContent = s[file.label]
   }
+
   primary.dataset.file = main
   primary.href = available ? `${DOWNLOAD}/${FILES[main].name}` : '#'
+  primary.textContent =
+    main === 'deb' ? s.downloadDeb : format(s.downloadFor, { os: main === 'windows' ? 'Windows' : 'Linux' })
+
+  // Linux visitors also get the other Linux format right under the button.
+  secondary.hidden = os !== 'linux'
+  if (os === 'linux') {
+    const other = main === 'deb' ? 'appimage' : 'deb'
+    secondary.dataset.file = other
+    secondary.href = available ? `${DOWNLOAD}/${FILES[other].name}` : '#'
+    secondary.setAttribute('aria-disabled', String(!available))
+    secondary.textContent = other === 'appimage' ? s.appImageLink : s.downloadDeb
+  }
 
   note.textContent = available
     ? [format(s.version, { version: release }), os === 'other' ? s.onlyWinLinux : ''].filter(Boolean).join(' · ')
     : s.comingSoon
+}
+
+/** Install guide tabs; opens the one for this visitor's system first. */
+function setUpTabs(initial) {
+  const tabs = [...document.querySelectorAll('[role="tab"]')]
+  if (!tabs.length) return
+  const select = (name, focus) => {
+    for (const tab of tabs) {
+      const on = tab.dataset.tab === name
+      tab.setAttribute('aria-selected', String(on))
+      tab.tabIndex = on ? 0 : -1
+      document.getElementById(tab.getAttribute('aria-controls')).hidden = !on
+      if (on && focus) tab.focus()
+    }
+  }
+  for (const [i, tab] of tabs.entries()) {
+    tab.addEventListener('click', () => select(tab.dataset.tab, false))
+    tab.addEventListener('keydown', (e) => {
+      const rtl = document.documentElement.dir === 'rtl'
+      const step = { ArrowRight: rtl ? -1 : 1, ArrowLeft: rtl ? 1 : -1 }[e.key]
+      if (step) {
+        e.preventDefault()
+        select(tabs[(i + step + tabs.length) % tabs.length].dataset.tab, true)
+      }
+    })
+  }
+  select(initial, false)
+}
+
+/** "Copy" buttons next to each command. */
+function setUpCopyButtons(getStrings) {
+  for (const button of document.querySelectorAll('.code .copy')) {
+    button.addEventListener('click', async () => {
+      const text = button.parentElement.querySelector('code').textContent
+      try {
+        await navigator.clipboard.writeText(text)
+        button.textContent = getStrings().copied
+        setTimeout(() => (button.textContent = getStrings().copy), 2000)
+      } catch {
+        // Clipboard blocked (e.g. insecure context); the text can still be selected by hand.
+      }
+    })
+  }
 }
 
 async function latestVersion() {
@@ -263,6 +334,8 @@ export async function start() {
   )
 
   render(lang, release)
+  setUpTabs(detectSystem(navigator.userAgent, navigator.userAgentData?.platform))
+  setUpCopyButtons(() => STRINGS[lang])
   for (const link of document.querySelectorAll('a[data-file]')) {
     link.addEventListener('click', (e) => {
       if (link.getAttribute('aria-disabled') === 'true') e.preventDefault()
