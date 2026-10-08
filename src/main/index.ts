@@ -6,6 +6,7 @@ import type { EventChannel, EventMap } from '@shared/ipc'
 import { isReleaseRepoConfigured, RELEASES_URL } from '@shared/release'
 import type { Settings } from '@shared/settings'
 import { handle } from './ipc'
+import { integrateLinux } from './linux-integration'
 import { Notifier } from './notifier'
 import { detectUpdateMode, UpdateController } from './update/update-controller'
 import { createServices, type Services } from './services'
@@ -203,6 +204,17 @@ if (!app.requestSingleInstanceLock()) {
     })
     services.history.onChange(() => broadcast('history:changed', null))
     guardClose(createMainWindow(() => translatorFor(live.settings.get())))
+
+    // Icons for VidSnare files and the AppImage's menu entry on Linux (best effort).
+    if (process.platform === 'linux' && app.isPackaged) {
+      void integrateLinux({
+        home: app.getPath('home'),
+        downloadsDir: app.getPath('downloads'),
+        resourcesDir: process.resourcesPath,
+        appImage: process.env['APPIMAGE'],
+        version: app.getVersion()
+      }).catch(() => {})
+    }
 
     // Updates are always on; tests switch them off so they run offline and stay predictable.
     const autoUpdates = !process.env['VIDSNARE_NO_AUTO_UPDATE']
