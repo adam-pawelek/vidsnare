@@ -14,7 +14,8 @@ function setup(settings = DEFAULT_SETTINGS) {
     'settings:get': () => settings,
     'queue:list': () => [],
     'queue:default-folder': () => '/home/u/Downloads',
-    'tools:get-status': () => ({ ytdlp: null, ffmpeg: null, deno: null, lastCheck: null })
+    'tools:get-status': () => ({ ytdlp: null, ffmpeg: null, deno: null, lastCheck: null }),
+    'update:get-status': () => ({ state: 'idle', mode: 'disabled' })
   })
   api.on.mockImplementation((channel: string, listener: (payload: unknown) => void) => {
     listeners.set(channel, listener)
@@ -63,6 +64,15 @@ describe('App', () => {
     await screen.findByText('v1.2.3')
     emit('app:navigate', { page: 'queue' })
     expect(screen.getByRole('button', { name: 'Queue' })).toHaveAttribute('aria-current', 'page')
+  })
+
+  it('shows a banner when an update is ready to install', async () => {
+    const { emit } = setup()
+    render(<App />)
+    await screen.findByText('v1.2.3')
+    emit('update:status', { state: 'ready', mode: 'auto', version: '2.0.0' })
+    expect(screen.getByText('Version 2.0.0 is ready to install.')).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: 'Restart and update' })).toBeInTheDocument()
   })
 
   it('shows how many downloads are active on the Queue tab', async () => {

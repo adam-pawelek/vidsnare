@@ -2,7 +2,9 @@ import { useEffect, useState } from 'react'
 import type { AppInfo } from '@shared/ipc'
 import { resolveLocale, type MessageKey } from '@shared/i18n'
 import { ACTIVE_STATUSES } from '@shared/queue'
+import { UpdateBanner } from './components/AppUpdate'
 import { useQueue } from './hooks/useQueue'
+import { useUpdateStatus } from './hooks/useUpdateStatus'
 import { useSettings } from './hooks/useSettings'
 import { I18nProvider, useI18n } from './i18n'
 import { DownloadPage } from './pages/DownloadPage'
@@ -26,6 +28,7 @@ function Shell({ settings, update }: ReturnType<typeof useSettings>): React.JSX.
   useEffect(() => window.vidsnare.on('app:navigate', ({ page }) => setPage(page)), [])
   const [info, setInfo] = useState<AppInfo | null>(null)
   const jobs = useQueue()
+  const updateStatus = useUpdateStatus()
   const active = jobs.filter((j) => ACTIVE_STATUSES.includes(j.status) || j.status === 'queued').length
 
   useEffect(() => {
@@ -55,6 +58,7 @@ function Shell({ settings, update }: ReturnType<typeof useSettings>): React.JSX.
         {info && <div className="version muted">v{info.version}</div>}
       </nav>
       <main className="content">
+        <UpdateBanner status={updateStatus} />
         {/* The download page stays mounted so a loaded playlist survives switching tabs. */}
         <div hidden={page !== 'download'}>
           <DownloadPage settings={settings} onOpenQueue={() => setPage('queue')} />

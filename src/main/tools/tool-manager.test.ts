@@ -79,7 +79,8 @@ beforeEach(async () => {
   dataDir = join(root, 'data')
   await mkdir(bundledDir, { recursive: true })
   await writeFile(join(bundledDir, 'yt-dlp'), '2026.01.01\n')
-  await writeFile(join(bundledDir, 'ffmpeg'), 'ffmpeg version n7.1-lgpl Copyright\n')
+  await mkdir(join(bundledDir, 'ffmpeg', 'bin'), { recursive: true })
+  await writeFile(join(bundledDir, 'ffmpeg', 'bin', 'ffmpeg'), 'ffmpeg version n7.1-lgpl Copyright\n')
   await writeFile(join(bundledDir, 'deno'), 'deno 2.5.0 (stable)\n')
 })
 
@@ -102,7 +103,8 @@ describe('ToolManager.resolve', () => {
     })
     expect(tools.ffmpeg?.version).toBe('n7.1-lgpl')
     expect(tools.deno?.version).toBe('2.5.0')
-    expect(ffmpegLocation(tools)).toBe(bundledDir)
+    // yt-dlp gets the folder, where it also finds ffprobe.
+    expect(ffmpegLocation(tools)).toBe(join(bundledDir, 'ffmpeg', 'bin'))
   })
 
   it('reports a missing tool as null', async () => {
@@ -266,7 +268,7 @@ describe('falling back', () => {
 
 describe('system tools', () => {
   it('finds a tool on PATH when allowed and nothing is bundled', async () => {
-    await rm(join(bundledDir, 'ffmpeg'))
+    await rm(join(bundledDir, 'ffmpeg'), { recursive: true })
     const sys = join(root, 'sysbin')
     await mkdir(sys)
     await writeFile(join(sys, 'ffmpeg'), 'ffmpeg version 6.1 Copyright\n', { mode: 0o755 })

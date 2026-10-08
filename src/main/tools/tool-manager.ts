@@ -4,7 +4,7 @@ import { access, chmod, mkdir, readdir, readFile, rename, rm, writeFile } from '
 import { delimiter, dirname, join } from 'node:path'
 import { unzipSync } from 'fflate'
 import type { Http } from './http'
-import { executableName, VERSION_ARGS, type Target, type ToolName, type UpdatableTool } from './platform'
+import { bundledPath, executableName, VERSION_ARGS, type Target, type ToolName, type UpdatableTool } from './platform'
 import { latestRelease } from './releases'
 import { compareVersions, parseVersionOutput } from './versions'
 
@@ -72,7 +72,7 @@ export class ToolManager {
     const manifest = await this.readManifest()
     const entry = name === 'ffmpeg' ? undefined : manifest.tools[name]
     if (entry) candidates.push({ path: join(this.opts.dataDir, entry.file), source: 'updated' })
-    candidates.push({ path: join(this.opts.bundledDir, executableName(name, this.opts.target)), source: 'bundled' })
+    candidates.push({ path: join(this.opts.bundledDir, ...bundledPath(name, this.opts.target)), source: 'bundled' })
     if (this.opts.allowSystem) {
       const system = await this.findOnPath(name)
       if (system) candidates.push({ path: system, source: 'system' })

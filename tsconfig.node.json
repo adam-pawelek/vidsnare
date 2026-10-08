@@ -5,5 +5,5 @@
     "lib": ["ES2023"],
     "types": ["node", "vitest/globals"]
   },
-  "include": ["electron.vite.config.ts", "vitest.config.ts", "src/main/**/*", "src/preload/**/*", "src/shared/**/*", "scripts/**/*"]
+  "include": ["electron.vite.config.ts", "vitest.config.ts", "vitest.e2e.config.ts", "tests/**/*", "src/main/**/*", "src/preload/**/*", "src/shared/**/*", "scripts/**/*"]
 }

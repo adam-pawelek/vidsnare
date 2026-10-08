@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { parseChecksumFile, parseDigest } from './checksums'
-import { checksumAsset, executableName, releaseAsset } from './platform'
+import { bundledPath, checksumAsset, executableName, releaseAsset } from './platform'
 import { compareVersions, normalizeTag, parseVersionOutput } from './versions'
 
 describe('compareVersions', () => {
@@ -63,6 +63,11 @@ describe('platform', () => {
   it('names executables per platform', () => {
     expect(executableName('yt-dlp', { platform: 'win32', arch: 'x64' })).toBe('yt-dlp.exe')
     expect(executableName('ffprobe', { platform: 'linux', arch: 'x64' })).toBe('ffprobe')
+  })
+
+  it('locates bundled tools', () => {
+    expect(bundledPath('ffmpeg', { platform: 'win32', arch: 'x64' })).toEqual(['ffmpeg', 'bin', 'ffmpeg.exe'])
+    expect(bundledPath('yt-dlp', { platform: 'linux', arch: 'x64' })).toEqual(['yt-dlp'])
   })
 
   it('knows where each project publishes checksums', () => {

@@ -1,10 +1,13 @@
 import { app, BrowserWindow, clipboard, dialog, nativeTheme, Notification, shell } from 'electron'
+import { createRequire } from 'node:module'
 import { dirname } from 'node:path'
 import { createTranslator, resolveLocale, type Translate } from '@shared/i18n'
 import type { EventChannel, EventMap } from '@shared/ipc'
+import { isReleaseRepoConfigured, RELEASES_URL } from '@shared/release'
 import type { Settings } from '@shared/settings'
 import { handle } from './ipc'
 import { Notifier } from './notifier'
+import { detectUpdateMode, UpdateController } from './update/update-controller'
 import { createServices, type Services } from './services'
 import { throttle } from './throttle'
 import { createMainWindow, isTrustedFrameUrl } from './window'
@@ -30,8 +33,16 @@ function showWindow(page?: EventMap['app:navigate']['page']): void {
   if (page) win.webContents.send('app:navigate', { page })
 }
 
-function registerIpc(services: Services): void {
+const SIX_HOURS = 6 * 60 * 60 * 1000
+
+function registerIpc(services: Services, updates: UpdateController): void {
   const { settings, history, engine, media, queue, queueService } = services
+
+  handle('update:get-status', trusted, () => updates.getStatus())
+  handle('update:check', trusted, () => updates.check())
+  handle('update:download', trusted, () => updates.download())
+  handle('update:install', trusted, () => updates.install())
+  handle('update:open-releases', trusted, () => shell.openExternal(RELEASES_URL))
 
   handle('app:get-info', trusted, () => ({ name: app.getName(), version: app.getVersion(), platform: process.platform }))
   handle('app:read-clipboard', trusted, async () => (await clipboard.readText()).trim().slice(0, 4096))
@@ -172,7 +183,21 @@ if (!app.requestSingleInstanceLock()) {
   app.whenReady().then(async () => {
     app.setAppUserModelId('com.vidsnare.app')
     services = await createServices({ onQueueChange: pushQueue, onJobFinished: (job) => notifier.jobFinished(job) })
-    registerIpc(services)
+    const live = services
+    const updates = new UpdateController({
+      mode: isReleaseRepoConfigured()
+        ? detectUpdateMode({ packaged: app.isPackaged, platform: process.platform, env: process.env })
+        : 'disabled',
+      // Loaded only in packaged builds; electron-updater reads app-update.yml from resources.
+      updater: () => createRequire(import.meta.url)('electron-updater').autoUpdater,
+      autoUpdate: () => live.settings.get().autoUpdateApp,
+      onStatus: (status) => broadcast('update:status', status),
+      beforeInstall: async () => {
+        quitConfirmed = true
+        await live.queue.shutdown()
+      }
+    })
+    registerIpc(services, updates)
 
     // Native parts (dialogs, title bar) and the page's prefers-color-scheme follow the theme setting.
     nativeTheme.themeSource = services.settings.get().theme
@@ -184,6 +209,13 @@ if (!app.requestSingleInstanceLock()) {
     guardClose(createMainWindow())
 
     if (services.settings.get().autoUpdateEngine) void services.engine.updateIfDue()
+
+    // App updates: shortly after start (not to slow it down), then every six hours.
+    const checkApp = (): void => {
+      if (live.settings.get().autoUpdateApp) void updates.check()
+    }
+    setTimeout(checkApp, 10_000)
+    setInterval(checkApp, SIX_HOURS)
 
     nativeTheme.on('updated', () => broadcast('app:theme-changed', { dark: nativeTheme.shouldUseDarkColors }))
     app.on('activate', () => {

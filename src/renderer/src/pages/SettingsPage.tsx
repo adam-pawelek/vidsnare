@@ -2,12 +2,14 @@ import { useEffect, useState } from 'react'
 import { renderFilename } from '@shared/filename'
 import { LOCALES, SUPPORTED_LOCALES } from '@shared/i18n'
 import type { EngineStatus, EngineUpdateResult } from '@shared/ipc'
+import { REPO_URL as SOURCE_URL } from '@shared/release'
 import { MAX_CONCURRENT_LIMIT, type Settings } from '@shared/settings'
+import { AppUpdateControls } from '../components/AppUpdate'
 import { OptionsPanel } from '../components/OptionsPanel'
+import { useUpdateStatus } from '../hooks/useUpdateStatus'
 import { useI18n } from '../i18n'
 
 const FIELDS = '{title} {id} {channel} {date} {index}'
-const SOURCE_URL = 'https://github.com/OWNER/vidsnare'
 const EXAMPLE = { title: 'Example video', id: 'dQw4w9WgXcQ', channel: 'Channel', uploadDate: '20240115', playlistIndex: 3, playlistCount: 25 }
 
 function Toggle({ label, help, checked, onChange }: { label: string; help?: string; checked: boolean; onChange: (v: boolean) => void }): React.JSX.Element {
@@ -122,6 +124,7 @@ export function SettingsPage({ settings, update }: { settings: Settings; update:
   const { t } = useI18n()
   const [defaultFolder, setDefaultFolder] = useState('')
   const [version, setVersion] = useState('')
+  const updateStatus = useUpdateStatus()
 
   useEffect(() => {
     void window.vidsnare.invoke('queue:default-folder').then(setDefaultFolder)
@@ -225,6 +228,7 @@ export function SettingsPage({ settings, update }: { settings: Settings; update:
         <p>
           <span className="field-label">{t('settings.appVersion')}</span> {version}
         </p>
+        <AppUpdateControls status={updateStatus} />
         <Toggle label={t('settings.autoUpdate')} checked={settings.autoUpdateApp} onChange={(v) => void update({ autoUpdateApp: v })} />
         <EngineSection />
         <Toggle

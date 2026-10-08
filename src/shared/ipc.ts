@@ -9,6 +9,7 @@ import type { HistoryItem, HistoryQuery } from './history'
 import type { FetchInfoResult } from './media'
 import type { AddDownloadsRequest, AddDownloadsResult, DownloadJob } from './queue'
 import type { Settings } from './settings'
+import type { UpdateStatus } from './update'
 
 export interface AppInfo {
   name: string
@@ -64,6 +65,11 @@ export interface InvokeMap {
   'history:open-file': [[id: string], void]
   'history:show-in-folder': [[id: string], void]
   'history:download-again': [[id: string], AddDownloadsResult]
+  'update:get-status': [[], UpdateStatus]
+  'update:check': [[], UpdateStatus]
+  'update:download': [[], void]
+  'update:install': [[], void]
+  'update:open-releases': [[], void]
 }
 
 /** Push channels from main to renderer: channel name -> payload. */
@@ -75,6 +81,7 @@ export interface EventMap {
   'history:changed': null
   /** Ask the UI to show a page (e.g. after clicking a notification). */
   'app:navigate': { page: 'download' | 'queue' | 'history' | 'settings' }
+  'update:status': UpdateStatus
 }
 
 export type InvokeChannel = keyof InvokeMap
@@ -106,9 +113,14 @@ export const INVOKE_CHANNELS = [
   'history:clear',
   'history:open-file',
   'history:show-in-folder',
-  'history:download-again'
+  'history:download-again',
+  'update:get-status',
+  'update:check',
+  'update:download',
+  'update:install',
+  'update:open-releases'
 ] as const satisfies readonly InvokeChannel[]
-export const EVENT_CHANNELS = ['app:theme-changed', 'tools:update-progress', 'queue:changed', 'settings:changed', 'history:changed', 'app:navigate'] as const satisfies readonly EventChannel[]
+export const EVENT_CHANNELS = ['app:theme-changed', 'tools:update-progress', 'queue:changed', 'settings:changed', 'history:changed', 'app:navigate', 'update:status'] as const satisfies readonly EventChannel[]
 
 export function isInvokeChannel(value: unknown): value is InvokeChannel {
   return typeof value === 'string' && (INVOKE_CHANNELS as readonly string[]).includes(value)

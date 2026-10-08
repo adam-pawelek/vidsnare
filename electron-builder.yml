@@ -1,0 +1,66 @@
+appId: com.vidsnare.app
+productName: VidSnare
+copyright: Copyright © 2026 VidSnare contributors
+
+directories:
+  output: release
+  buildResources: build
+
+files:
+  - out/**
+  - package.json
+  - '!**/*.map'
+
+# yt-dlp, deno and ffmpeg for the platform being built, fetched by
+# `npm run fetch-binaries` (scripts/fetch-binaries.mjs) before packaging.
+extraResources:
+  - from: resources/bin/${platform}-${arch}
+    to: bin
+  - from: docs/THIRD_PARTY.md
+    to: THIRD_PARTY.md
+  - from: LICENSE
+    to: LICENSE
+
+win:
+  target:
+    - target: nsis
+      arch: [x64]
+  icon: build/icon.png
+
+nsis:
+  oneClick: false
+  perMachine: false
+  allowToChangeInstallationDirectory: true
+  createDesktopShortcut: true
+  createStartMenuShortcut: true
+  shortcutName: VidSnare
+  artifactName: ${productName}-Setup-${version}.${ext}
+  deleteAppDataOnUninstall: false
+
+linux:
+  target:
+    - target: AppImage
+      arch: [x64]
+    - target: deb
+      arch: [x64]
+  category: AudioVideo
+  # Lets desktops match the running window to its launcher icon.
+  syncDesktopName: true
+  executableName: vidsnare
+  icon: build/icon.png
+  synopsis: Download videos and audio from YouTube
+  description: VidSnare downloads videos and audio from YouTube, with playlists, subtitles and a download queue.
+  maintainer: VidSnare contributors <vidsnare@users.noreply.github.com>
+
+appImage:
+  artifactName: ${productName}-${version}-${arch}.${ext}
+
+deb:
+  artifactName: ${productName}_${version}_${arch}.${ext}
+
+# Replace OWNER with the GitHub account that hosts the public repository.
+publish:
+  provider: github
+  owner: OWNER
+  repo: vidsnare
+  releaseType: release

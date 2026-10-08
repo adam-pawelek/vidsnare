@@ -22,6 +22,14 @@ export function executableName(tool: ToolName | 'ffprobe', target: Target): stri
   return target.platform === 'win32' ? `${tool}.exe` : tool
 }
 
+/**
+ * Where a bundled tool sits inside the bundle folder. ffmpeg is the LGPL
+ * "shared" build, so it keeps its own bin/ (and lib/ on Linux) layout.
+ */
+export function bundledPath(tool: ToolName, target: Target): string[] {
+  return tool === 'ffmpeg' ? ['ffmpeg', 'bin', executableName('ffmpeg', target)] : [executableName(tool, target)]
+}
+
 export const REPOS: Record<UpdatableTool, string> = {
   'yt-dlp': 'yt-dlp/yt-dlp',
   deno: 'denoland/deno'
