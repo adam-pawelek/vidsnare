@@ -1,5 +1,7 @@
 import { app, net } from 'electron'
 import { join } from 'node:path'
+import { spawnRunner } from './core/runner'
+import { MediaService } from './media-service'
 import { EngineService } from './tools/engine-service'
 import { createHttp } from './tools/http'
 import { currentTarget, targetDir } from './tools/platform'
@@ -10,6 +12,7 @@ import { ToolManager } from './tools/tool-manager'
 export interface Services {
   tools: ToolManager
   engine: EngineService
+  media: MediaService
 }
 
 export function createServices(): Services {
@@ -28,5 +31,6 @@ export function createServices(): Services {
     allowSystem: !app.isPackaged
   })
   const engine = new EngineService(tools, (message) => console.warn(`[engine] ${message}`))
-  return { tools, engine }
+  const media = new MediaService(tools, spawnRunner)
+  return { tools, engine, media }
 }

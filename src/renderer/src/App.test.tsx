@@ -1,16 +1,22 @@
 // @vitest-environment jsdom
-import { render, screen } from '@testing-library/react'
-import { describe, expect, it, vi } from 'vitest'
+import { fireEvent, render, screen } from '@testing-library/react'
+import { describe, expect, it } from 'vitest'
 import { App } from './App'
+import { mockApi } from './test-utils'
 
 describe('App', () => {
-  it('shows the app version from the main process', async () => {
-    window.vidsnare = {
-      invoke: vi.fn(async () => ({ name: 'VidSnare', version: '1.2.3', platform: 'linux' })) as never,
-      on: vi.fn(() => () => {})
-    }
+  it('shows navigation and the app version', async () => {
+    mockApi({ 'app:get-info': () => ({ name: 'VidSnare', version: '1.2.3', platform: 'linux' }) })
     render(<App />)
-    expect(screen.getByRole('heading', { name: 'VidSnare' })).toBeInTheDocument()
+    expect(screen.getByRole('navigation', { name: 'Main' })).toBeInTheDocument()
     expect(await screen.findByText('v1.2.3')).toBeInTheDocument()
+  })
+
+  it('switches pages', async () => {
+    mockApi({ 'app:get-info': () => ({ name: 'VidSnare', version: '1.2.3', platform: 'linux' }) })
+    render(<App />)
+    fireEvent.click(screen.getByRole('button', { name: 'Settings' }))
+    expect(screen.getByRole('button', { name: 'Settings' })).toHaveAttribute('aria-current', 'page')
+    expect(await screen.findByRole('heading', { name: 'Settings' })).toBeInTheDocument()
   })
 })

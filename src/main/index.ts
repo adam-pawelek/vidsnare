@@ -1,4 +1,4 @@
-import { app, BrowserWindow, nativeTheme } from 'electron'
+import { app, BrowserWindow, clipboard, nativeTheme } from 'electron'
 import type { EventChannel, EventMap } from '@shared/ipc'
 import { handle } from './ipc'
 import { createServices, type Services } from './services'
@@ -13,6 +13,12 @@ function registerIpc(services: Services): void {
     version: app.getVersion(),
     platform: process.platform
   }))
+  handle('app:read-clipboard', trusted, async () => (await clipboard.readText()).trim().slice(0, 4096))
+  handle('media:fetch-info', trusted, (url) =>
+    typeof url === 'string'
+      ? services.media.fetchInfo(url)
+      : { ok: false, error: { code: 'INVALID_URL', retryable: false, detail: '' } }
+  )
   handle('tools:get-status', trusted, () => services.engine.status())
   handle('tools:update-engine', trusted, () =>
     services.engine.update((fraction) => broadcast('tools:update-progress', { fraction }))
