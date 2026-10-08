@@ -177,7 +177,7 @@ export const en = {
     DISK_FULL: 'There is not enough free space on the disk.',
     PERMISSION_DENIED: "VidSnare isn't allowed to save files in this folder. Choose a different folder.",
     FORMAT_UNAVAILABLE: 'The chosen quality or format is not available for this video.',
-    ENGINE_OUTDATED: 'YouTube changed something. Update the download engine in Settings, then try again.',
+    ENGINE_OUTDATED: 'YouTube changed something. VidSnare is updating its download engine – try again in a few minutes.',
     POSTPROCESSING_FAILED: 'The file was downloaded but could not be converted.',
     TOOL_MISSING: 'A required component is missing. Reinstall VidSnare.',
     INVALID_URL: "That doesn't look like a YouTube link.",

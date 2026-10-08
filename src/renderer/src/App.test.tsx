@@ -50,15 +50,27 @@ describe('App', () => {
   it('switches language from the sidebar', async () => {
     const { emit } = setup()
     render(<App />)
-    const picker = await screen.findByRole('combobox', { name: 'Change language' })
-    const options = Array.from((picker as HTMLSelectElement).options).map((o) => o.text)
-    expect(options).toEqual(['System default', 'English', 'Polski', 'Deutsch', 'Español', 'Português (Brasil)', 'Русский', '日本語', 'Français'])
-    fireEvent.change(picker, { target: { value: 'pl' } })
+    fireEvent.click(await screen.findByRole('button', { name: /Change language/ }))
+    fireEvent.change(screen.getByRole('combobox', { name: 'Language' }), { target: { value: 'pol' } })
+    fireEvent.click(screen.getByRole('option', { name: /Polski/ }))
     expect(await screen.findByRole('button', { name: 'Pobierz' })).toBeInTheDocument()
-    const polish = screen.getByRole('combobox', { name: /^Zmień język/ })
-    expect(polish).toHaveValue('pl')
+    expect(screen.getByRole('button', { name: /Zmień język/ })).toHaveTextContent('Polski')
     emit('settings:changed', { ...DEFAULT_SETTINGS, language: 'ja' })
     expect(await screen.findByRole('button', { name: 'ダウンロード' })).toBeInTheDocument()
+  })
+
+  it('mirrors the layout for right-to-left languages', async () => {
+    const { emit } = setup()
+    render(<App />)
+    await screen.findByText('v1.2.3')
+    expect(document.documentElement.dir).toBe('ltr')
+    emit('settings:changed', { ...DEFAULT_SETTINGS, language: 'ar' })
+    expect(await screen.findByRole('button', { name: 'الإعدادات' })).toBeInTheDocument()
+    expect(document.documentElement.dir).toBe('rtl')
+    expect(document.documentElement.lang).toBe('ar')
+    emit('settings:changed', { ...DEFAULT_SETTINGS, language: 'en' })
+    await screen.findByRole('button', { name: 'Settings' })
+    expect(document.documentElement.dir).toBe('ltr')
   })
 
   it('applies a forced theme and follows the system otherwise', async () => {
@@ -69,7 +81,7 @@ describe('App', () => {
     unmount()
     setup()
     render(<App />)
-    await screen.findByRole('combobox', { name: 'Change language' })
+    await screen.findByRole('button', { name: /Change language/ })
     await waitFor(() => expect(document.documentElement.dataset['theme']).toBeUndefined())
   })
 

@@ -149,7 +149,7 @@ a[aria-disabled='true'] {
 
 .other ul {
   margin: 8px 0 0;
-  padding-left: 20px;
+  padding-inline-start: 20px;
 }
 
 .hero-shot img,

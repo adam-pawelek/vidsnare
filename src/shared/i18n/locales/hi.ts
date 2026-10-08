@@ -1,0 +1,185 @@
+import type { Messages } from '../types'
+
+export const hi: Messages = {
+  app: {
+    quitTitle: 'डाउनलोड चल रहे हैं',
+    quitMessage: 'बंद करने पर चल रहे डाउनलोड रद्द हो जाएँगे।',
+    quitAnyway: 'फिर भी बंद करें',
+    keepDownloading: 'डाउनलोड जारी रखें'
+  },
+  common: {
+    ok: 'ठीक है',
+    cancel: 'रद्द करें',
+    close: 'बंद करें',
+    retry: 'फिर से कोशिश करें',
+    remove: 'हटाएँ',
+    save: 'सहेजें',
+    browse: 'ब्राउज़ करें…',
+    changeFolder: 'डाउनलोड फ़ोल्डर बदलें…',
+    reset: 'डिफ़ॉल्ट पर लौटाएँ',
+    copyDetails: 'विवरण कॉपी करें',
+    copied: 'कॉपी हो गया',
+    loading: 'लोड हो रहा है…',
+    unknown: 'अज्ञात'
+  },
+  contextMenu: {
+    cut: 'काटें',
+    copy: 'कॉपी करें',
+    paste: 'चिपकाएँ',
+    selectAll: 'सभी चुनें'
+  },
+  nav: {
+    changeLanguage: 'भाषा बदलें',
+    download: 'डाउनलोड',
+    queue: 'कतार',
+    history: 'इतिहास',
+    settings: 'सेटिंग'
+  },
+  input: {
+    placeholder: 'YouTube लिंक चिपकाएँ (वीडियो या प्लेलिस्ट)',
+    paste: 'चिपकाएँ',
+    load: 'लोड करें',
+    invalid: 'यह YouTube लिंक जैसा नहीं लगता।',
+    hint: 'वीडियो, Shorts, प्लेलिस्ट और चैनल समर्थित हैं।'
+  },
+  preview: {
+    by: '{channel} द्वारा',
+    duration: 'अवधि',
+    live: 'लाइव',
+    videos: { one: '{count} वीडियो', other: '{count} वीडियो' },
+    selectAll: 'सभी चुनें',
+    selectNone: 'कोई नहीं',
+    selected: '{total} में से {selected} चुने गए',
+    alreadyDownloaded: 'पहले से डाउनलोड है',
+    hideDownloaded: 'डाउनलोड किए गए छिपाएँ',
+    partOfPlaylist: 'यह वीडियो एक प्लेलिस्ट का हिस्सा है।',
+    thisVideoOnly: 'सिर्फ़ यह वीडियो',
+    wholePlaylist: 'पूरी प्लेलिस्ट',
+    unavailableEntry: 'उपलब्ध नहीं'
+  },
+  options: {
+    downloadAs: 'इस रूप में डाउनलोड करें',
+    video: 'वीडियो',
+    audio: 'सिर्फ़ ऑडियो',
+    quality: 'क्वालिटी',
+    qualityBest: 'सबसे अच्छी उपलब्ध',
+    container: 'फ़ाइल प्रकार',
+    containerMp4: 'MP4 – हर जगह चलता है (1080p तक)',
+    containerMkv: 'MKV – सबसे ऊँची क्वालिटी (नया प्लेयर चाहिए)',
+    audioFormat: 'ऑडियो फ़ॉर्मैट',
+    subtitles: 'सबटाइटल',
+    subtitlesEnabled: 'सबटाइटल डाउनलोड करें',
+    subtitleLanguages: 'भाषाएँ',
+    autoSubs: 'ज़रूरत हो तो अपने-आप बने कैप्शन इस्तेमाल करें',
+    embedSubs: 'वीडियो फ़ाइल में जोड़ें',
+    saveTo: 'यहाँ सहेजें',
+    download: 'डाउनलोड करें',
+    downloadMany: { one: '{count} वीडियो डाउनलोड करें', other: '{count} वीडियो डाउनलोड करें' },
+    added: { one: 'कतार में {count} डाउनलोड जोड़ा गया', other: 'कतार में {count} डाउनलोड जोड़े गए' },
+    addedHint: 'प्रगति देखने और तैयार होने पर फ़ाइल खोलने के लिए बाईं ओर “{queue}” पर क्लिक करें।',
+    skippedExisting: {
+      one: 'पहले से डाउनलोड किया {count} वीडियो छोड़ा गया',
+      other: 'पहले से डाउनलोड किए {count} वीडियो छोड़े गए'
+    }
+  },
+  queue: {
+    empty: 'अभी कोई डाउनलोड नहीं है। शुरू करने के लिए लिंक चिपकाएँ।',
+    status: {
+      queued: 'इंतज़ार में',
+      downloading: 'डाउनलोड हो रहा है',
+      processing: 'प्रोसेस हो रहा है',
+      completed: 'पूरा हुआ',
+      failed: 'विफल',
+      cancelled: 'रद्द किया गया',
+      skipped: 'पहले से डाउनलोड है'
+    },
+    progress: '{total} में से {done}',
+    speed: '{speed}',
+    eta: '{time} बाकी',
+    cancel: 'रद्द करें',
+    retry: 'फिर से कोशिश करें',
+    openFile: 'फ़ाइल खोलें',
+    showInFolder: 'फ़ोल्डर में दिखाएँ',
+    clearFinished: 'पूरे हुए हटाएँ',
+    cancelAll: 'सभी रद्द करें',
+    active: { one: '{count} चालू', other: '{count} चालू' }
+  },
+  history: {
+    empty: 'पूरे हुए डाउनलोड यहाँ दिखेंगे।',
+    search: 'इतिहास में खोजें',
+    clear: 'इतिहास साफ़ करें',
+    clearConfirm: 'इतिहास की सभी प्रविष्टियाँ हटाएँ? डाउनलोड की गई फ़ाइलें नहीं हटेंगी।',
+    fileMissing: 'फ़ाइल हटा दी गई या कहीं और ले जाई गई',
+    downloadAgain: 'फिर से डाउनलोड करें',
+    noResults: 'कोई मिलान नहीं मिला।'
+  },
+  settings: {
+    title: 'सेटिंग',
+    sections: {
+      downloads: 'डाउनलोड',
+      defaults: 'डिफ़ॉल्ट विकल्प',
+      appearance: 'रूप-रंग',
+      updates: 'अपडेट',
+      about: 'जानकारी'
+    },
+    downloadFolder: 'डाउनलोड फ़ोल्डर',
+    maxConcurrent: 'एक साथ डाउनलोड',
+    skipDownloaded: 'पहले से डाउनलोड किए वीडियो छोड़ें',
+    skipDownloadedHelp: 'प्लेलिस्ट जोड़ते समय डाउनलोड इतिहास वाले वीडियो छोड़ दिए जाते हैं।',
+    playlistSubfolder: 'प्लेलिस्ट को अलग फ़ोल्डर में सहेजें',
+    notifications: 'डाउनलोड पूरा होने पर सूचना दिखाएँ',
+    language: 'भाषा',
+    systemLanguage: 'सिस्टम की भाषा',
+    theme: 'थीम',
+    themeSystem: 'सिस्टम के अनुसार',
+    themeLight: 'हल्की',
+    themeDark: 'गहरी',
+    appVersion: 'ऐप वर्शन',
+    updateAvailable: 'वर्शन {version} उपलब्ध है।',
+    updateDownloading: 'अपडेट डाउनलोड हो रहा है… {percent}',
+    updateReady: 'वर्शन {version} इंस्टॉल के लिए तैयार है।',
+    restartToUpdate: 'रीस्टार्ट करके अपडेट करें',
+    manualUpdate: 'नया वर्शन रिलीज़ पेज से डाउनलोड करें।',
+    openReleases: 'रिलीज़ पेज खोलें',
+    engine: 'डाउनलोड इंजन',
+    engineHelp: 'VidSnare ख़ुद को और अपने डाउनलोड इंजन को अपने-आप अपडेट रखता है।',
+    engineVersion: 'yt-dlp {version}',
+    useSystemFolder: 'सिस्टम का Downloads फ़ोल्डर इस्तेमाल करें',
+    lastChecked: 'आख़िरी जाँच: {date}',
+    never: 'कभी नहीं',
+    disclaimer:
+      'YouTube की सेवा की शर्तों और कॉपीराइट क़ानून का पालन करना आपकी ज़िम्मेदारी है। सिर्फ़ वही सामग्री डाउनलोड करें जिसे डाउनलोड करने का आपको अधिकार है।',
+    licenses: 'थर्ड-पार्टी लाइसेंस',
+    sourceCode: 'सोर्स कोड'
+  },
+  notify: {
+    finishedTitle: 'डाउनलोड पूरा हुआ',
+    failedTitle: 'डाउनलोड विफल',
+    allFinished: { one: '{count} डाउनलोड पूरा हुआ', other: '{count} डाउनलोड पूरे हुए' },
+    failedMany: { one: '{count} डाउनलोड विफल रहा', other: '{count} डाउनलोड विफल रहे' }
+  },
+  errors: {
+    PRIVATE_VIDEO: 'यह वीडियो निजी है।',
+    VIDEO_UNAVAILABLE: 'यह वीडियो उपलब्ध नहीं है। हो सकता है इसे हटा दिया गया हो या यह कभी था ही नहीं।',
+    AGE_RESTRICTED: 'इस वीडियो पर उम्र की पाबंदी है और इसके लिए साइन-इन ज़रूरी है, जो VidSnare नहीं करता।',
+    MEMBERS_ONLY: 'यह वीडियो सिर्फ़ चैनल के भुगतान करने वाले सदस्यों के लिए है।',
+    PAID_CONTENT: 'यह वीडियो YouTube पर ख़रीदना या किराए पर लेना होगा।',
+    REGION_BLOCKED: 'यह वीडियो आपके देश में उपलब्ध नहीं है।',
+    COPYRIGHT_BLOCKED: 'कॉपीराइट दावे की वजह से यह वीडियो ब्लॉक है।',
+    LIVE_NOT_STARTED: 'यह लाइव स्ट्रीम या प्रीमियर अभी शुरू नहीं हुआ है। शुरू होने के बाद फिर कोशिश करें।',
+    DRM_PROTECTED: 'यह वीडियो कॉपी-सुरक्षित (DRM) है, इसलिए डाउनलोड नहीं हो सकता।',
+    BOT_CHECK: 'YouTube पुष्टि चाहता है कि आप बॉट नहीं हैं। थोड़ा रुककर फिर कोशिश करें।',
+    RATE_LIMITED: 'YouTube अभी अनुरोध सीमित कर रहा है। कुछ मिनट रुककर फिर कोशिश करें।',
+    NO_INTERNET: 'YouTube से कनेक्ट नहीं हो पा रहा। अपना इंटरनेट कनेक्शन जाँचें।',
+    DISK_FULL: 'डिस्क पर पर्याप्त खाली जगह नहीं है।',
+    PERMISSION_DENIED: 'VidSnare को इस फ़ोल्डर में फ़ाइल सहेजने की अनुमति नहीं है। कोई दूसरा फ़ोल्डर चुनें।',
+    FORMAT_UNAVAILABLE: 'चुनी गई क्वालिटी या फ़ॉर्मैट इस वीडियो के लिए उपलब्ध नहीं है।',
+    ENGINE_OUTDATED: 'YouTube ने कुछ बदला है। VidSnare अपना डाउनलोड इंजन अपडेट कर रहा है – कुछ मिनट बाद फिर कोशिश करें।',
+    POSTPROCESSING_FAILED: 'फ़ाइल डाउनलोड हो गई, पर बदली नहीं जा सकी।',
+    TOOL_MISSING: 'एक ज़रूरी हिस्सा मौजूद नहीं है। VidSnare दोबारा इंस्टॉल करें।',
+    INVALID_URL: 'यह YouTube लिंक जैसा नहीं लगता।',
+    UNSUPPORTED_URL: 'इस तरह का लिंक समर्थित नहीं है।',
+    CANCELLED: 'रद्द किया गया।',
+    UNKNOWN: 'कुछ गड़बड़ हो गई।'
+  }
+}

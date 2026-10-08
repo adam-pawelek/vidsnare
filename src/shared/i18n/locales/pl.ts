@@ -196,7 +196,7 @@ export const pl: Messages = {
     DISK_FULL: 'Na dysku brakuje wolnego miejsca.',
     PERMISSION_DENIED: 'VidSnare nie ma uprawnień do zapisu w tym folderze. Wybierz inny folder.',
     FORMAT_UNAVAILABLE: 'Wybrana jakość lub format nie jest dostępny dla tego filmu.',
-    ENGINE_OUTDATED: 'YouTube coś zmienił. Zaktualizuj silnik pobierania w Ustawieniach i spróbuj ponownie.',
+    ENGINE_OUTDATED: 'YouTube coś zmienił. VidSnare aktualizuje silnik pobierania – spróbuj ponownie za kilka minut.',
     POSTPROCESSING_FAILED: 'Plik został pobrany, ale nie udało się go przekonwertować.',
     TOOL_MISSING: 'Brakuje wymaganego składnika. Zainstaluj VidSnare ponownie.',
     INVALID_URL: 'To nie wygląda na link do YouTube.',

@@ -177,7 +177,7 @@ export const de: Messages = {
     DISK_FULL: 'Auf dem Datenträger ist nicht genug Speicherplatz frei.',
     PERMISSION_DENIED: 'VidSnare darf in diesem Ordner keine Dateien speichern. Wähle einen anderen Ordner.',
     FORMAT_UNAVAILABLE: 'Die gewählte Qualität oder das Format ist für dieses Video nicht verfügbar.',
-    ENGINE_OUTDATED: 'YouTube hat etwas geändert. Aktualisiere die Download-Engine in den Einstellungen und versuche es erneut.',
+    ENGINE_OUTDATED: 'YouTube hat etwas geändert. VidSnare aktualisiert gerade seine Download-Engine – versuche es in ein paar Minuten erneut.',
     POSTPROCESSING_FAILED: 'Die Datei wurde heruntergeladen, konnte aber nicht konvertiert werden.',
     TOOL_MISSING: 'Eine benötigte Komponente fehlt. Installiere VidSnare neu.',
     INVALID_URL: 'Das sieht nicht nach einem YouTube-Link aus.',

@@ -187,7 +187,7 @@ export const ptBR: Messages = {
     DISK_FULL: 'Não há espaço livre suficiente no disco.',
     PERMISSION_DENIED: 'O VidSnare não tem permissão para salvar arquivos nesta pasta. Escolha outra pasta.',
     FORMAT_UNAVAILABLE: 'A qualidade ou o formato escolhido não está disponível para este vídeo.',
-    ENGINE_OUTDATED: 'O YouTube mudou algo. Atualize o mecanismo de download nas Configurações e tente de novo.',
+    ENGINE_OUTDATED: 'O YouTube mudou algo. O VidSnare está atualizando seu mecanismo de download – tente de novo em alguns minutos.',
     POSTPROCESSING_FAILED: 'O arquivo foi baixado, mas não pôde ser convertido.',
     TOOL_MISSING: 'Um componente necessário está faltando. Reinstale o VidSnare.',
     INVALID_URL: 'Isso não parece um link do YouTube.',

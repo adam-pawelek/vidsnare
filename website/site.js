@@ -1,4 +1,4 @@
-import { LANGUAGE_NAMES, STRINGS } from './strings.js'
+import { LANGUAGE_NAMES, RTL, STRINGS } from './strings.js'
 
 const REPO = 'adam-pawelek/vidsnare'
 const DOWNLOAD = `https://github.com/${REPO}/releases/latest/download`
@@ -17,6 +17,11 @@ export function pickLanguage(preferred) {
   for (const tag of preferred) {
     const exact = LANGUAGES.find((l) => l.toLowerCase() === String(tag).toLowerCase())
     if (exact) return exact
+    // Traditional Chinese only for Traditional-script regions, not Simplified Chinese.
+    if (/^zh\b/i.test(String(tag))) {
+      if (/^zh[-_](hant|tw|hk|mo)\b/i.test(String(tag))) return 'zh-TW'
+      continue
+    }
     const base = String(tag).split(/[-_]/)[0].toLowerCase()
     const byBase = LANGUAGES.find((l) => l.split('-')[0] === base)
     if (byBase) return byBase
@@ -40,6 +45,7 @@ export function format(template, vars = {}) {
 function render(lang, release) {
   const s = STRINGS[lang]
   document.documentElement.lang = lang
+  document.documentElement.dir = RTL.includes(lang) ? 'rtl' : 'ltr'
   document.title = s.title
   for (const el of document.querySelectorAll('[data-t]')) el.textContent = s[el.dataset.t]
   for (const el of document.querySelectorAll('[data-t-alt]')) el.alt = s[el.dataset.tAlt]

@@ -21,6 +21,11 @@ describe('website text', () => {
   it('names every language', () => {
     expect(Object.keys(LANGUAGE_NAMES).sort()).toEqual(Object.keys(STRINGS).sort())
   })
+
+  it('offers the same languages as the app', async () => {
+    const { SUPPORTED_LOCALES } = await import('../src/shared/i18n')
+    expect(Object.keys(STRINGS).sort()).toEqual([...SUPPORTED_LOCALES].sort())
+  })
 })
 
 describe('website helpers', () => {
@@ -28,7 +33,11 @@ describe('website helpers', () => {
     [['pl-PL'], 'pl'],
     [['pt-PT'], 'pt-BR'],
     [['zh-CN', 'de'], 'de'],
-    [['zh-CN'], 'en']
+    [['zh-CN'], 'en'],
+    [['zh-TW'], 'zh-TW'],
+    [['zh-HK'], 'zh-TW'],
+    [['ar-SA'], 'ar'],
+    [['uk-UA'], 'uk']
   ])('picks %j → %s', (prefs, lang) => {
     expect(pickLanguage(prefs)).toBe(lang)
   })

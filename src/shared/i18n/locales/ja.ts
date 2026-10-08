@@ -171,7 +171,7 @@ export const ja: Messages = {
     DISK_FULL: 'ディスクの空き容量が足りません。',
     PERMISSION_DENIED: 'このフォルダーにファイルを保存する権限がありません。別のフォルダーを選んでください。',
     FORMAT_UNAVAILABLE: '選択した画質または形式はこの動画では利用できません。',
-    ENGINE_OUTDATED: 'YouTube 側で変更がありました。設定でダウンロードエンジンを更新してから、もう一度お試しください。',
+    ENGINE_OUTDATED: 'YouTube 側で変更がありました。VidSnare がダウンロードエンジンを更新しています。数分後にもう一度お試しください。',
     POSTPROCESSING_FAILED: 'ファイルはダウンロードされましたが、変換できませんでした。',
     TOOL_MISSING: '必要なコンポーネントが見つかりません。VidSnare を再インストールしてください。',
     INVALID_URL: 'YouTube のリンクではないようです。',

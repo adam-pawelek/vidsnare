@@ -8,7 +8,7 @@ A desktop app for Windows and Linux that downloads videos and audio from YouTube
 - A download queue with progress, speed and time left; cancel, retry, open the file or its folder.
 - Several downloads at once (configurable), a searchable history, and skipping videos you already have.
 - Notifications, light/dark theme following the system, and clear error messages.
-- English, Polski, Deutsch, Español, Português (Brasil), Русский, 日本語, Français.
+- 26 languages, chosen from a searchable list, including right-to-left Arabic, Persian and Hebrew.
 
 > **Disclaimer:** VidSnare is a front end for [yt-dlp](https://github.com/yt-dlp/yt-dlp).
 > You are responsible for complying with YouTube's Terms of Service and the copyright

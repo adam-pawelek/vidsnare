@@ -191,7 +191,7 @@ export const es: Messages = {
     DISK_FULL: 'No hay suficiente espacio libre en el disco.',
     PERMISSION_DENIED: 'VidSnare no tiene permiso para guardar archivos en esta carpeta. Elige otra carpeta.',
     FORMAT_UNAVAILABLE: 'La calidad o el formato elegido no está disponible para este vídeo.',
-    ENGINE_OUTDATED: 'YouTube ha cambiado algo. Actualiza el motor de descarga en Ajustes y vuelve a intentarlo.',
+    ENGINE_OUTDATED: 'YouTube ha cambiado algo. VidSnare está actualizando su motor de descarga; vuelve a intentarlo en unos minutos.',
     POSTPROCESSING_FAILED: 'El archivo se descargó, pero no se pudo convertir.',
     TOOL_MISSING: 'Falta un componente necesario. Reinstala VidSnare.',
     INVALID_URL: 'Eso no parece un enlace de YouTube.',

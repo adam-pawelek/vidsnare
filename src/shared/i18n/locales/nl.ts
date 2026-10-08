@@ -1,0 +1,185 @@
+import type { Messages } from '../types'
+
+export const nl: Messages = {
+  app: {
+    quitTitle: 'Downloads bezig',
+    quitMessage: 'Als je afsluit, worden downloads die nog bezig zijn geannuleerd.',
+    quitAnyway: 'Toch afsluiten',
+    keepDownloading: 'Doorgaan met downloaden'
+  },
+  common: {
+    ok: 'OK',
+    cancel: 'Annuleren',
+    close: 'Sluiten',
+    retry: 'Opnieuw',
+    remove: 'Verwijderen',
+    save: 'Opslaan',
+    browse: 'Bladeren…',
+    changeFolder: 'Downloadmap wijzigen…',
+    reset: 'Standaardwaarden herstellen',
+    copyDetails: 'Details kopiëren',
+    copied: 'Gekopieerd',
+    loading: 'Laden…',
+    unknown: 'Onbekend'
+  },
+  contextMenu: {
+    cut: 'Knippen',
+    copy: 'Kopiëren',
+    paste: 'Plakken',
+    selectAll: 'Alles selecteren'
+  },
+  nav: {
+    changeLanguage: 'Taal wijzigen',
+    download: 'Downloaden',
+    queue: 'Wachtrij',
+    history: 'Geschiedenis',
+    settings: 'Instellingen'
+  },
+  input: {
+    placeholder: 'Plak een YouTube-link (video of afspeellijst)',
+    paste: 'Plakken',
+    load: 'Laden',
+    invalid: 'Dat lijkt geen YouTube-link.',
+    hint: 'Ondersteunt video’s, Shorts, afspeellijsten en kanalen.'
+  },
+  preview: {
+    by: 'door {channel}',
+    duration: 'Duur',
+    live: 'Live',
+    videos: { one: '{count} video', other: '{count} video’s' },
+    selectAll: 'Alles selecteren',
+    selectNone: 'Niets selecteren',
+    selected: '{selected} van {total} geselecteerd',
+    alreadyDownloaded: 'Al gedownload',
+    hideDownloaded: 'Al gedownloade verbergen',
+    partOfPlaylist: 'Deze video hoort bij een afspeellijst.',
+    thisVideoOnly: 'Alleen deze video',
+    wholePlaylist: 'Hele afspeellijst',
+    unavailableEntry: 'Niet beschikbaar'
+  },
+  options: {
+    downloadAs: 'Downloaden als',
+    video: 'Video',
+    audio: 'Alleen audio',
+    quality: 'Kwaliteit',
+    qualityBest: 'Beste beschikbare',
+    container: 'Bestandstype',
+    containerMp4: 'MP4 – speelt overal af (tot 1080p)',
+    containerMkv: 'MKV – hoogste kwaliteit (moderne speler nodig)',
+    audioFormat: 'Audioformaat',
+    subtitles: 'Ondertiteling',
+    subtitlesEnabled: 'Ondertiteling downloaden',
+    subtitleLanguages: 'Talen',
+    autoSubs: 'Automatische ondertiteling gebruiken indien nodig',
+    embedSubs: 'In het videobestand opnemen',
+    saveTo: 'Opslaan in',
+    download: 'Downloaden',
+    downloadMany: { one: '{count} video downloaden', other: '{count} video’s downloaden' },
+    added: { one: '{count} download toegevoegd aan de wachtrij', other: '{count} downloads toegevoegd aan de wachtrij' },
+    addedHint: 'Klik links op ‘{queue}’ om de voortgang te zien en je bestand te openen zodra het klaar is.',
+    skippedExisting: {
+      one: '{count} video overgeslagen die je al had gedownload',
+      other: '{count} video’s overgeslagen die je al had gedownload'
+    }
+  },
+  queue: {
+    empty: 'Nog geen downloads. Plak een link om te beginnen.',
+    status: {
+      queued: 'Wacht',
+      downloading: 'Downloaden',
+      processing: 'Verwerken',
+      completed: 'Klaar',
+      failed: 'Mislukt',
+      cancelled: 'Geannuleerd',
+      skipped: 'Al gedownload'
+    },
+    progress: '{done} van {total}',
+    speed: '{speed}',
+    eta: 'nog {time}',
+    cancel: 'Annuleren',
+    retry: 'Opnieuw',
+    openFile: 'Bestand openen',
+    showInFolder: 'Tonen in map',
+    clearFinished: 'Voltooide wissen',
+    cancelAll: 'Alles annuleren',
+    active: { one: '{count} actief', other: '{count} actief' }
+  },
+  history: {
+    empty: 'Voltooide downloads verschijnen hier.',
+    search: 'Geschiedenis doorzoeken',
+    clear: 'Geschiedenis wissen',
+    clearConfirm: 'Alle items uit de geschiedenis verwijderen? Gedownloade bestanden blijven bewaard.',
+    fileMissing: 'Bestand is verplaatst of verwijderd',
+    downloadAgain: 'Opnieuw downloaden',
+    noResults: 'Niets gevonden.'
+  },
+  settings: {
+    title: 'Instellingen',
+    sections: {
+      downloads: 'Downloads',
+      defaults: 'Standaardopties',
+      appearance: 'Weergave',
+      updates: 'Updates',
+      about: 'Over'
+    },
+    downloadFolder: 'Downloadmap',
+    maxConcurrent: 'Gelijktijdige downloads',
+    skipDownloaded: 'Video’s overslaan die ik al heb gedownload',
+    skipDownloadedHelp: 'Video’s uit je downloadgeschiedenis worden overgeslagen als je een afspeellijst toevoegt.',
+    playlistSubfolder: 'Afspeellijsten in een eigen map opslaan',
+    notifications: 'Melding tonen als een download klaar is',
+    language: 'Taal',
+    systemLanguage: 'Systeemtaal',
+    theme: 'Thema',
+    themeSystem: 'Systeem volgen',
+    themeLight: 'Licht',
+    themeDark: 'Donker',
+    appVersion: 'App-versie',
+    updateAvailable: 'Versie {version} is beschikbaar.',
+    updateDownloading: 'Update downloaden… {percent}',
+    updateReady: 'Versie {version} is klaar om te installeren.',
+    restartToUpdate: 'Herstarten en bijwerken',
+    manualUpdate: 'Download de nieuwe versie van de releasepagina.',
+    openReleases: 'Releasepagina openen',
+    engine: 'Download-engine',
+    engineHelp: 'VidSnare houdt zichzelf en de download-engine automatisch up-to-date.',
+    engineVersion: 'yt-dlp {version}',
+    useSystemFolder: 'De systeemmap Downloads gebruiken',
+    lastChecked: 'Laatst gecontroleerd: {date}',
+    never: 'Nooit',
+    disclaimer:
+      'Je bent zelf verantwoordelijk voor het naleven van de Servicevoorwaarden van YouTube en het auteursrecht. Download alleen inhoud die je mag downloaden.',
+    licenses: 'Licenties van derden',
+    sourceCode: 'Broncode'
+  },
+  notify: {
+    finishedTitle: 'Download voltooid',
+    failedTitle: 'Download mislukt',
+    allFinished: { one: '{count} download voltooid', other: '{count} downloads voltooid' },
+    failedMany: { one: '{count} download mislukt', other: '{count} downloads mislukt' }
+  },
+  errors: {
+    PRIVATE_VIDEO: 'Deze video is privé.',
+    VIDEO_UNAVAILABLE: 'Deze video is niet beschikbaar. Mogelijk is hij verwijderd of heeft hij nooit bestaan.',
+    AGE_RESTRICTED: 'Deze video heeft een leeftijdsgrens en vereist inloggen, wat VidSnare niet doet.',
+    MEMBERS_ONLY: 'Deze video is alleen voor betalende leden van het kanaal.',
+    PAID_CONTENT: 'Deze video moet op YouTube worden gekocht of gehuurd.',
+    REGION_BLOCKED: 'Deze video is niet beschikbaar in jouw land.',
+    COPYRIGHT_BLOCKED: 'Deze video is geblokkeerd vanwege een auteursrechtclaim.',
+    LIVE_NOT_STARTED: 'Deze livestream of première is nog niet begonnen. Probeer het opnieuw zodra hij begint.',
+    DRM_PROTECTED: 'Deze video is tegen kopiëren beveiligd (DRM) en kan niet worden gedownload.',
+    BOT_CHECK: 'YouTube vraagt te bevestigen dat je geen bot bent. Wacht even en probeer het opnieuw.',
+    RATE_LIMITED: 'YouTube beperkt nu het aantal verzoeken. Wacht een paar minuten en probeer het opnieuw.',
+    NO_INTERNET: 'Kan YouTube niet bereiken. Controleer je internetverbinding.',
+    DISK_FULL: 'Er is niet genoeg vrije ruimte op de schijf.',
+    PERMISSION_DENIED: 'VidSnare mag geen bestanden opslaan in deze map. Kies een andere map.',
+    FORMAT_UNAVAILABLE: 'De gekozen kwaliteit of het formaat is niet beschikbaar voor deze video.',
+    ENGINE_OUTDATED: 'YouTube heeft iets veranderd. VidSnare werkt de download-engine bij – probeer het over een paar minuten opnieuw.',
+    POSTPROCESSING_FAILED: 'Het bestand is gedownload, maar kon niet worden omgezet.',
+    TOOL_MISSING: 'Er ontbreekt een benodigd onderdeel. Installeer VidSnare opnieuw.',
+    INVALID_URL: 'Dat lijkt geen YouTube-link.',
+    UNSUPPORTED_URL: 'Dit soort link wordt niet ondersteund.',
+    CANCELLED: 'Geannuleerd.',
+    UNKNOWN: 'Er is iets misgegaan.'
+  }
+}

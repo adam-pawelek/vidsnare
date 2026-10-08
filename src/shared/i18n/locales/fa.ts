@@ -1,0 +1,185 @@
+import type { Messages } from '../types'
+
+export const fa: Messages = {
+  app: {
+    quitTitle: 'بارگیری در جریان است',
+    quitMessage: 'با خروج، بارگیری‌هایی که هنوز در جریان‌اند لغو می‌شوند.',
+    quitAnyway: 'به هر حال خروج',
+    keepDownloading: 'ادامهٔ بارگیری'
+  },
+  common: {
+    ok: 'تأیید',
+    cancel: 'لغو',
+    close: 'بستن',
+    retry: 'تلاش دوباره',
+    remove: 'حذف',
+    save: 'ذخیره',
+    browse: 'مرور…',
+    changeFolder: 'تغییر پوشهٔ بارگیری…',
+    reset: 'بازگشت به پیش‌فرض',
+    copyDetails: 'رونوشت جزئیات',
+    copied: 'رونوشت شد',
+    loading: 'در حال بارگذاری…',
+    unknown: 'نامشخص'
+  },
+  contextMenu: {
+    cut: 'برش',
+    copy: 'رونوشت',
+    paste: 'چسباندن',
+    selectAll: 'انتخاب همه'
+  },
+  nav: {
+    changeLanguage: 'تغییر زبان',
+    download: 'بارگیری',
+    queue: 'صف',
+    history: 'تاریخچه',
+    settings: 'تنظیمات'
+  },
+  input: {
+    placeholder: 'پیوند YouTube را بچسبانید (ویدیو یا فهرست پخش)',
+    paste: 'چسباندن',
+    load: 'بارگذاری',
+    invalid: 'این به نظر پیوند YouTube نیست.',
+    hint: 'از ویدیوها، Shorts، فهرست‌های پخش و کانال‌ها پشتیبانی می‌کند.'
+  },
+  preview: {
+    by: 'از {channel}',
+    duration: 'مدت',
+    live: 'زنده',
+    videos: { one: '{count} ویدیو', other: '{count} ویدیو' },
+    selectAll: 'انتخاب همه',
+    selectNone: 'لغو انتخاب',
+    selected: '{selected} از {total} انتخاب شده',
+    alreadyDownloaded: 'قبلاً بارگیری شده',
+    hideDownloaded: 'پنهان کردن موارد بارگیری‌شده',
+    partOfPlaylist: 'این ویدیو بخشی از یک فهرست پخش است.',
+    thisVideoOnly: 'فقط همین ویدیو',
+    wholePlaylist: 'کل فهرست پخش',
+    unavailableEntry: 'در دسترس نیست'
+  },
+  options: {
+    downloadAs: 'بارگیری به‌صورت',
+    video: 'ویدیو',
+    audio: 'فقط صدا',
+    quality: 'کیفیت',
+    qualityBest: 'بهترین کیفیت موجود',
+    container: 'نوع فایل',
+    containerMp4: 'MP4 – همه‌جا پخش می‌شود (تا 1080p)',
+    containerMkv: 'MKV – بالاترین کیفیت (به پخش‌کنندهٔ جدید نیاز دارد)',
+    audioFormat: 'قالب صدا',
+    subtitles: 'زیرنویس',
+    subtitlesEnabled: 'بارگیری زیرنویس',
+    subtitleLanguages: 'زبان‌ها',
+    autoSubs: 'در صورت نیاز از زیرنویس خودکار استفاده شود',
+    embedSubs: 'جاسازی در فایل ویدیو',
+    saveTo: 'ذخیره در',
+    download: 'بارگیری',
+    downloadMany: { one: 'بارگیری {count} ویدیو', other: 'بارگیری {count} ویدیو' },
+    added: { one: '{count} بارگیری به صف اضافه شد', other: '{count} بارگیری به صف اضافه شد' },
+    addedHint: 'برای دیدن پیشرفت و باز کردن فایل پس از آماده شدن، روی «{queue}» در نوار کناری کلیک کنید.',
+    skippedExisting: {
+      one: '{count} ویدیوی قبلاً بارگیری‌شده رد شد',
+      other: '{count} ویدیوی قبلاً بارگیری‌شده رد شدند'
+    }
+  },
+  queue: {
+    empty: 'هنوز بارگیری‌ای نیست. برای شروع یک پیوند بچسبانید.',
+    status: {
+      queued: 'در انتظار',
+      downloading: 'در حال بارگیری',
+      processing: 'در حال پردازش',
+      completed: 'تمام شد',
+      failed: 'ناموفق',
+      cancelled: 'لغو شد',
+      skipped: 'قبلاً بارگیری شده'
+    },
+    progress: '{done} از {total}',
+    speed: '{speed}',
+    eta: '{time} مانده',
+    cancel: 'لغو',
+    retry: 'تلاش دوباره',
+    openFile: 'باز کردن فایل',
+    showInFolder: 'نمایش در پوشه',
+    clearFinished: 'پاک کردن موارد تمام‌شده',
+    cancelAll: 'لغو همه',
+    active: { one: '{count} فعال', other: '{count} فعال' }
+  },
+  history: {
+    empty: 'بارگیری‌های تمام‌شده اینجا نمایش داده می‌شوند.',
+    search: 'جست‌وجو در تاریخچه',
+    clear: 'پاک کردن تاریخچه',
+    clearConfirm: 'همهٔ موارد تاریخچه حذف شوند؟ فایل‌های بارگیری‌شده حذف نمی‌شوند.',
+    fileMissing: 'فایل جابه‌جا یا حذف شده است',
+    downloadAgain: 'بارگیری دوباره',
+    noResults: 'موردی پیدا نشد.'
+  },
+  settings: {
+    title: 'تنظیمات',
+    sections: {
+      downloads: 'بارگیری‌ها',
+      defaults: 'گزینه‌های پیش‌فرض',
+      appearance: 'ظاهر',
+      updates: 'به‌روزرسانی‌ها',
+      about: 'درباره'
+    },
+    downloadFolder: 'پوشهٔ بارگیری',
+    maxConcurrent: 'بارگیری‌های هم‌زمان',
+    skipDownloaded: 'رد کردن ویدیوهایی که قبلاً بارگیری کرده‌ام',
+    skipDownloadedHelp: 'هنگام افزودن فهرست پخش، ویدیوهای موجود در تاریخچه رد می‌شوند.',
+    playlistSubfolder: 'ذخیرهٔ فهرست‌های پخش در پوشهٔ جداگانه',
+    notifications: 'نمایش اعلان پس از پایان بارگیری',
+    language: 'زبان',
+    systemLanguage: 'زبان سیستم',
+    theme: 'پوسته',
+    themeSystem: 'مطابق سیستم',
+    themeLight: 'روشن',
+    themeDark: 'تیره',
+    appVersion: 'نسخهٔ برنامه',
+    updateAvailable: 'نسخهٔ {version} در دسترس است.',
+    updateDownloading: 'در حال بارگیری به‌روزرسانی… {percent}',
+    updateReady: 'نسخهٔ {version} آمادهٔ نصب است.',
+    restartToUpdate: 'راه‌اندازی دوباره و به‌روزرسانی',
+    manualUpdate: 'نسخهٔ جدید را از صفحهٔ انتشارها بارگیری کنید.',
+    openReleases: 'باز کردن صفحهٔ انتشارها',
+    engine: 'موتور بارگیری',
+    engineHelp: 'VidSnare خودش و موتور بارگیری‌اش را به‌طور خودکار به‌روز نگه می‌دارد.',
+    engineVersion: 'yt-dlp {version}',
+    useSystemFolder: 'استفاده از پوشهٔ بارگیری سیستم',
+    lastChecked: 'آخرین بررسی: {date}',
+    never: 'هرگز',
+    disclaimer:
+      'رعایت شرایط خدمات YouTube و قانون حق نشر بر عهدهٔ شماست. فقط محتوایی را بارگیری کنید که حق بارگیری آن را دارید.',
+    licenses: 'مجوزهای شخص ثالث',
+    sourceCode: 'کد منبع'
+  },
+  notify: {
+    finishedTitle: 'بارگیری تمام شد',
+    failedTitle: 'بارگیری ناموفق بود',
+    allFinished: { one: '{count} بارگیری تمام شد', other: '{count} بارگیری تمام شد' },
+    failedMany: { one: '{count} بارگیری ناموفق بود', other: '{count} بارگیری ناموفق بود' }
+  },
+  errors: {
+    PRIVATE_VIDEO: 'این ویدیو خصوصی است.',
+    VIDEO_UNAVAILABLE: 'این ویدیو در دسترس نیست. شاید حذف شده یا هرگز وجود نداشته است.',
+    AGE_RESTRICTED: 'این ویدیو محدودیت سنی دارد و ورود به حساب لازم است؛ VidSnare وارد حساب نمی‌شود.',
+    MEMBERS_ONLY: 'این ویدیو فقط برای اعضای پولی کانال است.',
+    PAID_CONTENT: 'این ویدیو را باید در YouTube خرید یا اجاره کرد.',
+    REGION_BLOCKED: 'این ویدیو در کشور شما در دسترس نیست.',
+    COPYRIGHT_BLOCKED: 'این ویدیو به دلیل ادعای حق نشر مسدود شده است.',
+    LIVE_NOT_STARTED: 'این پخش زنده یا اولین نمایش هنوز شروع نشده است. پس از شروع دوباره امتحان کنید.',
+    DRM_PROTECTED: 'این ویدیو در برابر کپی محافظت شده (DRM) و قابل بارگیری نیست.',
+    BOT_CHECK: 'YouTube می‌خواهد تأیید کنید ربات نیستید. کمی صبر کنید و دوباره امتحان کنید.',
+    RATE_LIMITED: 'YouTube در حال حاضر درخواست‌ها را محدود کرده است. چند دقیقه صبر کنید و دوباره امتحان کنید.',
+    NO_INTERNET: 'دسترسی به YouTube ممکن نیست. اتصال اینترنت خود را بررسی کنید.',
+    DISK_FULL: 'فضای خالی کافی روی دیسک نیست.',
+    PERMISSION_DENIED: 'VidSnare اجازهٔ ذخیرهٔ فایل در این پوشه را ندارد. پوشهٔ دیگری انتخاب کنید.',
+    FORMAT_UNAVAILABLE: 'کیفیت یا قالب انتخاب‌شده برای این ویدیو موجود نیست.',
+    ENGINE_OUTDATED: 'YouTube چیزی را تغییر داده است. VidSnare در حال به‌روزرسانی موتور بارگیری است – چند دقیقهٔ دیگر دوباره امتحان کنید.',
+    POSTPROCESSING_FAILED: 'فایل بارگیری شد اما تبدیل آن ممکن نشد.',
+    TOOL_MISSING: 'یکی از اجزای لازم وجود ندارد. VidSnare را دوباره نصب کنید.',
+    INVALID_URL: 'این به نظر پیوند YouTube نیست.',
+    UNSUPPORTED_URL: 'این نوع پیوند پشتیبانی نمی‌شود.',
+    CANCELLED: 'لغو شد.',
+    UNKNOWN: 'مشکلی پیش آمد.'
+  }
+}

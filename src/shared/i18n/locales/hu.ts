@@ -1,0 +1,185 @@
+import type { Messages } from '../types'
+
+export const hu: Messages = {
+  app: {
+    quitTitle: 'Letöltés folyamatban',
+    quitMessage: 'Kilépéskor a még futó letöltések megszakadnak.',
+    quitAnyway: 'Kilépés mégis',
+    keepDownloading: 'Letöltés folytatása'
+  },
+  common: {
+    ok: 'OK',
+    cancel: 'Mégse',
+    close: 'Bezárás',
+    retry: 'Újra',
+    remove: 'Eltávolítás',
+    save: 'Mentés',
+    browse: 'Tallózás…',
+    changeFolder: 'Letöltési mappa módosítása…',
+    reset: 'Alapértékek visszaállítása',
+    copyDetails: 'Részletek másolása',
+    copied: 'Másolva',
+    loading: 'Betöltés…',
+    unknown: 'Ismeretlen'
+  },
+  contextMenu: {
+    cut: 'Kivágás',
+    copy: 'Másolás',
+    paste: 'Beillesztés',
+    selectAll: 'Összes kijelölése'
+  },
+  nav: {
+    changeLanguage: 'Nyelv módosítása',
+    download: 'Letöltés',
+    queue: 'Sor',
+    history: 'Előzmények',
+    settings: 'Beállítások'
+  },
+  input: {
+    placeholder: 'Illessz be egy YouTube-linket (videó vagy lejátszási lista)',
+    paste: 'Beillesztés',
+    load: 'Betöltés',
+    invalid: 'Ez nem tűnik YouTube-linknek.',
+    hint: 'Videókat, Shorts-videókat, lejátszási listákat és csatornákat támogat.'
+  },
+  preview: {
+    by: '{channel}',
+    duration: 'Hossz',
+    live: 'Élő',
+    videos: { one: '{count} videó', other: '{count} videó' },
+    selectAll: 'Összes kijelölése',
+    selectNone: 'Kijelölés törlése',
+    selected: '{selected}/{total} kijelölve',
+    alreadyDownloaded: 'Már letöltve',
+    hideDownloaded: 'A már letöltöttek elrejtése',
+    partOfPlaylist: 'Ez a videó egy lejátszási lista része.',
+    thisVideoOnly: 'Csak ez a videó',
+    wholePlaylist: 'A teljes lista',
+    unavailableEntry: 'Nem érhető el'
+  },
+  options: {
+    downloadAs: 'Letöltés mint',
+    video: 'Videó',
+    audio: 'Csak hang',
+    quality: 'Minőség',
+    qualityBest: 'Legjobb elérhető',
+    container: 'Fájltípus',
+    containerMp4: 'MP4 – mindenhol lejátszható (legfeljebb 1080p)',
+    containerMkv: 'MKV – legjobb minőség (modern lejátszó kell)',
+    audioFormat: 'Hangformátum',
+    subtitles: 'Feliratok',
+    subtitlesEnabled: 'Feliratok letöltése',
+    subtitleLanguages: 'Nyelvek',
+    autoSubs: 'Szükség esetén automatikus feliratok',
+    embedSubs: 'Beágyazás a videófájlba',
+    saveTo: 'Mentés helye',
+    download: 'Letöltés',
+    downloadMany: { one: '{count} videó letöltése', other: '{count} videó letöltése' },
+    added: { one: '{count} letöltés hozzáadva a sorhoz', other: '{count} letöltés hozzáadva a sorhoz' },
+    addedHint: 'Kattints bal oldalt a „{queue}” elemre a folyamat követéséhez, és nyisd meg a fájlt, ha elkészült.',
+    skippedExisting: {
+      one: '{count} már letöltött videó kihagyva',
+      other: '{count} már letöltött videó kihagyva'
+    }
+  },
+  queue: {
+    empty: 'Még nincs letöltés. Kezdésként illessz be egy linket.',
+    status: {
+      queued: 'Várakozik',
+      downloading: 'Letöltés',
+      processing: 'Feldolgozás',
+      completed: 'Kész',
+      failed: 'Sikertelen',
+      cancelled: 'Megszakítva',
+      skipped: 'Már letöltve'
+    },
+    progress: '{done} / {total}',
+    speed: '{speed}',
+    eta: 'még {time}',
+    cancel: 'Mégse',
+    retry: 'Újra',
+    openFile: 'Fájl megnyitása',
+    showInFolder: 'Megjelenítés a mappában',
+    clearFinished: 'Befejezettek törlése',
+    cancelAll: 'Összes megszakítása',
+    active: { one: '{count} aktív', other: '{count} aktív' }
+  },
+  history: {
+    empty: 'A befejezett letöltések itt jelennek meg.',
+    search: 'Keresés az előzményekben',
+    clear: 'Előzmények törlése',
+    clearConfirm: 'Törlöd az összes bejegyzést az előzményekből? A letöltött fájlok megmaradnak.',
+    fileMissing: 'A fájlt áthelyezték vagy törölték',
+    downloadAgain: 'Letöltés újra',
+    noResults: 'Nincs találat.'
+  },
+  settings: {
+    title: 'Beállítások',
+    sections: {
+      downloads: 'Letöltések',
+      defaults: 'Alapértelmezett beállítások',
+      appearance: 'Megjelenés',
+      updates: 'Frissítések',
+      about: 'Névjegy'
+    },
+    downloadFolder: 'Letöltési mappa',
+    maxConcurrent: 'Egyidejű letöltések',
+    skipDownloaded: 'A már letöltött videók kihagyása',
+    skipDownloadedHelp: 'Lejátszási lista hozzáadásakor az előzményekben szereplő videók kimaradnak.',
+    playlistSubfolder: 'Lejátszási listák mentése külön mappába',
+    notifications: 'Értesítés, ha egy letöltés befejeződik',
+    language: 'Nyelv',
+    systemLanguage: 'Rendszer nyelve',
+    theme: 'Téma',
+    themeSystem: 'Rendszer szerint',
+    themeLight: 'Világos',
+    themeDark: 'Sötét',
+    appVersion: 'Alkalmazás verziója',
+    updateAvailable: 'Elérhető a(z) {version} verzió.',
+    updateDownloading: 'Frissítés letöltése… {percent}',
+    updateReady: 'A(z) {version} verzió telepítésre kész.',
+    restartToUpdate: 'Újraindítás és frissítés',
+    manualUpdate: 'Töltsd le az új verziót a kiadások oldaláról.',
+    openReleases: 'Kiadások oldalának megnyitása',
+    engine: 'Letöltőmotor',
+    engineHelp: 'A VidSnare automatikusan frissíti önmagát és a letöltőmotorját.',
+    engineVersion: 'yt-dlp {version}',
+    useSystemFolder: 'A rendszer Letöltések mappájának használata',
+    lastChecked: 'Utolsó ellenőrzés: {date}',
+    never: 'Soha',
+    disclaimer:
+      'Te felelsz a YouTube Szolgáltatási feltételeinek és a szerzői jognak a betartásáért. Csak olyan tartalmat tölts le, amelyhez jogod van.',
+    licenses: 'Külső licencek',
+    sourceCode: 'Forráskód'
+  },
+  notify: {
+    finishedTitle: 'Letöltés kész',
+    failedTitle: 'Sikertelen letöltés',
+    allFinished: { one: '{count} letöltés kész', other: '{count} letöltés kész' },
+    failedMany: { one: '{count} letöltés sikertelen', other: '{count} letöltés sikertelen' }
+  },
+  errors: {
+    PRIVATE_VIDEO: 'Ez a videó privát.',
+    VIDEO_UNAVAILABLE: 'Ez a videó nem érhető el. Lehet, hogy eltávolították, vagy sosem létezett.',
+    AGE_RESTRICTED: 'Ez a videó korhatáros, és bejelentkezést igényel, amit a VidSnare nem használ.',
+    MEMBERS_ONLY: 'Ez a videó csak a csatorna fizető tagjainak érhető el.',
+    PAID_CONTENT: 'Ezt a videót meg kell vásárolni vagy ki kell bérelni a YouTube-on.',
+    REGION_BLOCKED: 'Ez a videó nem érhető el az országodban.',
+    COPYRIGHT_BLOCKED: 'Ezt a videót szerzői jogi követelés miatt letiltották.',
+    LIVE_NOT_STARTED: 'Ez az élő közvetítés vagy premier még nem kezdődött el. Próbáld újra, ha elkezdődött.',
+    DRM_PROTECTED: 'Ez a videó másolásvédett (DRM), ezért nem tölthető le.',
+    BOT_CHECK: 'A YouTube azt kéri, erősítsd meg, hogy nem vagy robot. Várj egy kicsit, majd próbáld újra.',
+    RATE_LIMITED: 'A YouTube most korlátozza a kéréseket. Várj néhány percet, majd próbáld újra.',
+    NO_INTERNET: 'A YouTube nem érhető el. Ellenőrizd az internetkapcsolatot.',
+    DISK_FULL: 'Nincs elég szabad hely a lemezen.',
+    PERMISSION_DENIED: 'A VidSnare nem menthet fájlokat ebbe a mappába. Válassz másik mappát.',
+    FORMAT_UNAVAILABLE: 'A választott minőség vagy formátum nem érhető el ehhez a videóhoz.',
+    ENGINE_OUTDATED: 'A YouTube változtatott valamin. A VidSnare frissíti a letöltőmotort – próbáld újra néhány perc múlva.',
+    POSTPROCESSING_FAILED: 'A fájl letöltődött, de nem sikerült átalakítani.',
+    TOOL_MISSING: 'Hiányzik egy szükséges összetevő. Telepítsd újra a VidSnare-t.',
+    INVALID_URL: 'Ez nem tűnik YouTube-linknek.',
+    UNSUPPORTED_URL: 'Ez a fajta link nem támogatott.',
+    CANCELLED: 'Megszakítva.',
+    UNKNOWN: 'Valami hiba történt.'
+  }
+}

@@ -1,0 +1,185 @@
+import type { Messages } from '../types'
+
+export const sv: Messages = {
+  app: {
+    quitTitle: 'Nedladdningar pågår',
+    quitMessage: 'Om du avslutar avbryts nedladdningar som fortfarande pågår.',
+    quitAnyway: 'Avsluta ändå',
+    keepDownloading: 'Fortsätt ladda ned'
+  },
+  common: {
+    ok: 'OK',
+    cancel: 'Avbryt',
+    close: 'Stäng',
+    retry: 'Försök igen',
+    remove: 'Ta bort',
+    save: 'Spara',
+    browse: 'Bläddra…',
+    changeFolder: 'Byt nedladdningsmapp…',
+    reset: 'Återställ standardvärden',
+    copyDetails: 'Kopiera detaljer',
+    copied: 'Kopierat',
+    loading: 'Läser in…',
+    unknown: 'Okänt'
+  },
+  contextMenu: {
+    cut: 'Klipp ut',
+    copy: 'Kopiera',
+    paste: 'Klistra in',
+    selectAll: 'Markera allt'
+  },
+  nav: {
+    changeLanguage: 'Byt språk',
+    download: 'Ladda ned',
+    queue: 'Kö',
+    history: 'Historik',
+    settings: 'Inställningar'
+  },
+  input: {
+    placeholder: 'Klistra in en YouTube-länk (video eller spellista)',
+    paste: 'Klistra in',
+    load: 'Läs in',
+    invalid: 'Det där ser inte ut som en YouTube-länk.',
+    hint: 'Stöder videor, Shorts, spellistor och kanaler.'
+  },
+  preview: {
+    by: 'av {channel}',
+    duration: 'Längd',
+    live: 'Live',
+    videos: { one: '{count} video', other: '{count} videor' },
+    selectAll: 'Markera alla',
+    selectNone: 'Avmarkera alla',
+    selected: '{selected} av {total} markerade',
+    alreadyDownloaded: 'Redan nedladdad',
+    hideDownloaded: 'Dölj redan nedladdade',
+    partOfPlaylist: 'Den här videon ingår i en spellista.',
+    thisVideoOnly: 'Bara den här videon',
+    wholePlaylist: 'Hela spellistan',
+    unavailableEntry: 'Inte tillgänglig'
+  },
+  options: {
+    downloadAs: 'Ladda ned som',
+    video: 'Video',
+    audio: 'Bara ljud',
+    quality: 'Kvalitet',
+    qualityBest: 'Bästa tillgängliga',
+    container: 'Filtyp',
+    containerMp4: 'MP4 – spelas upp överallt (upp till 1080p)',
+    containerMkv: 'MKV – högsta kvalitet (kräver en modern spelare)',
+    audioFormat: 'Ljudformat',
+    subtitles: 'Undertexter',
+    subtitlesEnabled: 'Ladda ned undertexter',
+    subtitleLanguages: 'Språk',
+    autoSubs: 'Använd automatiska undertexter vid behov',
+    embedSubs: 'Bädda in i videofilen',
+    saveTo: 'Spara i',
+    download: 'Ladda ned',
+    downloadMany: { one: 'Ladda ned {count} video', other: 'Ladda ned {count} videor' },
+    added: { one: '{count} nedladdning har lagts till i kön', other: '{count} nedladdningar har lagts till i kön' },
+    addedHint: 'Klicka på ”{queue}” till vänster för att se förloppet och öppna filen när den är klar.',
+    skippedExisting: {
+      one: 'Hoppade över {count} video som du redan har laddat ned',
+      other: 'Hoppade över {count} videor som du redan har laddat ned'
+    }
+  },
+  queue: {
+    empty: 'Inga nedladdningar än. Klistra in en länk för att börja.',
+    status: {
+      queued: 'Väntar',
+      downloading: 'Laddar ned',
+      processing: 'Bearbetar',
+      completed: 'Klar',
+      failed: 'Misslyckades',
+      cancelled: 'Avbruten',
+      skipped: 'Redan nedladdad'
+    },
+    progress: '{done} av {total}',
+    speed: '{speed}',
+    eta: '{time} kvar',
+    cancel: 'Avbryt',
+    retry: 'Försök igen',
+    openFile: 'Öppna fil',
+    showInFolder: 'Visa i mapp',
+    clearFinished: 'Rensa slutförda',
+    cancelAll: 'Avbryt alla',
+    active: { one: '{count} aktiv', other: '{count} aktiva' }
+  },
+  history: {
+    empty: 'Slutförda nedladdningar visas här.',
+    search: 'Sök i historiken',
+    clear: 'Rensa historik',
+    clearConfirm: 'Ta bort alla poster från historiken? Nedladdade filer raderas inte.',
+    fileMissing: 'Filen har flyttats eller raderats',
+    downloadAgain: 'Ladda ned igen',
+    noResults: 'Inga träffar.'
+  },
+  settings: {
+    title: 'Inställningar',
+    sections: {
+      downloads: 'Nedladdningar',
+      defaults: 'Standardalternativ',
+      appearance: 'Utseende',
+      updates: 'Uppdateringar',
+      about: 'Om'
+    },
+    downloadFolder: 'Nedladdningsmapp',
+    maxConcurrent: 'Samtidiga nedladdningar',
+    skipDownloaded: 'Hoppa över videor som jag redan har laddat ned',
+    skipDownloadedHelp: 'Videor i nedladdningshistoriken hoppas över när du lägger till en spellista.',
+    playlistSubfolder: 'Spara spellistor i en egen mapp',
+    notifications: 'Visa en avisering när en nedladdning är klar',
+    language: 'Språk',
+    systemLanguage: 'Systemets språk',
+    theme: 'Tema',
+    themeSystem: 'Följ systemet',
+    themeLight: 'Ljust',
+    themeDark: 'Mörkt',
+    appVersion: 'Appversion',
+    updateAvailable: 'Version {version} finns tillgänglig.',
+    updateDownloading: 'Laddar ned uppdatering… {percent}',
+    updateReady: 'Version {version} är redo att installeras.',
+    restartToUpdate: 'Starta om och uppdatera',
+    manualUpdate: 'Ladda ned den nya versionen från versionssidan.',
+    openReleases: 'Öppna versionssidan',
+    engine: 'Nedladdningsmotor',
+    engineHelp: 'VidSnare håller sig själv och sin nedladdningsmotor uppdaterade automatiskt.',
+    engineVersion: 'yt-dlp {version}',
+    useSystemFolder: 'Använd systemets mapp Hämtade filer',
+    lastChecked: 'Senast kontrollerad: {date}',
+    never: 'Aldrig',
+    disclaimer:
+      'Du ansvarar för att följa YouTubes användarvillkor och upphovsrättslagen. Ladda bara ned innehåll som du har rätt att ladda ned.',
+    licenses: 'Tredjepartslicenser',
+    sourceCode: 'Källkod'
+  },
+  notify: {
+    finishedTitle: 'Nedladdning klar',
+    failedTitle: 'Nedladdningen misslyckades',
+    allFinished: { one: '{count} nedladdning klar', other: '{count} nedladdningar klara' },
+    failedMany: { one: '{count} nedladdning misslyckades', other: '{count} nedladdningar misslyckades' }
+  },
+  errors: {
+    PRIVATE_VIDEO: 'Den här videon är privat.',
+    VIDEO_UNAVAILABLE: 'Den här videon är inte tillgänglig. Den kan ha tagits bort eller aldrig funnits.',
+    AGE_RESTRICTED: 'Den här videon är åldersbegränsad och kräver inloggning, vilket VidSnare inte använder.',
+    MEMBERS_ONLY: 'Den här videon är bara för kanalens betalande medlemmar.',
+    PAID_CONTENT: 'Den här videon måste köpas eller hyras på YouTube.',
+    REGION_BLOCKED: 'Den här videon är inte tillgänglig i ditt land.',
+    COPYRIGHT_BLOCKED: 'Den här videon har blockerats på grund av ett upphovsrättsanspråk.',
+    LIVE_NOT_STARTED: 'Den här livesändningen eller premiären har inte börjat än. Försök igen när den har startat.',
+    DRM_PROTECTED: 'Den här videon är kopieringsskyddad (DRM) och kan inte laddas ned.',
+    BOT_CHECK: 'YouTube vill att du bekräftar att du inte är en robot. Vänta en stund och försök igen.',
+    RATE_LIMITED: 'YouTube begränsar förfrågningar just nu. Vänta några minuter och försök igen.',
+    NO_INTERNET: 'Det går inte att nå YouTube. Kontrollera internetanslutningen.',
+    DISK_FULL: 'Det finns inte tillräckligt med ledigt utrymme på disken.',
+    PERMISSION_DENIED: 'VidSnare får inte spara filer i den här mappen. Välj en annan mapp.',
+    FORMAT_UNAVAILABLE: 'Vald kvalitet eller format finns inte för den här videon.',
+    ENGINE_OUTDATED: 'YouTube har ändrat något. VidSnare uppdaterar sin nedladdningsmotor – försök igen om några minuter.',
+    POSTPROCESSING_FAILED: 'Filen laddades ned men kunde inte konverteras.',
+    TOOL_MISSING: 'En nödvändig komponent saknas. Installera om VidSnare.',
+    INVALID_URL: 'Det där ser inte ut som en YouTube-länk.',
+    UNSUPPORTED_URL: 'Den här typen av länk stöds inte.',
+    CANCELLED: 'Avbruten.',
+    UNKNOWN: 'Något gick fel.'
+  }
+}

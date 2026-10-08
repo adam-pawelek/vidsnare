@@ -5,6 +5,7 @@ import {
   formatBytes,
   formatDuration,
   formatSpeed,
+  isRtl,
   LOCALES,
   resolveLocale,
   SUPPORTED_LOCALES,
@@ -132,9 +133,24 @@ describe('resolveLocale', () => {
     [['ru'], 'ru'],
     [['zh-CN', 'fr-FR'], 'fr'],
     [['zh-CN'], 'en'],
+    [['zh-Hans-CN'], 'en'],
+    [['zh-TW'], 'zh-TW'],
+    [['zh-HK'], 'zh-TW'],
+    [['zh-Hant'], 'zh-TW'],
+    [['zh_TW'], 'zh-TW'],
+    [['uk-UA'], 'uk'],
+    [['ar-EG'], 'ar'],
+    [['he-IL'], 'he'],
+    [['nb-NO', 'sv-SE'], 'sv'],
     [[], 'en']
   ])('%j → %s', (preferred, expected) => {
     expect(resolveLocale(preferred)).toBe(expected)
+  })
+})
+
+describe('isRtl', () => {
+  it('marks only right-to-left languages', () => {
+    expect(SUPPORTED_LOCALES.filter(isRtl).sort()).toEqual(['ar', 'fa', 'he'])
   })
 })
 

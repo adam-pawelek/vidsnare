@@ -6,6 +6,24 @@ import { ptBR } from './locales/pt-BR'
 import { ru } from './locales/ru'
 import { ja } from './locales/ja'
 import { fr } from './locales/fr'
+import { tr } from './locales/tr'
+import { it } from './locales/it'
+import { uk } from './locales/uk'
+import { id } from './locales/id'
+import { vi } from './locales/vi'
+import { ko } from './locales/ko'
+import { zhTW } from './locales/zh-TW'
+import { hi } from './locales/hi'
+import { nl } from './locales/nl'
+import { cs } from './locales/cs'
+import { ro } from './locales/ro'
+import { hu } from './locales/hu'
+import { sv } from './locales/sv'
+import { el } from './locales/el'
+import { th } from './locales/th'
+import { ar } from './locales/ar'
+import { fa } from './locales/fa'
+import { he } from './locales/he'
 import type { MessageKey, Messages, Plural, Vars } from './types'
 
 export type { MessageKey, Messages, Vars } from './types'
@@ -18,15 +36,45 @@ export const LOCALES = {
   'pt-BR': { name: 'Português (Brasil)', messages: ptBR },
   ru: { name: 'Русский', messages: ru },
   ja: { name: '日本語', messages: ja },
-  fr: { name: 'Français', messages: fr }
+  fr: { name: 'Français', messages: fr },
+  tr: { name: 'Türkçe', messages: tr },
+  it: { name: 'Italiano', messages: it },
+  uk: { name: 'Українська', messages: uk },
+  id: { name: 'Bahasa Indonesia', messages: id },
+  vi: { name: 'Tiếng Việt', messages: vi },
+  ko: { name: '한국어', messages: ko },
+  'zh-TW': { name: '繁體中文', messages: zhTW },
+  hi: { name: 'हिन्दी', messages: hi },
+  nl: { name: 'Nederlands', messages: nl },
+  cs: { name: 'Čeština', messages: cs },
+  ro: { name: 'Română', messages: ro },
+  hu: { name: 'Magyar', messages: hu },
+  sv: { name: 'Svenska', messages: sv },
+  el: { name: 'Ελληνικά', messages: el },
+  th: { name: 'ไทย', messages: th },
+  ar: { name: 'العربية', messages: ar },
+  fa: { name: 'فارسی', messages: fa },
+  he: { name: 'עברית', messages: he }
 } as const satisfies Record<string, { name: string; messages: Messages }>
 
 export type Locale = keyof typeof LOCALES
 export const SUPPORTED_LOCALES = Object.keys(LOCALES) as Locale[]
 export const DEFAULT_LOCALE: Locale = 'en'
 
+/** Languages written right to left: the whole layout is mirrored for them. */
+export const RTL_LOCALES: readonly Locale[] = ['ar', 'fa', 'he']
+
+export function isRtl(locale: Locale): boolean {
+  return RTL_LOCALES.includes(locale)
+}
+
 export function isLocale(value: unknown): value is Locale {
   return typeof value === 'string' && value in LOCALES
+}
+
+/** Traditional Chinese is only a match for Traditional-script regions, not Simplified Chinese. */
+function isTraditionalChinese(tag: string): boolean {
+  return /^zh([-_](hant|tw|hk|mo))(\b|[-_])/i.test(tag) || /^zh[-_]hant/i.test(tag)
 }
 
 /** Picks the best supported locale for the system's preferred languages. */
@@ -34,6 +82,10 @@ export function resolveLocale(preferred: readonly string[]): Locale {
   for (const tag of preferred) {
     const exact = SUPPORTED_LOCALES.find((l) => l.toLowerCase() === tag.toLowerCase())
     if (exact) return exact
+    if (/^zh\b/i.test(tag)) {
+      if (isTraditionalChinese(tag)) return 'zh-TW'
+      continue
+    }
     const language = tag.split(/[-_]/)[0]?.toLowerCase()
     const byLanguage = SUPPORTED_LOCALES.find((l) => l.split('-')[0] === language)
     if (byLanguage) return byLanguage

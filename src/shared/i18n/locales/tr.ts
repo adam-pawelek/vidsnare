@@ -1,0 +1,185 @@
+import type { Messages } from '../types'
+
+export const tr: Messages = {
+  app: {
+    quitTitle: 'İndirmeler sürüyor',
+    quitMessage: 'Çıkarsanız devam eden indirmeler iptal edilir.',
+    quitAnyway: 'Yine de çık',
+    keepDownloading: 'İndirmeye devam et'
+  },
+  common: {
+    ok: 'Tamam',
+    cancel: 'İptal',
+    close: 'Kapat',
+    retry: 'Tekrar dene',
+    remove: 'Kaldır',
+    save: 'Kaydet',
+    browse: 'Gözat…',
+    changeFolder: 'İndirme klasörünü değiştir…',
+    reset: 'Varsayılanlara dön',
+    copyDetails: 'Ayrıntıları kopyala',
+    copied: 'Kopyalandı',
+    loading: 'Yükleniyor…',
+    unknown: 'Bilinmiyor'
+  },
+  contextMenu: {
+    cut: 'Kes',
+    copy: 'Kopyala',
+    paste: 'Yapıştır',
+    selectAll: 'Tümünü seç'
+  },
+  nav: {
+    changeLanguage: 'Dili değiştir',
+    download: 'İndir',
+    queue: 'Sıra',
+    history: 'Geçmiş',
+    settings: 'Ayarlar'
+  },
+  input: {
+    placeholder: 'Bir YouTube bağlantısı yapıştırın (video veya oynatma listesi)',
+    paste: 'Yapıştır',
+    load: 'Yükle',
+    invalid: 'Bu bir YouTube bağlantısına benzemiyor.',
+    hint: 'Videolar, Shorts, oynatma listeleri ve kanallar desteklenir.'
+  },
+  preview: {
+    by: '{channel}',
+    duration: 'Süre',
+    live: 'Canlı',
+    videos: { one: '{count} video', other: '{count} video' },
+    selectAll: 'Tümünü seç',
+    selectNone: 'Hiçbirini seçme',
+    selected: '{total} videodan {selected} tanesi seçildi',
+    alreadyDownloaded: 'Zaten indirildi',
+    hideDownloaded: 'İndirilmiş olanları gizle',
+    partOfPlaylist: 'Bu video bir oynatma listesinin parçası.',
+    thisVideoOnly: 'Yalnızca bu video',
+    wholePlaylist: 'Tüm oynatma listesi',
+    unavailableEntry: 'Kullanılamıyor'
+  },
+  options: {
+    downloadAs: 'Şu şekilde indir',
+    video: 'Video',
+    audio: 'Yalnızca ses',
+    quality: 'Kalite',
+    qualityBest: 'En iyi kalite',
+    container: 'Dosya türü',
+    containerMp4: 'MP4 – her yerde oynatılır (1080p’ye kadar)',
+    containerMkv: 'MKV – en yüksek kalite (güncel bir oynatıcı gerekir)',
+    audioFormat: 'Ses biçimi',
+    subtitles: 'Altyazılar',
+    subtitlesEnabled: 'Altyazıları indir',
+    subtitleLanguages: 'Diller',
+    autoSubs: 'Gerekirse otomatik altyazıları kullan',
+    embedSubs: 'Video dosyasına göm',
+    saveTo: 'Kaydedilecek yer',
+    download: 'İndir',
+    downloadMany: { one: '{count} videoyu indir', other: '{count} videoyu indir' },
+    added: { one: 'Sıraya {count} indirme eklendi', other: 'Sıraya {count} indirme eklendi' },
+    addedHint: 'İlerlemeyi görmek ve hazır olduğunda dosyanızı açmak için soldaki “{queue}” öğesine tıklayın.',
+    skippedExisting: {
+      one: 'Daha önce indirdiğiniz {count} video atlandı',
+      other: 'Daha önce indirdiğiniz {count} video atlandı'
+    }
+  },
+  queue: {
+    empty: 'Henüz indirme yok. Başlamak için bir bağlantı yapıştırın.',
+    status: {
+      queued: 'Bekliyor',
+      downloading: 'İndiriliyor',
+      processing: 'İşleniyor',
+      completed: 'Tamamlandı',
+      failed: 'Başarısız',
+      cancelled: 'İptal edildi',
+      skipped: 'Zaten indirildi'
+    },
+    progress: '{done} / {total}',
+    speed: '{speed}',
+    eta: '{time} kaldı',
+    cancel: 'İptal',
+    retry: 'Tekrar dene',
+    openFile: 'Dosyayı aç',
+    showInFolder: 'Klasörde göster',
+    clearFinished: 'Bitenleri temizle',
+    cancelAll: 'Tümünü iptal et',
+    active: { one: '{count} etkin', other: '{count} etkin' }
+  },
+  history: {
+    empty: 'Tamamlanan indirmeler burada görünecek.',
+    search: 'Geçmişte ara',
+    clear: 'Geçmişi temizle',
+    clearConfirm: 'Geçmişteki tüm kayıtlar silinsin mi? İndirilen dosyalar silinmez.',
+    fileMissing: 'Dosya taşındı veya silindi',
+    downloadAgain: 'Yeniden indir',
+    noResults: 'Aramanızla eşleşen bir şey yok.'
+  },
+  settings: {
+    title: 'Ayarlar',
+    sections: {
+      downloads: 'İndirmeler',
+      defaults: 'Varsayılan seçenekler',
+      appearance: 'Görünüm',
+      updates: 'Güncellemeler',
+      about: 'Hakkında'
+    },
+    downloadFolder: 'İndirme klasörü',
+    maxConcurrent: 'Aynı anda indirme sayısı',
+    skipDownloaded: 'Daha önce indirdiğim videoları atla',
+    skipDownloadedHelp: 'Bir oynatma listesi eklediğinizde indirme geçmişinizdeki videolar atlanır.',
+    playlistSubfolder: 'Oynatma listelerini ayrı klasöre kaydet',
+    notifications: 'İndirme bitince bildirim göster',
+    language: 'Dil',
+    systemLanguage: 'Sistem dili',
+    theme: 'Tema',
+    themeSystem: 'Sistemi izle',
+    themeLight: 'Açık',
+    themeDark: 'Koyu',
+    appVersion: 'Uygulama sürümü',
+    updateAvailable: '{version} sürümü mevcut.',
+    updateDownloading: 'Güncelleme indiriliyor… {percent}',
+    updateReady: '{version} sürümü kurulmaya hazır.',
+    restartToUpdate: 'Yeniden başlat ve güncelle',
+    manualUpdate: 'Yeni sürümü sürümler sayfasından indirin.',
+    openReleases: 'Sürümler sayfasını aç',
+    engine: 'İndirme motoru',
+    engineHelp: 'VidSnare kendisini ve indirme motorunu otomatik olarak güncel tutar.',
+    engineVersion: 'yt-dlp {version}',
+    useSystemFolder: 'Sistemin İndirilenler klasörünü kullan',
+    lastChecked: 'Son kontrol: {date}',
+    never: 'Hiç',
+    disclaimer:
+      'YouTube Hizmet Şartları’na ve telif hakkı yasalarına uymak sizin sorumluluğunuzdadır. Yalnızca indirme hakkına sahip olduğunuz içerikleri indirin.',
+    licenses: 'Üçüncü taraf lisansları',
+    sourceCode: 'Kaynak kodu'
+  },
+  notify: {
+    finishedTitle: 'İndirme tamamlandı',
+    failedTitle: 'İndirme başarısız',
+    allFinished: { one: '{count} indirme tamamlandı', other: '{count} indirme tamamlandı' },
+    failedMany: { one: '{count} indirme başarısız oldu', other: '{count} indirme başarısız oldu' }
+  },
+  errors: {
+    PRIVATE_VIDEO: 'Bu video gizli.',
+    VIDEO_UNAVAILABLE: 'Bu video kullanılamıyor. Kaldırılmış ya da hiç var olmamış olabilir.',
+    AGE_RESTRICTED: 'Bu videoda yaş sınırı var ve oturum açmak gerekiyor; VidSnare oturum açmaz.',
+    MEMBERS_ONLY: 'Bu video yalnızca kanalın ücretli üyelerine açık.',
+    PAID_CONTENT: 'Bu videonun YouTube’da satın alınması veya kiralanması gerekiyor.',
+    REGION_BLOCKED: 'Bu video ülkenizde kullanılamıyor.',
+    COPYRIGHT_BLOCKED: 'Bu video bir telif hakkı talebi nedeniyle engellendi.',
+    LIVE_NOT_STARTED: 'Bu canlı yayın veya prömiyer henüz başlamadı. Başladıktan sonra tekrar deneyin.',
+    DRM_PROTECTED: 'Bu video kopya korumalı (DRM) olduğu için indirilemez.',
+    BOT_CHECK: 'YouTube robot olmadığınızı doğrulamanızı istiyor. Bir süre bekleyip tekrar deneyin.',
+    RATE_LIMITED: 'YouTube şu anda istekleri sınırlıyor. Birkaç dakika bekleyip tekrar deneyin.',
+    NO_INTERNET: 'YouTube’a ulaşılamıyor. İnternet bağlantınızı kontrol edin.',
+    DISK_FULL: 'Diskte yeterli boş alan yok.',
+    PERMISSION_DENIED: 'VidSnare bu klasöre dosya kaydedemiyor. Başka bir klasör seçin.',
+    FORMAT_UNAVAILABLE: 'Seçilen kalite veya biçim bu video için mevcut değil.',
+    ENGINE_OUTDATED: 'YouTube bir şeyi değiştirdi. VidSnare indirme motorunu güncelliyor – birkaç dakika sonra tekrar deneyin.',
+    POSTPROCESSING_FAILED: 'Dosya indirildi ancak dönüştürülemedi.',
+    TOOL_MISSING: 'Gerekli bir bileşen eksik. VidSnare’i yeniden kurun.',
+    INVALID_URL: 'Bu bir YouTube bağlantısına benzemiyor.',
+    UNSUPPORTED_URL: 'Bu tür bağlantılar desteklenmiyor.',
+    CANCELLED: 'İptal edildi.',
+    UNKNOWN: 'Bir şeyler ters gitti.'
+  }
+}
