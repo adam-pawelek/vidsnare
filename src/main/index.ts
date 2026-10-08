@@ -60,6 +60,9 @@ function registerIpc(services: Services): void {
   })
 }
 
+// Tests run the app against a throwaway data folder instead of the user's real one.
+if (process.env['VIDSNARE_USER_DATA']) app.setPath('userData', process.env['VIDSNARE_USER_DATA'])
+
 // Only one instance may run, so two queues never write to the same files.
 if (!app.requestSingleInstanceLock()) {
   app.quit()

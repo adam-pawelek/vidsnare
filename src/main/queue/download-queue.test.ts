@@ -77,6 +77,7 @@ function setup(overrides: Partial<QueueDeps> = {}) {
     archiveFile: () => undefined,
     onFinished: (job) => finished.push(job),
     fileExists: async () => false,
+    fileSize: async () => null,
     now: () => 1000,
     newId: () => `job${++id}`,
     ...overrides
@@ -145,6 +146,22 @@ describe('DownloadQueue', () => {
     expect(job.progress).toMatchObject({ fraction: 1, speed: null, eta: null })
     expect(finished).toHaveLength(1)
     expect(onChange).toHaveBeenCalled()
+  })
+
+  it('reports the size of the finished file, not of the downloaded streams', async () => {
+    const { queue, run } = setup({ fileSize: async () => 669_088 })
+    queue.add([spec(1, { options: { ...video, kind: 'audio' } })])
+    await settle()
+    run.runs[0]!.emit('__VS_DL__ finished|252182|252182|NA|1000|NA|251')
+    run.runs[0]!.finish()
+    await settle()
+    expect(queue.list()[0]!.progress).toEqual({
+      fraction: 1,
+      downloadedBytes: 669_088,
+      totalBytes: 669_088,
+      speed: null,
+      eta: null
+    })
   })
 
   it('uses the expected path when yt-dlp does not print one', async () => {

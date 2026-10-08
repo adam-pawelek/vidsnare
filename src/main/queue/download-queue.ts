@@ -1,5 +1,5 @@
 import { randomUUID } from 'node:crypto'
-import { access, rm } from 'node:fs/promises'
+import { access, rm, stat } from 'node:fs/promises'
 import { join } from 'node:path'
 import type { DownloadOptions } from '@shared/download'
 import type { AppError } from '@shared/errors'
@@ -27,6 +27,8 @@ export interface QueueDeps {
   /** Called once when a job reaches a final state. */
   onFinished?: (job: DownloadJob) => void
   fileExists?: (path: string) => Promise<boolean>
+  /** Size of the finished file; null if it can't be read. */
+  fileSize?: (path: string) => Promise<number | null>
   now?: () => number
   newId?: () => string
 }
@@ -42,6 +44,12 @@ export interface NewJob {
 interface Runtime {
   controller: AbortController
 }
+
+const defaultSize = (path: string): Promise<number | null> =>
+  stat(path).then(
+    (s) => s.size,
+    () => null
+  )
 
 const defaultExists = (path: string): Promise<boolean> =>
   access(path).then(
@@ -61,11 +69,13 @@ export class DownloadQueue {
   /** Final paths claimed by running jobs, so two jobs never write the same file. */
   private readonly reserved = new Set<string>()
   private readonly exists: (path: string) => Promise<boolean>
+  private readonly size: (path: string) => Promise<number | null>
   private readonly now: () => number
   private readonly newId: () => string
 
   constructor(private readonly deps: QueueDeps) {
     this.exists = deps.fileExists ?? defaultExists
+    this.size = deps.fileSize ?? defaultSize
     this.now = deps.now ?? Date.now
     this.newId = deps.newId ?? randomUUID
   }
@@ -247,6 +257,12 @@ export class DownloadQueue {
         this.finish(job, 'skipped', null)
       } else if (result.code === 0) {
         job.filePath = reportedPath ?? finalPath
+        // Downloaded bytes describe the source streams; after conversion the file
+        // on disk can be larger or smaller, and that is the size worth showing.
+        const size = await this.size(job.filePath)
+        if (size !== null) {
+          job.progress = { fraction: 1, downloadedBytes: size, totalBytes: size, speed: null, eta: null }
+        }
         this.finish(job, 'completed', null)
       } else {
         this.finish(job, 'failed', classifyError(result.stderr || result.stdout))

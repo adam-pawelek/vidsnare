@@ -420,3 +420,287 @@ input[type='radio'] {
     width: 100%;
   }
 }
+
+/* Download options */
+.options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px 24px;
+  padding: 14px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--surface);
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+
+.field-wide {
+  flex-basis: 100%;
+}
+
+.field-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--muted);
+}
+
+select {
+  padding: 6px 8px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--surface);
+}
+
+.segmented {
+  display: inline-flex;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.segmented label {
+  padding: 6px 14px;
+  cursor: pointer;
+}
+
+.segmented label + label {
+  border-left: 1px solid var(--border);
+}
+
+.segmented label.active {
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.segmented input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.segmented label:has(input:focus-visible) {
+  outline: 2px solid var(--accent);
+  outline-offset: -2px;
+}
+
+.subtitle-options {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-left: 24px;
+}
+
+.languages {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+}
+
+.chips {
+  display: contents;
+  list-style: none;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 4px 2px 10px;
+  border-radius: 999px;
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+
+.chip button {
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  padding: 0 6px;
+  font-size: 15px;
+  line-height: 1;
+}
+
+.folder {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+
+.folder-path {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  /* Cut long paths at the start so the folder name stays visible; <bdi> keeps the path itself left-to-right. */
+  direction: rtl;
+  text-align: left;
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.btn-large {
+  padding: 10px 22px;
+  font-size: 15px;
+}
+
+.btn-icon {
+  padding: 4px 10px;
+  font-size: 16px;
+  line-height: 1;
+}
+
+/* Navigation badge */
+.nav-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.nav-badge {
+  min-width: 20px;
+  padding: 0 6px;
+  border-radius: 999px;
+  background: var(--accent);
+  color: var(--accent-text);
+  font-size: 11px;
+  font-weight: 700;
+  text-align: center;
+}
+
+/* Queue */
+.page-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.page-tools {
+  display: flex;
+  gap: 6px;
+}
+
+.empty {
+  padding: 40px 0;
+  text-align: center;
+}
+
+.jobs {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--surface);
+  overflow: hidden;
+}
+
+.job {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+}
+
+.job + .job {
+  border-top: 1px solid var(--border);
+}
+
+.job-body {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.job-title {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-weight: 500;
+}
+
+.job-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 12px;
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+}
+
+.status {
+  font-weight: 600;
+}
+
+.status-completed {
+  color: var(--ok);
+}
+
+.status-failed {
+  color: var(--danger);
+}
+
+.job-error {
+  margin: 0;
+  font-size: 12px;
+  color: var(--danger);
+}
+
+.job-actions {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex: none;
+}
+
+.progress {
+  height: 6px;
+  border-radius: 3px;
+  background: var(--hover);
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: var(--accent);
+  transition: width 0.25s linear;
+}
+
+.progress.indeterminate .progress-fill {
+  width: 30%;
+  animation: slide 1.2s ease-in-out infinite;
+}
+
+@keyframes slide {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(340%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .progress.indeterminate .progress-fill {
+    animation: none;
+    width: 100%;
+    opacity: 0.4;
+  }
+
+  .progress-fill {
+    transition: none;
+  }
+}

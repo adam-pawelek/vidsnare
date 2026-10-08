@@ -2,8 +2,15 @@
 import { fireEvent, screen, waitFor } from '@testing-library/react'
 import { describe, expect, it } from 'vitest'
 import type { FetchInfoResult, VideoEntry } from '@shared/media'
-import { mockApi, renderWithI18n } from '../test-utils'
-import { DownloadPage } from './DownloadPage'
+import type { AddDownloadsRequest } from '@shared/queue'
+import { DEFAULT_SETTINGS } from '@shared/settings'
+import { mockApi as baseMockApi, renderWithI18n } from '../test-utils'
+import { DownloadPage as Page } from './DownloadPage'
+
+// Channels every test needs; individual tests add or override the rest.
+const mockApi = (handlers: Parameters<typeof baseMockApi>[0] = {}) =>
+  baseMockApi({ 'queue:default-folder': () => '/home/u/Downloads', ...handlers })
+const DownloadPage = (): React.JSX.Element => <Page settings={DEFAULT_SETTINGS} onOpenQueue={() => {}} />
 
 const entry = (id: string, title: string, extra: Partial<VideoEntry> = {}): VideoEntry => ({
   id,
@@ -34,7 +41,7 @@ describe('DownloadPage', () => {
     renderWithI18n(<DownloadPage />)
     load('https://example.com/x')
     expect(screen.getByRole('alert')).toHaveTextContent("That doesn't look like a YouTube link.")
-    expect(api.invoke).not.toHaveBeenCalled()
+    expect(api.invoke).not.toHaveBeenCalledWith('media:fetch-info', expect.anything())
   })
 
   it('shows a video preview', async () => {
@@ -203,5 +210,111 @@ describe('playlist picker', () => {
     fireEvent.click(screen.getByRole('checkbox', { name: 'Hide already downloaded' }))
     expect(screen.queryByText('Two')).toBeNull()
     expect(screen.getAllByRole('listitem')).toHaveLength(3)
+  })
+})
+
+describe('starting downloads', () => {
+  function setup(preview: FetchInfoResult) {
+    const requests: AddDownloadsRequest[] = []
+    const api = mockApi({
+      'media:fetch-info': () => preview,
+      'dialog:choose-folder': () => '/mnt/usb',
+      'queue:add': (req) => {
+        requests.push(req as AddDownloadsRequest)
+        return { added: (req as AddDownloadsRequest).items.length, skipped: 0 }
+      }
+    })
+    return { api, requests }
+  }
+
+  it('downloads a single video with the default options', async () => {
+    const { requests } = setup({ ok: true, preview: { kind: 'video', playlistId: null, video: entry('aaaaaaaaaaa', 'V') } })
+    renderWithI18n(<DownloadPage />)
+    load(VIDEO_URL)
+    fireEvent.click(await screen.findByRole('button', { name: 'Download' }))
+    await screen.findByText('Added 1 download to the queue')
+    expect(requests[0]).toMatchObject({
+      items: [{ videoId: 'aaaaaaaaaaa', title: 'V' }],
+      options: DEFAULT_SETTINGS.defaults,
+      outputDir: '/home/u/Downloads',
+      playlistTitle: null
+    })
+  })
+
+  it('sends only the selected playlist videos and the playlist title', async () => {
+    const { requests } = setup({
+      ok: true,
+      preview: {
+        kind: 'playlist',
+        id: 'PL1',
+        title: 'Mix',
+        channel: null,
+        thumbnail: null,
+        entries: [entry('aaaaaaaaaaa', 'One'), entry('bbbbbbbbbbb', 'Two'), entry('ccccccccccc', 'Three')]
+      }
+    })
+    renderWithI18n(<DownloadPage />)
+    load(PLAYLIST_URL)
+    await screen.findByRole('heading', { name: 'Mix' })
+    fireEvent.click(screen.getByRole('checkbox', { name: /Two/ }))
+    fireEvent.click(screen.getByRole('button', { name: 'Download 2 videos' }))
+    await screen.findByText('Added 2 downloads to the queue')
+    expect(requests[0]!.items.map((i) => i.videoId)).toEqual(['aaaaaaaaaaa', 'ccccccccccc'])
+    expect(requests[0]!.playlistTitle).toBe('Mix')
+  })
+
+  it('disables the button when nothing is selected', async () => {
+    setup({
+      ok: true,
+      preview: { kind: 'playlist', id: 'PL1', title: 'Mix', channel: null, thumbnail: null, entries: [entry('aaaaaaaaaaa', 'One')] }
+    })
+    renderWithI18n(<DownloadPage />)
+    load(PLAYLIST_URL)
+    await screen.findByRole('heading', { name: 'Mix' })
+    fireEvent.click(screen.getByRole('button', { name: 'Select none' }))
+    expect(screen.getByRole('button', { name: 'Download 0 videos' })).toBeDisabled()
+  })
+
+  it('switches to audio and sends the chosen format and folder', async () => {
+    const { requests } = setup({ ok: true, preview: { kind: 'video', playlistId: null, video: entry('aaaaaaaaaaa', 'V') } })
+    renderWithI18n(<DownloadPage />)
+    load(VIDEO_URL)
+    fireEvent.click(await screen.findByRole('radio', { name: 'Audio only' }))
+    expect(screen.queryByRole('combobox', { name: 'Quality' })).toBeNull()
+    fireEvent.change(screen.getByRole('combobox', { name: 'Audio format' }), { target: { value: 'opus' } })
+    fireEvent.click(screen.getByRole('button', { name: 'Change…' }))
+    await screen.findByText('/mnt/usb')
+    fireEvent.click(screen.getByRole('button', { name: 'Download' }))
+    await screen.findByText(/Added 1 download/)
+    expect(requests[0]).toMatchObject({ options: { kind: 'audio', audioFormat: 'opus' }, outputDir: '/mnt/usb' })
+  })
+
+  it('lets you pick subtitle languages', async () => {
+    const { requests } = setup({ ok: true, preview: { kind: 'video', playlistId: null, video: entry('aaaaaaaaaaa', 'V') } })
+    renderWithI18n(<DownloadPage />)
+    load(VIDEO_URL)
+    fireEvent.click(await screen.findByRole('checkbox', { name: 'Download subtitles' }))
+    const picker = screen.getByRole('combobox', { name: 'Languages' })
+    fireEvent.change(picker, { target: { value: 'pl' } })
+    fireEvent.change(picker, { target: { value: 'ja' } })
+    expect(screen.getByText('Polish')).toBeInTheDocument()
+    fireEvent.click(screen.getByRole('button', { name: 'Remove Japanese' }))
+    fireEvent.click(screen.getByRole('button', { name: 'Download' }))
+    await screen.findByText(/Added 1 download/)
+    expect(requests[0]!.options.subtitles).toMatchObject({ enabled: true, languages: ['pl'] })
+  })
+
+  it('reports videos skipped as already downloaded', async () => {
+    mockApi({
+      'media:fetch-info': (): FetchInfoResult => ({
+        ok: true,
+        preview: { kind: 'playlist', id: 'PL1', title: 'Mix', channel: null, thumbnail: null, entries: [entry('aaaaaaaaaaa', 'One')] }
+      }),
+      'queue:add': () => ({ added: 0, skipped: 3 })
+    })
+    renderWithI18n(<DownloadPage />)
+    load(PLAYLIST_URL)
+    fireEvent.click(await screen.findByRole('button', { name: 'Download 1 video' }))
+    expect(await screen.findByText(/Skipped 3 videos you already downloaded/)).toBeInTheDocument()
   })
 })
