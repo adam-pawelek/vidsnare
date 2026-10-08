@@ -57,6 +57,8 @@ export const de: Messages = {
     quality: 'Qualität',
     qualityBest: 'Beste verfügbare',
     container: 'Dateityp',
+    containerMp4: 'MP4 – läuft überall (bis 1080p)',
+    containerMkv: 'MKV – höchste Qualität (braucht einen modernen Player)',
     audioFormat: 'Audioformat',
     subtitles: 'Untertitel',
     subtitlesEnabled: 'Untertitel herunterladen',

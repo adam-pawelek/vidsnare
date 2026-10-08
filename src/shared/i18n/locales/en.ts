@@ -60,6 +60,8 @@ export const en = {
     quality: 'Quality',
     qualityBest: 'Best available',
     container: 'File type',
+    containerMp4: 'MP4 – plays everywhere (up to 1080p)',
+    containerMkv: 'MKV – highest quality (needs a modern player)',
     audioFormat: 'Audio format',
     subtitles: 'Subtitles',
     subtitlesEnabled: 'Download subtitles',

@@ -57,6 +57,8 @@ export const ptBR: Messages = {
     quality: 'Qualidade',
     qualityBest: 'Melhor disponível',
     container: 'Tipo de arquivo',
+    containerMp4: 'MP4 – roda em qualquer lugar (até 1080p)',
+    containerMkv: 'MKV – qualidade máxima (requer um player moderno)',
     audioFormat: 'Formato de áudio',
     subtitles: 'Legendas',
     subtitlesEnabled: 'Baixar legendas',

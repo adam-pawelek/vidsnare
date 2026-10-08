@@ -62,22 +62,28 @@ describe('buildDownloadArgs', () => {
     expect(args).toContain('temp:/tmp/vs')
   })
 
-  it('downloads best video and audio for "best"', () => {
+  it('prefers H.264 + AAC for MP4 so every player shows the video', () => {
     const args = buildDownloadArgs(request())
     expect(valueOf(args, '-f')).toBe('bv*+ba/b')
-    expect(args).not.toContain('-S')
+    expect(valueOf(args, '-S')).toBe('vcodec:h264,res,acodec:m4a')
     expect(valueOf(args, '--merge-output-format')).toBe('mp4')
     expect(valueOf(args, '--remux-video')).toBe('mp4')
   })
 
-  it.each(['1080', '720', '480', '360'] as const)('caps resolution at %sp', (quality) => {
+  it.each(['1080', '720', '480', '360'] as const)('caps MP4 resolution at %sp', (quality) => {
     const args = buildDownloadArgs(request({}, { quality }))
-    expect(valueOf(args, '-S')).toBe(`res:${quality}`)
+    expect(valueOf(args, '-S')).toBe(`vcodec:h264,res:${quality},acodec:m4a`)
   })
 
-  it('honours the MKV container', () => {
+  it('takes the best streams in any codec for MKV', () => {
     const args = buildDownloadArgs(request({}, { container: 'mkv' }))
+    expect(args).not.toContain('-S')
     expect(valueOf(args, '--merge-output-format')).toBe('mkv')
+  })
+
+  it('caps MKV resolution without preferring a codec', () => {
+    const args = buildDownloadArgs(request({}, { container: 'mkv', quality: '720' }))
+    expect(valueOf(args, '-S')).toBe('res:720')
   })
 
   it.each([

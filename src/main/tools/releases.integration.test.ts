@@ -1,7 +1,10 @@
 /** Talks to the real GitHub API. Opt-in: VIDSNARE_NETWORK=1 npm test */
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it, vi } from 'vitest'
 import { createHttp } from './http'
 import { latestRelease } from './releases'
+
+// Real network work takes longer than the default 5-second test limit.
+vi.setConfig({ testTimeout: 180_000 })
 
 describe.runIf(process.env['VIDSNARE_NETWORK'])('latestRelease (live)', () => {
   const http = createHttp(fetch, 'VidSnare-tests')

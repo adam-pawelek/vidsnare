@@ -57,6 +57,8 @@ export const ru: Messages = {
     quality: 'Качество',
     qualityBest: 'Наилучшее доступное',
     container: 'Тип файла',
+    containerMp4: 'MP4 – открывается везде (до 1080p)',
+    containerMkv: 'MKV – наилучшее качество (нужен современный плеер)',
     audioFormat: 'Формат аудио',
     subtitles: 'Субтитры',
     subtitlesEnabled: 'Скачать субтитры',

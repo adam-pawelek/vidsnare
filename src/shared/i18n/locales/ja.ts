@@ -57,6 +57,8 @@ export const ja: Messages = {
     quality: '画質',
     qualityBest: '最高画質',
     container: 'ファイル形式',
+    containerMp4: 'MP4 – どこでも再生可能（最大 1080p）',
+    containerMkv: 'MKV – 最高画質（新しいプレーヤーが必要）',
     audioFormat: '音声形式',
     subtitles: '字幕',
     subtitlesEnabled: '字幕をダウンロード',

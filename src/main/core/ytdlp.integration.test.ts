@@ -8,7 +8,7 @@ import { spawnSync } from 'node:child_process'
 import { existsSync, mkdtempSync, rmSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
-import { afterAll, describe, expect, it } from 'vitest'
+import { afterAll, describe, expect, it, vi } from 'vitest'
 import { classifyError } from './errors'
 import { parseLine, type YtdlpEvent } from './progress'
 import { buildDownloadArgs, buildInfoArgs } from './ytdlp-args'
@@ -19,6 +19,9 @@ const deno = process.env['VIDSNARE_DENO']
 const tools = { ffmpeg, deno }
 // "Me at the zoo": the first YouTube video, 19 seconds long.
 const URL = 'https://www.youtube.com/watch?v=jNQXAC9IVRw'
+
+// Real network work takes longer than the default 5-second test limit.
+vi.setConfig({ testTimeout: 180_000 })
 
 describe.runIf(ytdlp)('yt-dlp integration', () => {
   const dir = mkdtempSync(join(tmpdir(), 'vidsnare-it-'))

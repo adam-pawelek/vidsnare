@@ -49,7 +49,7 @@ export function OptionsPanel({ options, onChange, folder, onChooseFolder }: Prop
             >
               {VIDEO_CONTAINERS.map((c) => (
                 <option key={c} value={c}>
-                  {c.toUpperCase()}
+                  {t(c === 'mp4' ? 'options.containerMp4' : 'options.containerMkv')}
                 </option>
               ))}
             </select>

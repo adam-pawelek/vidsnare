@@ -58,7 +58,16 @@ function formatArgs(options: DownloadOptions): string[] {
   const args = ['-f', 'bv*+ba/b']
   // `res:N` prefers the largest resolution not above N (by the shorter side, so
   // vertical Shorts behave), falling back to larger only if nothing smaller exists.
-  if (options.quality !== 'best') args.push('-S', `res:${options.quality}`)
+  const res = options.quality === 'best' ? 'res' : `res:${options.quality}`
+  if (options.container === 'mp4') {
+    // MP4 means "plays everywhere": YouTube's best streams are often AV1/VP9 + Opus,
+    // which many players can't decode inside MP4 (they play only the sound).
+    // H.264 + AAC first; YouTube offers H.264 up to 1080p.
+    args.push('-S', `vcodec:h264,${res},acodec:m4a`)
+  } else if (options.quality !== 'best') {
+    // MKV means "highest quality, any codec".
+    args.push('-S', res)
+  }
   args.push(
     '--merge-output-format', options.container,
     '--remux-video', options.container,
