@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 // @ts-expect-error plain JavaScript module served as-is by the website
-import { detectOs, FILES, format, pickLanguage } from '../website/site.js'
+import { detectOs, FILES, filterChoices, fold, format, languageChoices, pickLanguage } from '../website/site.js'
 // @ts-expect-error plain JavaScript module served as-is by the website
 import { LANGUAGE_NAMES, STRINGS } from '../website/strings.js'
 
@@ -54,6 +54,45 @@ describe('website helpers', () => {
 
   it('fills placeholders', () => {
     expect(format('Version {version}', { version: '1.2.0' })).toBe('Version 1.2.0')
+  })
+})
+
+describe('language search', () => {
+  const labels = (choices: { label: string }[]): string[] => choices.map((c) => c.label)
+
+  it('lists every language in its own name', () => {
+    expect(labels(languageChoices('en'))).toHaveLength(Object.keys(STRINGS).length)
+  })
+
+  it.each([
+    ['ger', ['Deutsch']],
+    ['deutsch', ['Deutsch']],
+    ['turkce', ['Türkçe']],
+    ['zh-tw', ['繁體中文']],
+    ['hebrew', ['עברית']],
+    ['portug', ['Português (Brasil)']]
+  ])('finds %s', (query, expected) => {
+    expect(labels(filterChoices(languageChoices('en'), query))).toEqual(expected)
+  })
+
+  it('matches names in the page language', () => {
+    expect(labels(filterChoices(languageChoices('pl'), 'niemiecki'))).toEqual(['Deutsch'])
+  })
+
+  it('shows the name in the page language beside the own name', () => {
+    const german = languageChoices('en').find((c: { code: string }) => c.code === 'de')
+    expect(german.hint).toBe('German')
+    const english = languageChoices('en').find((c: { code: string }) => c.code === 'en')
+    expect(english.hint).toBe('')
+  })
+
+  it('returns nothing for nonsense and everything for an empty query', () => {
+    expect(filterChoices(languageChoices('en'), 'klingon')).toEqual([])
+    expect(filterChoices(languageChoices('en'), '  ')).toHaveLength(Object.keys(STRINGS).length)
+  })
+
+  it('ignores case and accents', () => {
+    expect(fold('Français ČEŠTINA')).toBe('francais cestina')
   })
 })
 

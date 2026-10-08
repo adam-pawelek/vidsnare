@@ -47,6 +47,16 @@ function render(lang, release) {
   document.documentElement.lang = lang
   document.documentElement.dir = RTL.includes(lang) ? 'rtl' : 'ltr'
   document.title = s.title
+  const current = document.getElementById('lang-current')
+  if (current) {
+    current.textContent = LANGUAGE_NAMES[lang]
+    current.lang = lang
+    document.getElementById('lang-button').setAttribute('aria-label', `${s.language}: ${LANGUAGE_NAMES[lang]}`)
+    const search = document.getElementById('lang-search')
+    search.placeholder = `${s.language}…`
+    search.setAttribute('aria-label', s.language)
+    document.getElementById('lang-list').setAttribute('aria-label', s.language)
+  }
   for (const el of document.querySelectorAll('[data-t]')) el.textContent = s[el.dataset.t]
   for (const el of document.querySelectorAll('[data-t-alt]')) el.alt = s[el.dataset.tAlt]
 
@@ -84,6 +94,150 @@ async function latestVersion() {
   }
 }
 
+/** Lower-case and strip accents, so "turkce" finds "Türkçe". */
+export function fold(text) {
+  return String(text).normalize('NFD').replace(/\p{Diacritic}/gu, '').toLocaleLowerCase()
+}
+
+function displayName(names, code) {
+  try {
+    return names.of(code) || ''
+  } catch {
+    return ''
+  }
+}
+
+/**
+ * The language list for the page's current language: each entry has its own
+ * name, its name in the current language (when different), and search text.
+ */
+export function languageChoices(uiLang) {
+  const local = new Intl.DisplayNames([uiLang], { type: 'language' })
+  const english = new Intl.DisplayNames(['en'], { type: 'language' })
+  return LANGUAGES.map((code) => {
+    const label = LANGUAGE_NAMES[code]
+    const inUi = displayName(local, code)
+    return {
+      code,
+      label,
+      hint: fold(inUi) === fold(label) ? '' : inUi,
+      haystack: fold([label, inUi, displayName(english, code), code].join(' '))
+    }
+  })
+}
+
+/** Choices matching every word of the query. */
+export function filterChoices(choices, query) {
+  const terms = fold(query.trim()).split(/\s+/).filter(Boolean)
+  return terms.length ? choices.filter((c) => terms.every((t) => c.haystack.includes(t))) : choices
+}
+
+/** The searchable language menu in the header. */
+function setUpPicker(getLang, setLang) {
+  const root = document.getElementById('lang-picker')
+  const button = document.getElementById('lang-button')
+  const popover = document.getElementById('lang-popover')
+  const search = document.getElementById('lang-search')
+  const list = document.getElementById('lang-list')
+  let shown = []
+  let active = 0
+
+  const draw = () => {
+    list.replaceChildren(
+      ...shown.map((choice, i) => {
+        const li = document.createElement('li')
+        li.id = `lang-option-${i}`
+        li.setAttribute('role', 'option')
+        li.setAttribute('aria-selected', String(choice.code === getLang()))
+        li.className = `lang-option${i === active ? ' active' : ''}`
+        const name = document.createElement('span')
+        name.lang = choice.code
+        name.textContent = choice.label
+        li.append(name)
+        if (choice.hint) {
+          const hint = document.createElement('span')
+          hint.className = 'muted'
+          hint.textContent = choice.hint
+          li.append(hint)
+        }
+        li.addEventListener('mousedown', (e) => e.preventDefault())
+        li.addEventListener('mouseenter', () => {
+          active = i
+          highlight()
+        })
+        li.addEventListener('click', () => choose(choice.code))
+        return li
+      })
+    )
+    highlight()
+  }
+
+  const highlight = () => {
+    for (const [i, li] of [...list.children].entries()) li.classList.toggle('active', i === active)
+    const current = document.getElementById(`lang-option-${active}`)
+    if (current) {
+      search.setAttribute('aria-activedescendant', current.id)
+      current.scrollIntoView?.({ block: 'nearest' })
+    } else {
+      search.removeAttribute('aria-activedescendant')
+    }
+  }
+
+  const refresh = () => {
+    shown = filterChoices(languageChoices(getLang()), search.value)
+    draw()
+  }
+
+  const open = () => {
+    popover.hidden = false
+    button.setAttribute('aria-expanded', 'true')
+    search.value = ''
+    shown = languageChoices(getLang())
+    active = Math.max(0, shown.findIndex((c) => c.code === getLang()))
+    draw()
+    search.focus()
+  }
+
+  const close = (focusButton) => {
+    popover.hidden = true
+    button.setAttribute('aria-expanded', 'false')
+    if (focusButton) button.focus()
+  }
+
+  const choose = (code) => {
+    setLang(code)
+    close(true)
+  }
+
+  button.addEventListener('click', () => (popover.hidden ? open() : close(false)))
+  search.addEventListener('input', () => {
+    active = 0
+    refresh()
+  })
+  search.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowDown') {
+      e.preventDefault()
+      active = Math.min(shown.length - 1, active + 1)
+      highlight()
+    } else if (e.key === 'ArrowUp') {
+      e.preventDefault()
+      active = Math.max(0, active - 1)
+      highlight()
+    } else if (e.key === 'Enter') {
+      e.preventDefault()
+      if (shown[active]) choose(shown[active].code)
+    } else if (e.key === 'Escape') {
+      e.preventDefault()
+      close(true)
+    } else if (e.key === 'Tab') {
+      close(false)
+    }
+  })
+  document.addEventListener('mousedown', (e) => {
+    if (!popover.hidden && !root.contains(e.target)) close(false)
+  })
+}
+
 export async function start() {
   const saved = (() => {
     try {
@@ -93,22 +247,22 @@ export async function start() {
     }
   })()
   let lang = saved && STRINGS[saved] ? saved : pickLanguage(navigator.languages || [navigator.language])
-
-  const picker = document.getElementById('language')
-  for (const [code, name] of Object.entries(LANGUAGE_NAMES)) picker.add(new Option(name, code))
-  picker.value = lang
-
   let release = null
-  render(lang, release)
-  picker.addEventListener('change', () => {
-    lang = picker.value
-    try {
-      localStorage.setItem('vidsnare-lang', lang)
-    } catch {
-      // Private windows may block storage; the choice just won't be remembered.
+
+  setUpPicker(
+    () => lang,
+    (code) => {
+      lang = code
+      try {
+        localStorage.setItem('vidsnare-lang', lang)
+      } catch {
+        // Private windows may block storage; the choice just won't be remembered.
+      }
+      render(lang, release)
     }
-    render(lang, release)
-  })
+  )
+
+  render(lang, release)
   for (const link of document.querySelectorAll('a[data-file]')) {
     link.addEventListener('click', (e) => {
       if (link.getAttribute('aria-disabled') === 'true') e.preventDefault()
