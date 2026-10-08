@@ -111,9 +111,12 @@ input[type='radio'] {
 }
 
 .brand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
   font-weight: 700;
   font-size: 18px;
-  padding: 4px 10px 16px;
+  padding: 4px 8px 16px;
   color: var(--accent);
 }
 

@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import type { AppInfo } from '@shared/ipc'
 import { resolveLocale, type MessageKey } from '@shared/i18n'
 import { ACTIVE_STATUSES } from '@shared/queue'
+import logo from './assets/logo.svg'
 import { UpdateBanner } from './components/AppUpdate'
 import { LanguagePicker } from './components/LanguagePicker'
 import { useQueue } from './hooks/useQueue'
@@ -40,7 +41,10 @@ function Shell({ settings, update }: ReturnType<typeof useSettings>): React.JSX.
   return (
     <div className="layout">
       <nav className="sidebar" aria-label="Main">
-        <div className="brand">VidSnare</div>
+        <div className="brand">
+          <img src={logo} alt="" width="26" height="26" />
+          VidSnare
+        </div>
         {PAGES.map((p) => (
           <button
             key={p.id}
