@@ -77,4 +77,11 @@ runners and publishes them to a GitHub release, where installed copies find the 
 
 ## License
 
-MIT. Bundled third-party programs keep their own licenses; see [docs/THIRD_PARTY.md](docs/THIRD_PARTY.md).
+VidSnare is **source-available**, not open source. It is licensed under the
+[PolyForm Strict License 1.0.0](LICENSE): you may download and use it for non-commercial
+purposes, but you may not modify it, build on it, or redistribute it.
+For any other use, contact the author.
+
+Versions published before this change (up to commit `c72750c`) were released under the MIT license.
+
+Bundled third-party programs keep their own licenses; see [docs/THIRD_PARTY.md](docs/THIRD_PARTY.md).

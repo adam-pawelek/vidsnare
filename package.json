@@ -3,9 +3,9 @@
   "productName": "VidSnare",
   "version": "0.1.0",
   "description": "Download videos and audio from YouTube on Windows and Linux.",
-  "license": "MIT",
+  "license": "SEE LICENSE IN LICENSE",
   "author": {
-    "name": "VidSnare contributors",
+    "name": "Adam Pawelek",
     "email": "vidsnare@users.noreply.github.com"
   },
   "homepage": "https://github.com/adam-pawelek/vidsnare",

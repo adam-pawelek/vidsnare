@@ -1,6 +1,6 @@
 appId: com.vidsnare.app
 productName: VidSnare
-copyright: Copyright © 2026 VidSnare contributors
+copyright: Copyright © 2026 Adam Pawelek
 
 directories:
   output: release
@@ -50,7 +50,7 @@ linux:
   icon: build/icon.png
   synopsis: Download videos and audio from YouTube
   description: VidSnare downloads videos and audio from YouTube, with playlists, subtitles and a download queue.
-  maintainer: VidSnare contributors <vidsnare@users.noreply.github.com>
+  maintainer: Adam Pawelek <vidsnare@users.noreply.github.com>
 
 appImage:
   artifactName: ${productName}-${version}-${arch}.${ext}

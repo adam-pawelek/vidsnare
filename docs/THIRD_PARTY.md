@@ -1,7 +1,8 @@
 # Third-party software
 
-VidSnare itself is released under the MIT license (see `LICENSE`). It ships with,
-or depends on, the following components, each under its own license.
+VidSnare itself is licensed under the PolyForm Strict License 1.0.0 (see `LICENSE`).
+That license covers only VidSnare's own code. VidSnare ships with, or depends on, the
+following components, each under its own license, which this license does not change.
 
 ## Bundled programs
 
