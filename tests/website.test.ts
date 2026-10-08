@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 // @ts-expect-error plain JavaScript module served as-is by the website
-import { detectOs, detectSystem, FILES, filterChoices, fold, format, languageChoices, pickLanguage } from '../website/site.js'
+import { detectOs, detectSystem, FILES, filterChoices, fold, format, languageChoices, pickLanguage, releaseFromResponse } from '../website/site.js'
 // @ts-expect-error plain JavaScript module served as-is by the website
 import { LANGUAGE_NAMES, STRINGS } from '../website/strings.js'
 
@@ -61,6 +61,16 @@ describe('website helpers', () => {
     ['Mozilla/5.0 (Macintosh; Intel Mac OS X 14_0)', 'windows']
   ])('suggests the right download for %s', (ua, system) => {
     expect(detectSystem(ua)).toBe(system)
+  })
+
+  it.each([
+    [200, { tag_name: 'v0.1.2' }, { state: 'ready', version: '0.1.2' }],
+    [404, null, { state: 'none' }],
+    [403, null, { state: 'unknown' }],
+    [500, null, { state: 'unknown' }],
+    [200, {}, { state: 'unknown' }]
+  ])('reads a GitHub answer %i as %j', (status, data, expected) => {
+    expect(releaseFromResponse(status, data)).toEqual(expected)
   })
 
   it('fills placeholders', () => {

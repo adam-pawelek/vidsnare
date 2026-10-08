@@ -81,7 +81,7 @@ function render(lang, release) {
   const note = document.getElementById('release-note')
   const main = system === 'deb' ? 'deb' : system === 'appimage' ? 'appimage' : 'windows'
 
-  const available = release !== null
+  const available = release.state !== 'none'
   for (const link of document.querySelectorAll('a[data-file]')) {
     const file = FILES[link.dataset.file]
     link.href = available ? `${DOWNLOAD}/${file.name}` : '#'
@@ -104,9 +104,12 @@ function render(lang, release) {
     secondary.textContent = other === 'appimage' ? s.appImageLink : s.downloadDeb
   }
 
-  note.textContent = available
-    ? [format(s.version, { version: release }), os === 'other' ? s.onlyWinLinux : ''].filter(Boolean).join(' · ')
-    : s.comingSoon
+  note.textContent =
+    release.state === 'none'
+      ? s.comingSoon
+      : [release.state === 'ready' ? format(s.version, { version: release.version }) : '', os === 'other' ? s.onlyWinLinux : '']
+          .filter(Boolean)
+          .join(' · ')
 }
 
 /** Install guide tabs; opens the one for this visitor's system first. */
@@ -152,16 +155,29 @@ function setUpCopyButtons(getStrings) {
   }
 }
 
-async function latestVersion() {
+/**
+ * What GitHub says about the newest release:
+ *   { state: 'ready', version }  a release exists
+ *   { state: 'none' }            GitHub confirms there is no release yet (404)
+ *   { state: 'unknown' }         no answer (offline, or GitHub's limit of 60
+ *                                lookups per hour per connection was reached)
+ * Downloads stay available unless the answer is 'none': the buttons link to
+ * the newest files directly and work without this lookup.
+ */
+export function releaseFromResponse(status, data) {
+  if (status === 404) return { state: 'none' }
+  const version = status === 200 ? String(data?.tag_name || '').replace(/^v/, '') : ''
+  return version ? { state: 'ready', version } : { state: 'unknown' }
+}
+
+async function latestRelease() {
   try {
     const res = await fetch(`https://api.github.com/repos/${REPO}/releases/latest`, {
       headers: { Accept: 'application/vnd.github+json' }
     })
-    if (!res.ok) return null
-    const data = await res.json()
-    return String(data.tag_name || '').replace(/^v/, '') || null
+    return releaseFromResponse(res.status, res.ok ? await res.json() : null)
   } catch {
-    return null
+    return { state: 'unknown' }
   }
 }
 
@@ -318,7 +334,7 @@ export async function start() {
     }
   })()
   let lang = saved && STRINGS[saved] ? saved : pickLanguage(navigator.languages || [navigator.language])
-  let release = null
+  let release = { state: 'unknown' }
 
   setUpPicker(
     () => lang,
@@ -341,7 +357,7 @@ export async function start() {
       if (link.getAttribute('aria-disabled') === 'true') e.preventDefault()
     })
   }
-  release = await latestVersion()
+  release = await latestRelease()
   render(lang, release)
 }
 
