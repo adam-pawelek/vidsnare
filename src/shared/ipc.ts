@@ -6,6 +6,8 @@
  * forwards channels named here, so the renderer cannot reach anything else.
  */
 import type { FetchInfoResult } from './media'
+import type { AddDownloadsRequest, AddDownloadsResult, DownloadJob } from './queue'
+import type { Settings } from './settings'
 
 export interface AppInfo {
   name: string
@@ -40,12 +42,29 @@ export interface InvokeMap {
   'tools:update-engine': [[], EngineUpdateResult]
   'app:read-clipboard': [[], string]
   'media:fetch-info': [[url: string], FetchInfoResult]
+  'settings:get': [[], Settings]
+  'settings:update': [[patch: Partial<Settings>], Settings]
+  /** Opens a folder picker; resolves to the chosen folder or null. */
+  'dialog:choose-folder': [[current: string], string | null]
+  /** The folder downloads go to when nothing else is chosen. */
+  'queue:default-folder': [[], string]
+  'queue:add': [[request: AddDownloadsRequest], AddDownloadsResult]
+  'queue:list': [[], DownloadJob[]]
+  'queue:cancel': [[id: string], void]
+  'queue:cancel-all': [[], void]
+  'queue:retry': [[id: string], void]
+  'queue:remove': [[id: string], void]
+  'queue:clear-finished': [[], void]
+  'queue:open-file': [[id: string], void]
+  'queue:show-in-folder': [[id: string], void]
 }
 
 /** Push channels from main to renderer: channel name -> payload. */
 export interface EventMap {
   'app:theme-changed': { dark: boolean }
   'tools:update-progress': { fraction: number | null }
+  'queue:changed': DownloadJob[]
+  'settings:changed': Settings
 }
 
 export type InvokeChannel = keyof InvokeMap
@@ -58,9 +77,22 @@ export const INVOKE_CHANNELS = [
   'tools:get-status',
   'tools:update-engine',
   'app:read-clipboard',
-  'media:fetch-info'
+  'media:fetch-info',
+  'settings:get',
+  'settings:update',
+  'dialog:choose-folder',
+  'queue:default-folder',
+  'queue:add',
+  'queue:list',
+  'queue:cancel',
+  'queue:cancel-all',
+  'queue:retry',
+  'queue:remove',
+  'queue:clear-finished',
+  'queue:open-file',
+  'queue:show-in-folder'
 ] as const satisfies readonly InvokeChannel[]
-export const EVENT_CHANNELS = ['app:theme-changed', 'tools:update-progress'] as const satisfies readonly EventChannel[]
+export const EVENT_CHANNELS = ['app:theme-changed', 'tools:update-progress', 'queue:changed', 'settings:changed'] as const satisfies readonly EventChannel[]
 
 export function isInvokeChannel(value: unknown): value is InvokeChannel {
   return typeof value === 'string' && (INVOKE_CHANNELS as readonly string[]).includes(value)
